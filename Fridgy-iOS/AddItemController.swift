@@ -18,6 +18,7 @@ class AddItemController: UIViewController {
     
     @IBOutlet weak var dateTextField: UITextField!
 
+    @IBOutlet weak var addItemOutlet: UIButton!
     private var expiry = Date()
     
     private let datePicker = UIDatePicker()
@@ -26,6 +27,7 @@ class AddItemController: UIViewController {
         super.viewDidLoad()
         createDatePickerView()
         addTextFieldToolbar()
+        addItemOutlet.layer.cornerRadius = 8
     }
     
     func createDatePickerView() {
@@ -74,7 +76,7 @@ class AddItemController: UIViewController {
     }
 
     @IBAction func addItemAction(_ sender: UIButton) {
-        if nameTextField.text != "" {
+        if nameTextField.text != "", dateTextField.text != "" {
             delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry)
             dismiss(animated: true, completion: nil)
         }

@@ -9,11 +9,13 @@
 import UIKit
 
 class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem {
+    
     func addItem(name: String, expiry: Date) {
         items.append(FridgeItem(name: name, expiry: expiry))
     }
     
-
+    @IBOutlet weak var addItemOutlet: UIButton!
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -22,6 +24,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         self.tableView.delegate = self
         self.tableView.dataSource = self
         navigationController!.navigationBar.prefersLargeTitles = true
+        addItemOutlet.layer.cornerRadius = 8
     }
 
     private var items = [FridgeItem]() {
