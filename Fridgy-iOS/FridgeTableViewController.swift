@@ -41,7 +41,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = tableView.dequeueReusableCell(withIdentifier: "fridgeItemCell", for: indexPath) as! FridgeItemTableCell
         
         cell.itemNameLabel.text = items[indexPath.row].name
-        
         cell.itemExpiryLabel.text = items[indexPath.row].expiryString
         
         return cell

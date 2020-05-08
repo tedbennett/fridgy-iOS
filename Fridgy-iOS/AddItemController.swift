@@ -13,6 +13,10 @@ protocol AddItem {
 }
 
 class AddItemController: UIViewController {
+    
+    var textFields = [UITextField]()
+
+    
 
     private var expiry = Date()
     

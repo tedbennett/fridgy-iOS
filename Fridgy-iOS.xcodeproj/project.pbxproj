@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F58BBCA2465615100E5F8A1 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */; };
 		9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357ED2456DB4E0026B32D /* AppDelegate.swift */; };
 		9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */; };
 		9F9357F52456DB4E0026B32D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F32456DB4E0026B32D /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
 		9F9357EA2456DB4E0026B32D /* Fridgy-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fridgy-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9357ED2456DB4E0026B32D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 		9F9357EC2456DB4E0026B32D /* Fridgy-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */,
 				9F9357ED2456DB4E0026B32D /* AppDelegate.swift */,
 				9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */,
 				9FE720F1245B66720045A4A6 /* FridgeTableViewController.swift */,
@@ -146,6 +149,7 @@
 			files = (
 				9FC1F4D4245A0B4C0097DFF4 /* AddItemController.swift in Sources */,
 				9FE720F2245B66720045A4A6 /* FridgeTableViewController.swift in Sources */,
+				9F58BBCA2465615100E5F8A1 /* AddItemTableViewCell.swift in Sources */,
 				9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */,
 				9FE720F4245B66890045A4A6 /* FridgeItemTableCell.swift in Sources */,
 				9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */,
