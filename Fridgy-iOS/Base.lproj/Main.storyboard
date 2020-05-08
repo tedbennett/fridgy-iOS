@@ -72,7 +72,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Uof-dV-j9L" kind="presentation" id="WAY-6v-kev"/>
+                                    <segue destination="Uof-dV-j9L" kind="presentation" identifier="Add Item Segue" id="WAY-6v-kev"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -91,7 +91,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Fridgy" largeTitleDisplayMode="always" id="Isy-zY-96d"/>
                     <connections>
-                        <outlet property="tableView" destination="N8S-aF-Tje" id="4ot-mP-KtB"/>
+                        <outlet property="tableView" destination="N8S-aF-Tje" id="HeF-HN-4Sv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

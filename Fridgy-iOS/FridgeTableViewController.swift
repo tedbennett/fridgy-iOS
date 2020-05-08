@@ -8,7 +8,11 @@
 
 import UIKit
 
-class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem {
+    func addItem(name: String, expiry: Date) {
+        items.append(FridgeItem(name: name, expiry: expiry))
+    }
+    
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -31,6 +35,14 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         let startOfDay = Calendar.current.startOfDay(for: Date())
         let sampleItem = FridgeItem(name: "Cucumber", expiry: Date(timeInterval: -10 * 86400, since: startOfDay))
         items.append(sampleItem)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Add Item Segue" {
+            if let vc = segue.destination as? AddItemController {
+                vc.delegate = self
+            }
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,7 +80,7 @@ class FridgeItem : Comparable {
             case 1: return "In 1 day"
             case 0: return "In <1 day"
             case -1: return "1 day ago"
-            case _ where expiryInDays < -1: return "In \(abs(expiryInDays)) days"
+            case _ where expiryInDays < -1: return "\(abs(expiryInDays)) days ago"
             default: return "???"
         }
     }

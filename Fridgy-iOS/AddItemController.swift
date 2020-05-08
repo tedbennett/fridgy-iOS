@@ -76,7 +76,7 @@ class AddItemController: UIViewController {
     @IBAction func addItemAction(_ sender: UIButton) {
         if nameTextField.text != "" {
             delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry)
-            navigationController?.popViewController(animated: true)
+            dismiss(animated: true, completion: nil)
         }
     }
     
