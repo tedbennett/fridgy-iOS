@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="52" id="KGk-i7-Jjw" customClass="AddDateTableCell" customModule="Fridgy_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="398" height="52"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="398" height="52"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expiry Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNh-WV-aiT">
+                        <rect key="frame" x="16" y="14" width="99.5" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="99.5" id="ayf-nI-2GH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Date" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Swg-eh-zdI">
+                        <rect key="frame" x="115.5" y="13.5" width="266.5" height="25.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Swg-eh-zdI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="KXa-od-Euf"/>
+                    <constraint firstAttribute="trailing" secondItem="Swg-eh-zdI" secondAttribute="trailing" constant="16" id="aDP-3H-LXh"/>
+                    <constraint firstItem="VNh-WV-aiT" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="eLc-B9-Ibq"/>
+                    <constraint firstItem="Swg-eh-zdI" firstAttribute="leading" secondItem="VNh-WV-aiT" secondAttribute="trailing" id="ebJ-a4-mcK"/>
+                    <constraint firstItem="VNh-WV-aiT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="oxh-wK-tyy"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="dateTextField" destination="Swg-eh-zdI" id="dlw-85-5Ii"/>
+            </connections>
+            <point key="canvasLocation" x="113.04347826086958" y="97.098214285714278"/>
+        </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="55" id="A1M-LB-dnb" customClass="AddNameTableCell" customModule="Fridgy_iOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="398" height="55"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="A1M-LB-dnb" id="Own-BI-36q">
+                <rect key="frame" x="0.0" y="0.0" width="398" height="55"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qnt-ys-ada">
+                        <rect key="frame" x="16" y="15.5" width="99.5" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="99.5" id="woY-F2-Y4l"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4dP-on-QJ7">
+                        <rect key="frame" x="115.5" y="15" width="266.5" height="25.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                        <textInputTraits key="textInputTraits"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="4dP-on-QJ7" firstAttribute="leading" secondItem="qnt-ys-ada" secondAttribute="trailing" id="8fE-Gi-Gqh"/>
+                    <constraint firstItem="4dP-on-QJ7" firstAttribute="centerY" secondItem="Own-BI-36q" secondAttribute="centerY" id="Frr-C6-9rL"/>
+                    <constraint firstItem="qnt-ys-ada" firstAttribute="leading" secondItem="Own-BI-36q" secondAttribute="leading" constant="16" id="Qbs-id-JtD"/>
+                    <constraint firstItem="qnt-ys-ada" firstAttribute="centerY" secondItem="Own-BI-36q" secondAttribute="centerY" id="X68-d8-WLt"/>
+                    <constraint firstAttribute="trailing" secondItem="4dP-on-QJ7" secondAttribute="trailing" constant="16" id="Zbp-OX-MXB"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="113" y="20"/>
+        </tableViewCell>
+    </objects>
+</document>
