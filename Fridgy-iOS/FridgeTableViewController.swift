@@ -60,6 +60,29 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+        -> UISwipeActionsConfiguration? {
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+                // delete the item here
+                completionHandler(true)
+            }
+            deleteAction.image = UIImage(systemName: "trash")
+            deleteAction.backgroundColor = .systemRed
+            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+            return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+        -> UISwipeActionsConfiguration? {
+            let runningLowAction = UIContextualAction(style: .normal, title: "Running Low") { (_, _, completionHandler) in
+                // delete the item here
+                completionHandler(true)
+            }
+            runningLowAction.backgroundColor = .systemOrange
+            let configuration = UISwipeActionsConfiguration(actions: [runningLowAction])
+            return configuration
+    }
 }
 
 class FridgeItem : Comparable {
