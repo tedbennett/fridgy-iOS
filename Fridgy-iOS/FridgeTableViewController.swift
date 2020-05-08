@@ -8,16 +8,22 @@
 
 import UIKit
 
-class FridgeTableViewController: UITableViewController {
+class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadSampleItems()
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        navigationController!.navigationBar.prefersLargeTitles = true
     }
 
     private var items = [FridgeItem]() {
         didSet {
             items.sort()
+            tableView.reloadData()
         }
     }
     
@@ -26,43 +32,20 @@ class FridgeTableViewController: UITableViewController {
         let sampleItem = FridgeItem(name: "Cucumber", expiry: Date(timeInterval: -10 * 86400, since: startOfDay))
         items.append(sampleItem)
     }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fridgeItemCell", for: indexPath) as! FridgeItemTableCell
         
         cell.itemNameLabel.text = items[indexPath.row].name
         
-        let startOfDay = Calendar.current.startOfDay(for: Date())
-        let expiryInDays = Calendar.current.dateComponents([.day], from: startOfDay, to: items[indexPath.row].expiry).day!
+        cell.itemExpiryLabel.text = items[indexPath.row].expiryString
         
-        var expiryInDaysString = "?"
-        if expiryInDays > 1 {
-            expiryInDaysString = "In \(expiryInDays) days"
-        } else if expiryInDays == 1 {
-            expiryInDaysString = "In \(expiryInDays) day"
-        } else if expiryInDays == -1 {
-            expiryInDaysString = "\(abs(expiryInDays)) day ago"
-        } else if expiryInDays < -1 {
-            expiryInDaysString = "\(abs(expiryInDays)) days ago"
-        } else {
-            expiryInDaysString = "In <1 day"
-        }
-        
-        
-        cell.itemExpiryLabel.text = expiryInDaysString
-
         return cell
     }
-
-
 }
 
 class FridgeItem : Comparable {
@@ -76,7 +59,20 @@ class FridgeItem : Comparable {
     
     var name = ""
     
-    var expiry = Date()
+    private var expiry = Date()
+    
+    var expiryString : String {
+        let startOfDay = Calendar.current.startOfDay(for: Date())
+        let expiryInDays = Calendar.current.dateComponents([.day], from: startOfDay, to: expiry).day!
+        switch expiryInDays {
+            case _ where expiryInDays > 1: return "In \(expiryInDays) days"
+            case 1: return "In 1 day"
+            case 0: return "In <1 day"
+            case -1: return "1 day ago"
+            case _ where expiryInDays < -1: return "In \(abs(expiryInDays)) days"
+            default: return "???"
+        }
+    }
     
     convenience init(name: String, expiry: Date) {
         self.init()
