@@ -119,10 +119,13 @@ class FridgeItem : Comparable {
         let startOfDay = Calendar.current.startOfDay(for: Date())
         let expiryInDays = Calendar.current.dateComponents([.day], from: startOfDay, to: expiry).day!
         switch expiryInDays {
+            case _ where expiryInDays > 60: return "In \(expiryInDays/30) months"
+            case _ where expiryInDays > 14: return "In \(expiryInDays/7) weeks"
             case _ where expiryInDays > 1: return "In \(expiryInDays) days"
             case 1: return "In 1 day"
             case 0: return "In <1 day"
             case -1: return "1 day ago"
+            case _ where expiryInDays < -14: return ">14 days ago"
             case _ where expiryInDays < -1: return "\(abs(expiryInDays)) days ago"
             default: return "???"
         }
