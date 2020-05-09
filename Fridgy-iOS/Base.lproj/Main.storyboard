@@ -18,7 +18,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7RB-e9-0JI">
                                 <rect key="frame" x="0.0" y="44" width="414" height="626"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8S-aF-Tje">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your fridge is empty!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tq5-z9-JRP">
+                                        <rect key="frame" x="127.66666666666667" y="302.66666666666669" width="158.66666666666663" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8S-aF-Tje">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="626"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
@@ -75,9 +81,11 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
+                                    <constraint firstItem="tq5-z9-JRP" firstAttribute="centerX" secondItem="7RB-e9-0JI" secondAttribute="centerX" id="3d7-R0-RqX"/>
                                     <constraint firstAttribute="bottom" secondItem="N8S-aF-Tje" secondAttribute="bottom" id="7Do-zA-SsH"/>
                                     <constraint firstItem="N8S-aF-Tje" firstAttribute="top" secondItem="7RB-e9-0JI" secondAttribute="top" id="HaE-q9-nhU"/>
                                     <constraint firstItem="N8S-aF-Tje" firstAttribute="leading" secondItem="7RB-e9-0JI" secondAttribute="leading" id="SAl-ji-Mp1"/>
+                                    <constraint firstItem="tq5-z9-JRP" firstAttribute="centerY" secondItem="7RB-e9-0JI" secondAttribute="centerY" id="fYh-Rr-W90"/>
                                     <constraint firstAttribute="trailing" secondItem="N8S-aF-Tje" secondAttribute="trailing" id="nau-z7-RyU"/>
                                 </constraints>
                             </view>
@@ -108,6 +116,7 @@
                     <navigationItem key="navigationItem" title="Fridgy" largeTitleDisplayMode="always" id="Isy-zY-96d"/>
                     <connections>
                         <outlet property="addItemOutlet" destination="1KW-4g-6QL" id="Owm-V0-Lp2"/>
+                        <outlet property="emptyTableLabel" destination="tq5-z9-JRP" id="a8R-aK-ac8"/>
                         <outlet property="tableView" destination="N8S-aF-Tje" id="HeF-HN-4Sv"/>
                     </connections>
                 </viewController>

@@ -11,16 +11,20 @@ import UIKit
 class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem {
     
     func addItem(name: String, expiry: Date) {
-        items.append(FridgeItem(name: name, expiry: expiry))
+        let newItem = FridgeItem(name: name, expiry: expiry)
+        items.append(newItem)
+        //updateDatabase(newItem)
     }
     
+    @IBOutlet weak var emptyTableLabel: UILabel!
     @IBOutlet weak var addItemOutlet: UIButton!
-    
     @IBOutlet weak var tableView: UITableView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadSampleItems()
+        //loadSampleItems()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         navigationController!.navigationBar.prefersLargeTitles = true
@@ -31,6 +35,8 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         didSet {
             items.sort()
             tableView.reloadData()
+            tableView.isHidden = (items.count == 0)
+            emptyTableLabel.isHidden = !(items.count == 0)
         }
     }
     

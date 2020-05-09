@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F58BBCA2465615100E5F8A1 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */; };
+		9F663A602466C08C00817361 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F663A5F2466C08C00817361 /* Item.swift */; };
 		9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357ED2456DB4E0026B32D /* AppDelegate.swift */; };
 		9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */; };
 		9F9357F52456DB4E0026B32D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F32456DB4E0026B32D /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
+		9F663A5F2466C08C00817361 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		9F9357EA2456DB4E0026B32D /* Fridgy-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fridgy-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9357ED2456DB4E0026B32D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 		9F9357EC2456DB4E0026B32D /* Fridgy-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				9F663A5F2466C08C00817361 /* Item.swift */,
 				9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */,
 				9FE4C4792465C857007C30F7 /* Unused */,
 				9F9357ED2456DB4E0026B32D /* AppDelegate.swift */,
@@ -166,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FC1F4D4245A0B4C0097DFF4 /* AddItemController.swift in Sources */,
+				9F663A602466C08C00817361 /* Item.swift in Sources */,
 				9FE84D5B246581A5000F8055 /* AddDateTableCell.swift in Sources */,
 				9FE720F2245B66720045A4A6 /* FridgeTableViewController.swift in Sources */,
 				9FDFBA0F246695C400DEEFD7 /* Model.xcdatamodeld in Sources */,
