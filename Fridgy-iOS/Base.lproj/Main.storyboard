@@ -28,7 +28,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="626"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="fridgeItemCell" rowHeight="60" id="Prb-bv-Wx7" customClass="FridgeItemTableCell" customModule="Fridgy_iOS" customModuleProvider="target">
+                                            <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="fridgeItemCell" rowHeight="60" id="Prb-bv-Wx7" customClass="FridgeItemTableCell" customModule="Fridgy_iOS" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Prb-bv-Wx7" id="J9q-Ws-5AH">
@@ -57,14 +57,24 @@
                                                                 <constraint firstAttribute="width" constant="5" id="UYY-JI-Hav"/>
                                                             </constraints>
                                                         </view>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Q9-WU-gw0">
+                                                            <rect key="frame" x="409" y="0.0" width="5" height="60"/>
+                                                            <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="5" id="WlO-Ru-7eE"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="y9B-uw-kU8" firstAttribute="leading" secondItem="J9q-Ws-5AH" secondAttribute="leading" constant="20" id="0pz-c9-RQb"/>
                                                         <constraint firstItem="wj7-Mq-H3a" firstAttribute="centerY" secondItem="J9q-Ws-5AH" secondAttribute="centerY" id="7w3-Wf-nfm"/>
                                                         <constraint firstItem="F2z-v3-7ps" firstAttribute="centerY" secondItem="y9B-uw-kU8" secondAttribute="centerY" id="LTa-PK-eyI"/>
+                                                        <constraint firstItem="4Q9-WU-gw0" firstAttribute="height" secondItem="J9q-Ws-5AH" secondAttribute="height" id="RvY-Ip-Iwy"/>
                                                         <constraint firstItem="wj7-Mq-H3a" firstAttribute="leading" secondItem="J9q-Ws-5AH" secondAttribute="leading" id="Tku-1J-DEM"/>
+                                                        <constraint firstAttribute="trailing" secondItem="4Q9-WU-gw0" secondAttribute="trailing" id="Wfd-hm-U6N"/>
                                                         <constraint firstItem="wj7-Mq-H3a" firstAttribute="height" secondItem="J9q-Ws-5AH" secondAttribute="height" id="Wv2-BS-HHN"/>
                                                         <constraint firstAttribute="trailing" secondItem="F2z-v3-7ps" secondAttribute="trailing" constant="20" id="gtG-w3-DTZ"/>
+                                                        <constraint firstItem="4Q9-WU-gw0" firstAttribute="centerY" secondItem="J9q-Ws-5AH" secondAttribute="centerY" id="h6t-i2-co5"/>
                                                         <constraint firstItem="y9B-uw-kU8" firstAttribute="centerY" secondItem="J9q-Ws-5AH" secondAttribute="centerY" id="lff-VQ-m79"/>
                                                         <constraint firstItem="F2z-v3-7ps" firstAttribute="leading" secondItem="y9B-uw-kU8" secondAttribute="trailing" id="pDn-Vx-I5a"/>
                                                     </constraints>
@@ -74,6 +84,7 @@
                                                     <outlet property="itemExpiryLabel" destination="F2z-v3-7ps" id="Tsz-9k-snG"/>
                                                     <outlet property="itemNameLabel" destination="y9B-uw-kU8" id="4er-2r-873"/>
                                                     <outlet property="runningLowView" destination="wj7-Mq-H3a" id="bpa-xi-3N8"/>
+                                                    <outlet property="savedView" destination="4Q9-WU-gw0" id="DNe-8f-hpE"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -257,6 +268,7 @@
                         <outlet property="addItemOutlet" destination="Xi9-9R-OzX" id="aIW-hK-FFL"/>
                         <outlet property="dateTextField" destination="LBR-aD-Ud2" id="Clc-ba-N0T"/>
                         <outlet property="nameTextField" destination="k4t-O3-i3D" id="pyz-r6-P9o"/>
+                        <outlet property="saveItemOutlet" destination="nW7-7R-fnl" id="ywP-pT-O1W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PYg-zZ-X2v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

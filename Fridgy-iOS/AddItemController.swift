@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddItem {
-    func addItem(name: String, expiry: Date)
+    func addItem(name: String, expiry: Date, saved: Bool)
 }
 
 class AddItemController: UIViewController {
@@ -18,6 +18,8 @@ class AddItemController: UIViewController {
     
     @IBOutlet weak var dateTextField: UITextField!
 
+    @IBOutlet weak var saveItemOutlet: UISwitch!
+    
     @IBOutlet weak var addItemOutlet: UIButton!
     private var expiry = Date()
     
@@ -77,7 +79,8 @@ class AddItemController: UIViewController {
 
     @IBAction func addItemAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
-            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry)
+            
+            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, saved: saveItemOutlet.isOn)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -91,7 +94,7 @@ extension UITextField {
     @IBInspectable var maxLength: Int {
         get {
             guard let l = __maxLengths[self] else {
-                return 150 // (global default-limit. or just, Int.max)
+                return 150
             }
             return l
         }
