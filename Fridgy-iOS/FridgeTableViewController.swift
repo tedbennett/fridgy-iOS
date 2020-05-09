@@ -75,13 +75,30 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
         -> UISwipeActionsConfiguration? {
-            let runningLowAction = UIContextualAction(style: .normal, title: "Running Low") { (_, _, completionHandler) in
-                // delete the item here
-                completionHandler(true)
+            if !items[indexPath.row].runningLow {
+                let runningLowAction = UIContextualAction(style: .normal, title: "Running Low") { (_, _, completionHandler) in
+                    self.items[indexPath.row].runningLow = true
+                    if let cell = tableView.cellForRow(at: indexPath) as? FridgeItemTableCell{
+                        cell.runningLowView.isHidden = false
+                    }
+                    completionHandler(true)
+                }
+                runningLowAction.backgroundColor = .systemOrange
+                let configuration = UISwipeActionsConfiguration(actions: [runningLowAction])
+                return configuration
+            } else {
+                let undoAction = UIContextualAction(style: .normal, title: "Undo") { (_, _, completionHandler) in
+                    self.items[indexPath.row].runningLow = false
+                    if let cell = tableView.cellForRow(at: indexPath) as? FridgeItemTableCell{
+                        cell.runningLowView.isHidden = true
+                    }
+                    completionHandler(true)
+                }
+                undoAction.backgroundColor = .systemGreen
+                let configuration = UISwipeActionsConfiguration(actions: [undoAction])
+                return configuration
             }
-            runningLowAction.backgroundColor = .systemOrange
-            let configuration = UISwipeActionsConfiguration(actions: [runningLowAction])
-            return configuration
+            
     }
 }
 
@@ -110,6 +127,8 @@ class FridgeItem : Comparable {
             default: return "???"
         }
     }
+    
+    var runningLow = false
     
     convenience init(name: String, expiry: Date) {
         self.init()

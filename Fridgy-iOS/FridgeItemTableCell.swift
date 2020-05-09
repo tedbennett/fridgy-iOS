@@ -12,5 +12,6 @@ class FridgeItemTableCell: UITableViewCell {
 
     @IBOutlet weak var itemNameLabel: UILabel!
     @IBOutlet weak var itemExpiryLabel: UILabel!
+    @IBOutlet weak var runningLowView: UIView!
     
 }
