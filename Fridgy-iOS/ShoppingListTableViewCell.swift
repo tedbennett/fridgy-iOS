@@ -10,9 +10,12 @@ import UIKit
 
 class ShoppingListTableViewCell: UITableViewCell {
 
-    @IBAction func checkBoxAction(_ sender: UIButton) {
-    }
-    
     @IBOutlet weak var itemNameTextField: UITextField!
     
+    @IBOutlet weak var checkBoxOutlet: UIImageView!
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        checkBoxOutlet.image = UIImage(systemName: selected ? "checkmark.circle.fill" : "circle")
+    }
 }

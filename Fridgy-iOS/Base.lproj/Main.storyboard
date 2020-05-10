@@ -15,50 +15,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8qX-ui-eUh">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" springLoaded="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8qX-ui-eUh">
                                 <rect key="frame" x="0.0" y="44" width="414" height="626"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="shoppingListCell" id="kmk-QI-Ztq" customClass="ShoppingListTableViewCell" customModule="Fridgy_iOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="shoppingListCell" id="fF4-yz-2bd" customClass="ShoppingListTableViewCell" customModule="Fridgy_iOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kmk-QI-Ztq" id="7is-Sd-7rI">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fF4-yz-2bd" id="jRs-1Y-Mug">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2l-hc-vVb">
-                                                    <rect key="frame" x="20" y="9.3333333333333357" width="25" height="25"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="R2l-hc-vVb" secondAttribute="height" multiplier="1:1" id="i2S-EZ-ygd"/>
-                                                        <constraint firstAttribute="height" constant="25" id="pDw-15-U78"/>
-                                                    </constraints>
-                                                    <state key="normal" image="circle" catalog="system">
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="21"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="checkBoxAction:" destination="kmk-QI-Ztq" eventType="touchUpInside" id="JYx-lI-oig"/>
-                                                    </connections>
-                                                </button>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Item" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qvb-NL-nz1">
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Item" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FqY-Eb-b7A">
                                                     <rect key="frame" x="55" y="5" width="339" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="34" id="Dl7-Nj-q1M"/>
+                                                        <constraint firstAttribute="height" constant="34" id="eLU-rK-1OG"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="d0o-5h-W04">
+                                                    <rect key="frame" x="20" y="10.33333333333333" width="25" height="23.666666666666664"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="d0o-5h-W04" secondAttribute="height" multiplier="1:1" id="J6o-Iv-ldb"/>
+                                                        <constraint firstAttribute="height" constant="25" id="kO8-mE-lGv"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Qvb-NL-nz1" firstAttribute="centerY" secondItem="7is-Sd-7rI" secondAttribute="centerY" id="AbT-B1-n08"/>
-                                                <constraint firstItem="R2l-hc-vVb" firstAttribute="leading" secondItem="7is-Sd-7rI" secondAttribute="leading" constant="20" id="GEv-Qb-Yvc"/>
-                                                <constraint firstAttribute="trailing" secondItem="Qvb-NL-nz1" secondAttribute="trailing" constant="20" id="KJM-eA-cgK"/>
-                                                <constraint firstItem="Qvb-NL-nz1" firstAttribute="leading" secondItem="R2l-hc-vVb" secondAttribute="trailing" constant="10" id="RVG-Vs-Bab"/>
-                                                <constraint firstItem="R2l-hc-vVb" firstAttribute="centerY" secondItem="7is-Sd-7rI" secondAttribute="centerY" id="kYa-TR-re8"/>
+                                                <constraint firstItem="d0o-5h-W04" firstAttribute="centerY" secondItem="jRs-1Y-Mug" secondAttribute="centerY" id="GP7-A4-rQ6"/>
+                                                <constraint firstItem="FqY-Eb-b7A" firstAttribute="centerY" secondItem="jRs-1Y-Mug" secondAttribute="centerY" id="KAJ-su-lpo"/>
+                                                <constraint firstItem="d0o-5h-W04" firstAttribute="leading" secondItem="jRs-1Y-Mug" secondAttribute="leading" constant="20" id="KdI-ya-5BV"/>
+                                                <constraint firstAttribute="trailing" secondItem="FqY-Eb-b7A" secondAttribute="trailing" constant="20" id="Rm4-yp-2fS"/>
+                                                <constraint firstItem="FqY-Eb-b7A" firstAttribute="leading" secondItem="d0o-5h-W04" secondAttribute="trailing" constant="10" id="wWO-ZY-jQW"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="itemNameTextField" destination="Qvb-NL-nz1" id="cyM-o8-2LA"/>
+                                            <outlet property="checkBoxOutlet" destination="d0o-5h-W04" id="jK1-7W-SWa"/>
+                                            <outlet property="itemNameTextField" destination="FqY-Eb-b7A" id="pMk-rH-2xb"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -95,7 +90,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YT7-UV-8El" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1044.9275362318842" y="-568.20652173913049"/>
+            <point key="canvasLocation" x="1857.9710144927537" y="129.61956521739131"/>
         </scene>
         <!--Fridgy-->
         <scene sceneID="tne-QT-ifu">
@@ -388,7 +383,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PYg-zZ-X2v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1973.913043478261" y="129.61956521739131"/>
+            <point key="canvasLocation" x="1858" y="884"/>
         </scene>
         <!--Edit Item Controller-->
         <scene sceneID="KuR-9R-jaV">
@@ -527,7 +522,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LmE-4c-KnL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1974" y="880"/>
+            <point key="canvasLocation" x="1045" y="884"/>
         </scene>
     </scenes>
     <resources>

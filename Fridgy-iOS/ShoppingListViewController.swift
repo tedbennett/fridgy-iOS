@@ -22,6 +22,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     
     private func addSampleRows() {
         shoppingList.append("Cheese")
+        shoppingList.append("Milk")
     }
     
     private func setupView() {
@@ -41,6 +42,7 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
             fatalError("Unexpected Index Path")
         }
         cell.itemNameTextField.text =  shoppingList[indexPath.row]
+        cell.itemNameTextField.isUserInteractionEnabled = false
         
         return cell
     }
