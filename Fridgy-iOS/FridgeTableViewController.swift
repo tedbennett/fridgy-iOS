@@ -15,6 +15,26 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var addItemOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBAction func optionsAction(_ sender: UIBarButtonItem) {
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let listAction = UIAlertAction(title: "Shopping List", style: .default) { (action) in
+            self.performSegue(withIdentifier: "Shopping List Segue", sender: nil)
+        }
+        
+        let selectAction = UIAlertAction(title: "Select Mode", style: .default) { (action) in
+            print("didPress block")
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            print("didPress cancel")
+        }
+        actionSheet.addAction(listAction)
+        actionSheet.addAction(selectAction)
+        actionSheet.addAction(cancelAction)
+        self.present(actionSheet, animated: true, completion: nil)
+    }
     let persistentContainer = NSPersistentContainer.init(name: "Model")
     
     lazy var fetchedResultsController: NSFetchedResultsController<Item> = {
@@ -226,6 +246,8 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 vc.saved = item.saved
                 vc.uniqueId = item.uniqueId
             }
+        } else if segue.identifier == "Shopping List Segue" {
+            
         }
     }
 }
