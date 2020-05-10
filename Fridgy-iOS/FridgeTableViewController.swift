@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem {
+class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem, EditItem {
     
     @IBOutlet weak var emptyTableLabel: UILabel!
     @IBOutlet weak var addItemOutlet: UIButton!
@@ -83,8 +83,33 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         item.expiry = expiry
         item.saved = saved
         item.runningLow = false
+        item.uniqueId = UUID().uuidString
         
         try? context.save()
+    }
+    
+    func editItem(name: String, expiry: Date, saved: Bool, uniqueId: String) {
+        guard let context = container?.viewContext else { return }
+        
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "uniqueId = %@", uniqueId)
+        var item : Item?
+        let matches = try? context.fetch(request)
+        assert(matches?.count == 1, "editItem - Database error")
+        if matches?.count == 1 {
+            item = matches?[0]
+        }
+
+        
+        if item != nil {
+            item!.name = name
+            item!.expiry = expiry
+            item!.saved = saved
+            
+            item!.uniqueId = UUID().uuidString
+            try? item!.managedObjectContext?.save()
+        }
     }
 
     
@@ -172,12 +197,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, completionHandler) in
             
-            let editItemController = AddItemController()
-            
-            editItemController.modalTransitionStyle = .crossDissolve
-            editItemController.modalPresentationStyle = .overCurrentContext
-            editItemController.nameTextField.text = item.name
-            self.present(editItemController, animated: true, completion: nil)
+            self.performSegue(withIdentifier: "Edit Item Segue", sender: item)
             
             completionHandler(true)
         }
@@ -194,6 +214,17 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         if segue.identifier == "Add Item Segue" {
             if let vc = segue.destination as? AddItemController {
                 vc.delegate = self
+            }
+        } else if segue.identifier == "Edit Item Segue" {
+            if let vc = segue.destination as? EditItemController, let item = sender as? Item {
+                
+                vc.editDelegate = self
+                vc.name = item.name
+                if item.expiry != nil {
+                    vc.expiry = item.expiry!
+                }
+                vc.saved = item.saved
+                vc.uniqueId = item.uniqueId
             }
         }
     }

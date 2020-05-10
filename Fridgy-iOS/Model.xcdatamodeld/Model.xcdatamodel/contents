@@ -6,8 +6,9 @@
         <attribute name="runningLow" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="saved" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="shelfLife" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="uniqueId" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>

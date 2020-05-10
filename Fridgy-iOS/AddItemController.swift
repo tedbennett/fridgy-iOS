@@ -12,16 +12,25 @@ protocol AddItem {
     func addItem(name: String, expiry: Date, saved: Bool)
 }
 
-class AddItemController: UIViewController {
+protocol EditItem {
+    func editItem(name: String, expiry: Date, saved: Bool, uniqueId: String) 
+}
 
+class AddItemController: UIViewController {
+    
+    var expiry = Date()
+    
     @IBOutlet weak var nameTextField : UITextField!
     
     @IBOutlet weak var dateTextField: UITextField!
 
     @IBOutlet weak var saveItemOutlet: UISwitch!
     
-    @IBOutlet weak var addItemOutlet: UIButton!
-    private var expiry = Date()
+    @IBAction func cancelAction(_ sender: UIButton) {
+        
+        dismiss(animated: true, completion: nil)
+    }
+    @IBOutlet weak var doneButtonOutlet: UIButton!
     
     private let datePicker = UIDatePicker()
     
@@ -29,7 +38,7 @@ class AddItemController: UIViewController {
         super.viewDidLoad()
         createDatePickerView()
         addTextFieldToolbar()
-        addItemOutlet.layer.cornerRadius = 8
+        doneButtonOutlet.layer.cornerRadius = 8
     }
     
     func createDatePickerView() {
@@ -62,13 +71,17 @@ class AddItemController: UIViewController {
         nameTextField.inputAccessoryView = toolBar
     }
     
-    @objc func acceptDate() {
-        // format date for text string
+    fileprivate func formattedDate(_ date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         
-        dateTextField.text = formatter.string(from: datePicker.date)
+       return formatter.string(from: date)
+    }
+    
+    @objc func acceptDate() {
+        // format date for text string
+        dateTextField.text = formattedDate(datePicker.date)
         expiry = datePicker.date
         self.view.endEditing(true)
     }
@@ -77,7 +90,7 @@ class AddItemController: UIViewController {
         self.view.endEditing(true)
     }
 
-    @IBAction func addItemAction(_ sender: UIButton) {
+    @IBAction func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
             
             delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, saved: saveItemOutlet.isOn)
@@ -106,5 +119,30 @@ extension UITextField {
     @objc func fix(textField: UITextField) {
         let t = textField.text
         textField.text = String((t?.prefix(maxLength))!)
+    }
+}
+
+class EditItemController : AddItemController {
+    
+    
+    var name : String?
+    var saved : Bool?
+    var uniqueId : String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.nameTextField.text = name
+        self.dateTextField.text = formattedDate(expiry)
+        self.saveItemOutlet.isOn = saved ?? false
+    }
+    
+    var editDelegate: EditItem?
+    
+    @IBAction override func doneButtonAction(_ sender: UIButton) {
+        if nameTextField.text != "", dateTextField.text != "" {
+            
+            editDelegate?.editItem(name: nameTextField.text ?? "???", expiry: expiry, saved: saveItemOutlet.isOn, uniqueId: uniqueId ?? "")
+            dismiss(animated: true, completion: nil)
+        }
     }
 }
