@@ -27,6 +27,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2g-4a-JO0">
+                                                    <rect key="frame" x="55" y="5" width="339" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="34" id="1rT-kH-rhQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Item" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FqY-Eb-b7A">
                                                     <rect key="frame" x="55" y="5" width="339" height="34"/>
                                                     <constraints>
@@ -47,12 +56,16 @@
                                                 <constraint firstItem="d0o-5h-W04" firstAttribute="centerY" secondItem="jRs-1Y-Mug" secondAttribute="centerY" id="GP7-A4-rQ6"/>
                                                 <constraint firstItem="FqY-Eb-b7A" firstAttribute="centerY" secondItem="jRs-1Y-Mug" secondAttribute="centerY" id="KAJ-su-lpo"/>
                                                 <constraint firstItem="d0o-5h-W04" firstAttribute="leading" secondItem="jRs-1Y-Mug" secondAttribute="leading" constant="20" id="KdI-ya-5BV"/>
+                                                <constraint firstItem="Y2g-4a-JO0" firstAttribute="centerY" secondItem="jRs-1Y-Mug" secondAttribute="centerY" id="PWb-gZ-Bk6"/>
                                                 <constraint firstAttribute="trailing" secondItem="FqY-Eb-b7A" secondAttribute="trailing" constant="20" id="Rm4-yp-2fS"/>
+                                                <constraint firstItem="Y2g-4a-JO0" firstAttribute="leading" secondItem="d0o-5h-W04" secondAttribute="trailing" constant="10" id="vZ5-Vj-tSo"/>
+                                                <constraint firstAttribute="trailing" secondItem="Y2g-4a-JO0" secondAttribute="trailing" constant="20" id="wEi-cT-3m5"/>
                                                 <constraint firstItem="FqY-Eb-b7A" firstAttribute="leading" secondItem="d0o-5h-W04" secondAttribute="trailing" constant="10" id="wWO-ZY-jQW"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="checkBoxOutlet" destination="d0o-5h-W04" id="jK1-7W-SWa"/>
+                                            <outlet property="itemNameLabel" destination="Y2g-4a-JO0" id="vVl-np-HKK"/>
                                             <outlet property="itemNameTextField" destination="FqY-Eb-b7A" id="pMk-rH-2xb"/>
                                         </connections>
                                     </tableViewCell>
@@ -69,6 +82,9 @@
                                     <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="19" scale="medium" weight="bold"/>
                                 </state>
+                                <connections>
+                                    <action selector="addItemAction:" destination="rQj-Us-mvw" eventType="touchUpInside" id="77o-6Z-GSO"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -160,10 +176,10 @@
                                                 </tableViewCellContentView>
                                                 <gestureRecognizers/>
                                                 <connections>
+                                                    <outlet property="favouriteView" destination="4Q9-WU-gw0" id="DNe-8f-hpE"/>
                                                     <outlet property="itemExpiryLabel" destination="F2z-v3-7ps" id="Tsz-9k-snG"/>
                                                     <outlet property="itemNameLabel" destination="y9B-uw-kU8" id="4er-2r-873"/>
                                                     <outlet property="runningLowView" destination="wj7-Mq-H3a" id="bpa-xi-3N8"/>
-                                                    <outlet property="savedView" destination="4Q9-WU-gw0" id="DNe-8f-hpE"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -377,8 +393,8 @@
                     <connections>
                         <outlet property="dateTextField" destination="LBR-aD-Ud2" id="Clc-ba-N0T"/>
                         <outlet property="doneButtonOutlet" destination="Xi9-9R-OzX" id="aIW-hK-FFL"/>
+                        <outlet property="favouriteItemOutlet" destination="nW7-7R-fnl" id="ywP-pT-O1W"/>
                         <outlet property="nameTextField" destination="k4t-O3-i3D" id="pyz-r6-P9o"/>
-                        <outlet property="saveItemOutlet" destination="nW7-7R-fnl" id="ywP-pT-O1W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PYg-zZ-X2v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -516,8 +532,8 @@
                     <connections>
                         <outlet property="dateTextField" destination="gvM-dA-bAE" id="2tC-zr-kbU"/>
                         <outlet property="doneButtonOutlet" destination="DvV-nO-2hi" id="hZD-Ns-YDL"/>
+                        <outlet property="favouriteItemOutlet" destination="0E5-sC-yVg" id="wU7-wG-d9P"/>
                         <outlet property="nameTextField" destination="70j-L4-U6y" id="ioc-qu-YY7"/>
-                        <outlet property="saveItemOutlet" destination="0E5-sC-yVg" id="ln1-Jm-4Ej"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LmE-4c-KnL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

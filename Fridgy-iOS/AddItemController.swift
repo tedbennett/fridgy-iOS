@@ -9,11 +9,11 @@
 import UIKit
 
 protocol AddItem {
-    func addItem(name: String, expiry: Date, saved: Bool)
+    func addItem(name: String, expiry: Date, favourite: Bool)
 }
 
 protocol EditItem {
-    func editItem(name: String, expiry: Date, saved: Bool, uniqueId: String) 
+    func editItem(name: String, expiry: Date, favourite: Bool, uniqueId: String)
 }
 
 class AddItemController: UIViewController {
@@ -24,7 +24,7 @@ class AddItemController: UIViewController {
     
     @IBOutlet weak var dateTextField: UITextField!
 
-    @IBOutlet weak var saveItemOutlet: UISwitch!
+    @IBOutlet weak var favouriteItemOutlet: UISwitch!
     
     @IBAction func cancelAction(_ sender: UIButton) {
         
@@ -93,7 +93,7 @@ class AddItemController: UIViewController {
     @IBAction func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
             
-            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, saved: saveItemOutlet.isOn)
+            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -126,14 +126,14 @@ class EditItemController : AddItemController {
     
     
     var name : String?
-    var saved : Bool?
+    var favourite : Bool?
     var uniqueId : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.nameTextField.text = name
         self.dateTextField.text = formattedDate(expiry)
-        self.saveItemOutlet.isOn = saved ?? false
+        self.favouriteItemOutlet.isOn = favourite ?? false
     }
     
     var editDelegate: EditItem?
@@ -141,7 +141,7 @@ class EditItemController : AddItemController {
     @IBAction override func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
             
-            editDelegate?.editItem(name: nameTextField.text ?? "???", expiry: expiry, saved: saveItemOutlet.isOn, uniqueId: uniqueId ?? "")
+            editDelegate?.editItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn, uniqueId: uniqueId ?? "")
             dismiss(animated: true, completion: nil)
         }
     }

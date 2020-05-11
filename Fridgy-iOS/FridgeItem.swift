@@ -1,5 +1,5 @@
 //
-//  Item.swift
+//  FridgeItem.swift
 //  Fridgy-iOS
 //
 //  Created by Ted Bennett on 09/05/2020.
@@ -9,5 +9,5 @@
 import UIKit
 import CoreData
 
-class Item: NSManagedObject {
+class FridgeItem: NSManagedObject {
 }

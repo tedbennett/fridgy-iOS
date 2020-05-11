@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F58BBCA2465615100E5F8A1 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */; };
-		9F663A602466C08C00817361 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F663A5F2466C08C00817361 /* Item.swift */; };
+		9F663A602466C08C00817361 /* FridgeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F663A5F2466C08C00817361 /* FridgeItem.swift */; };
 		9F663A622467EECD00817361 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F663A612467EECD00817361 /* ShoppingListViewController.swift */; };
 		9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357ED2456DB4E0026B32D /* AppDelegate.swift */; };
 		9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */; };
@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
-		9F663A5F2466C08C00817361 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		9F663A5F2466C08C00817361 /* FridgeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeItem.swift; sourceTree = "<group>"; };
 		9F663A612467EECD00817361 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
 		9F9357EA2456DB4E0026B32D /* Fridgy-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fridgy-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9357ED2456DB4E0026B32D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 			children = (
 				9FFAE0E4246802FD0004D6CB /* ShoppingListTableViewCell.swift */,
 				9F663A612467EECD00817361 /* ShoppingListViewController.swift */,
-				9F663A5F2466C08C00817361 /* Item.swift */,
+				9F663A5F2466C08C00817361 /* FridgeItem.swift */,
 				9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */,
 				9FE4C4792465C857007C30F7 /* Unused */,
 				9F9357ED2456DB4E0026B32D /* AppDelegate.swift */,
@@ -176,7 +176,7 @@
 			files = (
 				9FC1F4D4245A0B4C0097DFF4 /* AddItemController.swift in Sources */,
 				9FFAE0E5246802FD0004D6CB /* ShoppingListTableViewCell.swift in Sources */,
-				9F663A602466C08C00817361 /* Item.swift in Sources */,
+				9F663A602466C08C00817361 /* FridgeItem.swift in Sources */,
 				9F663A622467EECD00817361 /* ShoppingListViewController.swift in Sources */,
 				9FE84D5B246581A5000F8055 /* AddDateTableCell.swift in Sources */,
 				9FE720F2245B66720045A4A6 /* FridgeTableViewController.swift in Sources */,

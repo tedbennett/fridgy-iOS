@@ -35,11 +35,12 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         actionSheet.addAction(cancelAction)
         self.present(actionSheet, animated: true, completion: nil)
     }
+    
     let persistentContainer = NSPersistentContainer.init(name: "Model")
     
-    lazy var fetchedResultsController: NSFetchedResultsController<Item> = {
+    lazy var fetchedResultsController: NSFetchedResultsController<FridgeItem> = {
         
-        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        let fetchRequest: NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "expiry", ascending: true)]
         
@@ -94,27 +95,28 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
 
     var container : NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
-    func addItem(name: String, expiry: Date, saved: Bool) {
+    func addItem(name: String, expiry: Date, favourite: Bool) {
         guard let context = container?.viewContext else { return }
         
-        let item = Item(context: context)
+        let item = FridgeItem(context: context)
         
         item.name = name
         item.expiry = expiry
-        item.saved = saved
+        item.favourite = favourite
         item.runningLow = false
+        item.shoppingListOnly = false
         item.uniqueId = UUID().uuidString
         
         try? context.save()
     }
     
-    func editItem(name: String, expiry: Date, saved: Bool, uniqueId: String) {
+    func editItem(name: String, expiry: Date, favourite: Bool, uniqueId: String) {
         guard let context = container?.viewContext else { return }
         
-        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
         
         request.predicate = NSPredicate(format: "uniqueId = %@", uniqueId)
-        var item : Item?
+        var item : FridgeItem?
         let matches = try? context.fetch(request)
         assert(matches?.count == 1, "editItem - Database error")
         if matches?.count == 1 {
@@ -125,7 +127,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         if item != nil {
             item!.name = name
             item!.expiry = expiry
-            item!.saved = saved
+            item!.favourite = favourite
             
             item!.uniqueId = UUID().uuidString
             try? item!.managedObjectContext?.save()
@@ -158,13 +160,10 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         let item = fetchedResultsController.object(at: indexPath)
         
         // Configure Cell
-        
-        let name = item.name ?? "" + (item.saved ? "✓" : "")
-        cell.itemNameLabel.text = name
         cell.itemExpiryLabel.text = getExpiryString(for: item.expiry)
         cell.itemNameLabel.text = item.name
         cell.runningLowView.isHidden = !item.runningLow
-        cell.savedView.isHidden = !item.saved
+        cell.favouriteView.isHidden = !item.favourite
     }
     
     private func getExpiryString(for expiry: Date?) -> String {
@@ -236,14 +235,14 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 vc.delegate = self
             }
         } else if segue.identifier == "Edit Item Segue" {
-            if let vc = segue.destination as? EditItemController, let item = sender as? Item {
+            if let vc = segue.destination as? EditItemController, let item = sender as? FridgeItem {
                 
                 vc.editDelegate = self
                 vc.name = item.name
                 if item.expiry != nil {
                     vc.expiry = item.expiry!
                 }
-                vc.saved = item.saved
+                vc.favourite = item.favourite
                 vc.uniqueId = item.uniqueId
             }
         } else if segue.identifier == "Shopping List Segue" {

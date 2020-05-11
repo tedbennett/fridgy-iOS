@@ -12,6 +12,8 @@ class ShoppingListTableViewCell: UITableViewCell {
 
     @IBOutlet weak var itemNameTextField: UITextField!
     
+    @IBOutlet weak var itemNameLabel: UILabel!
+    
     @IBOutlet weak var checkBoxOutlet: UIImageView!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
