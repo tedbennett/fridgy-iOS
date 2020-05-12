@@ -11,16 +11,10 @@ import CoreData
 
 class ShoppingListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    private var shoppingList = [String]()
     @IBOutlet weak var tableView: UITableView!
     
     @IBAction func addItemAction(_ sender: UIButton) {
-        shoppingList.append("")
-        tableView.reloadData()
-        
-        let cell = tableView.cellForRow(at: IndexPath(row: shoppingList.count - 1, section: 0) as IndexPath) as! ShoppingListTableViewCell
-        cell.itemNameTextField.isUserInteractionEnabled = true
-        cell.itemNameTextField.becomeFirstResponder()
+
     }
 
     
@@ -29,21 +23,14 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         setupView()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        navigationController!.navigationBar.prefersLargeTitles = true
+        //navigationController!.navigationBar.prefersLargeTitles = true
         
         loadFromDatabase()
-    }
-    
-    
-    private func addSampleRows() {
-        shoppingList.append("Cheese")
-        shoppingList.append("Milk")
     }
     
     private func setupView() {
         
     }
-    
     
     // MARK tables
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -61,7 +48,6 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         configureCell(cell, at: indexPath)
-        //cell.itemNameTextField.text =  shoppingList[indexPath.row]
         
         return cell
     }
@@ -71,10 +57,13 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     lazy var fetchedResultsController: NSFetchedResultsController<FridgeItem> = {
         
         let fetchRequest: NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
-        let predicate1 = NSPredicate(format: "shoppingListOnly == true")
-        let predicate2 = NSPredicate(format: "favourite == true")
-        fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [predicate1, predicate2])
-        //fetchRequest.predicate = NSPredicate(format: "favourite == true")
+
+        let favouriteAndDeleted = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSPredicate(format: "favourite == true"), NSPredicate(format: "removed == true")])
+        let favouriteAndLow = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "favourite == true"), NSPredicate(format: "runningLow == true")])
+
+        fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [favouriteAndDeleted, favouriteAndLow, NSPredicate(format: "shoppingListOnly == true")])
+        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "expiry", ascending: true)]
 
         
@@ -111,7 +100,6 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         }
         
         tableView.isHidden = !hasItems
-        //emptyTableLabel.isHidden = hasItems
     }
     
     private func configureCell(_ cell: ShoppingListTableViewCell, at indexPath: IndexPath) {
@@ -123,7 +111,6 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
         cell.itemNameTextField.isHidden = true
         cell.itemNameTextField.isUserInteractionEnabled = false
     }
-    
 
 }
 

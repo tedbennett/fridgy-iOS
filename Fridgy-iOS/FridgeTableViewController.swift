@@ -42,6 +42,9 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         let fetchRequest: NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
         
+        let predicateIsNotEmpty = NSPredicate(format: "removed == false")
+        let predicateNotShoppingList = NSPredicate(format: "shoppingListOnly == false")
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateIsNotEmpty, predicateNotShoppingList])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "expiry", ascending: true)]
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -105,6 +108,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         item.favourite = favourite
         item.runningLow = false
         item.shoppingListOnly = false
+        item.removed = false
         item.uniqueId = UUID().uuidString
         
         try? context.save()
@@ -193,7 +197,11 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
 
                 let item = self.fetchedResultsController.object(at: indexPath)
-                item.managedObjectContext?.delete(item)
+                if item.favourite {
+                    item.removed = true
+                } else {
+                    item.managedObjectContext?.delete(item)
+                }
                 try? item.managedObjectContext?.save()
                 completionHandler(true)
             }

@@ -99,7 +99,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0U0-LJ-QfG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Shopping List" id="pHo-t8-ChQ"/>
+                    <navigationItem key="navigationItem" title="Shopping List" largeTitleDisplayMode="always" id="pHo-t8-ChQ"/>
                     <connections>
                         <outlet property="tableView" destination="8qX-ui-eUh" id="m5y-Vh-rPt"/>
                     </connections>
