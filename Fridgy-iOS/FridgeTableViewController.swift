@@ -99,6 +99,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         item.name = name
         item.expiry = expiry
+        item.shelfLife = expiry.timeIntervalSince(Date())
         item.favourite = favourite
         item.runningLow = false
         item.shoppingListOnly = false

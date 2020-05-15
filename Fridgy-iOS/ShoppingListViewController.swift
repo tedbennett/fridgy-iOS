@@ -53,6 +53,7 @@ class ShoppingListViewController: UITableViewController {
                     } else {
                         item.runningLow = false
                         item.removed = false
+                        item.expiry = Date().addingTimeInterval(item.shelfLife)
                     }
                     try? item.managedObjectContext!.save()
                 }
