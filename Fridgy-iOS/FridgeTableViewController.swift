@@ -22,14 +22,9 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         let listAction = UIAlertAction(title: "Shopping List", style: .default) { (action) in
             self.performSegue(withIdentifier: "Shopping List Segue", sender: nil)
         }
+        let selectAction = UIAlertAction(title: "Select Mode", style: .default)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
-        let selectAction = UIAlertAction(title: "Select Mode", style: .default) { (action) in
-            print("didPress block")
-        }
-
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            print("didPress cancel")
-        }
         actionSheet.addAction(listAction)
         actionSheet.addAction(selectAction)
         actionSheet.addAction(cancelAction)
@@ -91,7 +86,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         if let items = fetchedResultsController.fetchedObjects {
             hasItems = items.count > 0
         }
-    
         tableView.isHidden = !hasItems
         emptyTableLabel.isHidden = hasItems
     }
@@ -126,8 +120,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         if matches?.count == 1 {
             item = matches?[0]
         }
-
-        
         if item != nil {
             item!.name = name
             item!.expiry = expiry
@@ -155,7 +147,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         configureCell(cell, at: indexPath)
-        
         return cell
     }
     
@@ -163,7 +154,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     private func configureCell(_ cell: FridgeItemTableCell, at indexPath: IndexPath) {
         let item = fetchedResultsController.object(at: indexPath)
         
-        // Configure Cell
         cell.itemExpiryLabel.text = getExpiryString(for: item.expiry)
         cell.itemNameLabel.text = item.name
         cell.runningLowView.isHidden = !item.runningLow
@@ -207,8 +197,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                         item.managedObjectContext?.delete(item)
                         try? item.managedObjectContext?.save()
                     }
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-                    }
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
                     actionSheet.addAction(listAction)
                     actionSheet.addAction(cancelAction)
                     self.present(actionSheet, animated: true, completion: nil)
@@ -236,14 +225,12 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, completionHandler) in
             
             self.performSegue(withIdentifier: "Edit Item Segue", sender: item)
-            
             completionHandler(true)
         }
         runningLowAction.backgroundColor = item.runningLow ? .systemGreen : .systemOrange
         editAction.backgroundColor = .systemGray
         let configuration = UISwipeActionsConfiguration(actions: [runningLowAction, editAction])
-    
-        
+
         return configuration
     }
     
@@ -277,7 +264,6 @@ extension FridgeTableViewController : NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.endUpdates()
-        
         updateView()
     }
     
@@ -295,9 +281,9 @@ extension FridgeTableViewController : NSFetchedResultsControllerDelegate {
                 if let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) {
                     configureCell(cell as! FridgeItemTableCell, at: indexPath)
                 }
-                break;
+                break
             default:
-                print("...")
+                break
         }
     }
     

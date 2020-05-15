@@ -85,10 +85,8 @@ class ShoppingListViewController: UITableViewController {
         let favouriteAndLow = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "favourite == true"), NSPredicate(format: "runningLow == true")])
 
         fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [favouriteAndDeleted, favouriteAndLow, NSPredicate(format: "shoppingListOnly == true")])
-        
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "expiry", ascending: true)]
 
-        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
