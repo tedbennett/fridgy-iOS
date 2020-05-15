@@ -11,8 +11,60 @@ import CoreData
 
 class ShoppingListViewController: UITableViewController {
     
-    @IBAction func addItemAction(_ sender: UIBarButtonItem) {
+    private var selectedRows = [IndexPath]()
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !selectedRows.contains(indexPath) {
+            selectedRows.append(indexPath)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if selectedRows.contains(indexPath) {
+            selectedRows.removeAll(where: {value in value == indexPath} )
+        }
+    }
+    
+    @IBAction func optionsAction(_ sender: UIBarButtonItem) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
+        actionSheet.addAction(UIAlertAction(title: "Add Item", style: .default) { [weak self] (action) in
+            self?.addItemPopup()
+        })
+        
+        actionSheet.addAction(UIAlertAction(title: "Restock Fridge", style: .default, handler: { [weak self] (_) in
+            self?.restockFridge()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    private func restockFridge() {
+        let alert = UIAlertController(title: "Restock Fridge?", message: "The selected favourited items in this list will be restocked in your fridge using their saved shelf lives", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (_) in
+            if let rows = self?.selectedRows {
+                for indexPath in rows {
+                    let item = self!.fetchedResultsController.object(at: indexPath)
+                    
+                    if item.shoppingListOnly {
+                        item.managedObjectContext!.delete(item)
+                    } else {
+                        item.runningLow = false
+                        item.removed = false
+                    }
+                    try? item.managedObjectContext!.save()
+                }
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func addItemPopup() {
         let alert = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
         
         alert.addTextField { (textField) in
@@ -37,7 +89,7 @@ class ShoppingListViewController: UITableViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
+        
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -51,8 +103,6 @@ class ShoppingListViewController: UITableViewController {
     }
     
     private var container : NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
-    
-    lazy private var noItemsView = UIView()
     
     // MARK tables
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -182,6 +232,4 @@ extension ShoppingListViewController : NSFetchedResultsControllerDelegate {
                 break
         }
     }
-    
-    
 }

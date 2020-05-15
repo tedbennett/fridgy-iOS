@@ -125,7 +125,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Fridgy" largeTitleDisplayMode="always" id="Isy-zY-96d">
-                        <barButtonItem key="rightBarButtonItem" image="ellipsis.circle" catalog="system" id="NXX-Jf-YCs">
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis" catalog="system" id="NXX-Jf-YCs">
                             <connections>
                                 <action selector="optionsAction:" destination="BYZ-38-t0r" id="Uq1-BT-WyZ"/>
                             </connections>
@@ -147,7 +147,7 @@
         <scene sceneID="QXw-E9-4sY">
             <objects>
                 <tableViewController id="biK-48-t94" customClass="ShoppingListViewController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Tr5-dC-SVW">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Tr5-dC-SVW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -196,9 +196,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Shopping List" id="0yu-Ty-oIV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="w0q-Rj-Pwc">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="w0q-Rj-Pwc">
                             <connections>
-                                <action selector="addItemAction:" destination="biK-48-t94" id="6mR-2D-AT7"/>
+                                <action selector="optionsAction:" destination="biK-48-t94" id="86j-nT-GzZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -506,6 +506,6 @@
     </scenes>
     <resources>
         <image name="circle" catalog="system" width="128" height="121"/>
-        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
     </resources>
 </document>
