@@ -199,10 +199,21 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 let item = self.fetchedResultsController.object(at: indexPath)
                 if item.favourite {
                     item.removed = true
+                    try? item.managedObjectContext?.save()
                 } else {
-                    item.managedObjectContext?.delete(item)
+                    let actionSheet = UIAlertController(title: "Delete Item?", message: "This action cannot be reversed. \n Only your favourites are saved in your shopping list", preferredStyle: .alert)
+                    
+                    let listAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                        item.managedObjectContext?.delete(item)
+                        try? item.managedObjectContext?.save()
+                    }
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                    }
+                    actionSheet.addAction(listAction)
+                    actionSheet.addAction(cancelAction)
+                    self.present(actionSheet, animated: true, completion: nil)
                 }
-                try? item.managedObjectContext?.save()
+                
                 completionHandler(true)
             }
 

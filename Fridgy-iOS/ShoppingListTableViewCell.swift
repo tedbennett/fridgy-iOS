@@ -9,8 +9,6 @@
 import UIKit
 
 class ShoppingListTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var itemNameTextField: UITextField!
     
     @IBOutlet weak var itemNameLabel: UILabel!
     

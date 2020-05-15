@@ -9,40 +9,62 @@
 import UIKit
 import CoreData
 
-class ShoppingListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    @IBOutlet weak var tableView: UITableView!
+class ShoppingListViewController: UITableViewController {
     
-    @IBAction func addItemAction(_ sender: UIButton) {
+    @IBAction func addItemAction(_ sender: UIBarButtonItem) {
+        
+        let alert = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter Name"
+        }
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert, weak self] (_) in
+            let textField = alert?.textFields![0].text
+            
+            guard let context = self!.container?.viewContext else { return }
+            
+            let item = FridgeItem(context: context)
+            
+            item.name = textField!
+            item.favourite = false
+            item.runningLow = false
+            item.shoppingListOnly = true
+            item.removed = false
+            item.uniqueId = UUID().uuidString
+            
+            try? context.save()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
+        self.present(alert, animated: true, completion: nil)
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        //navigationController!.navigationBar.prefersLargeTitles = true
+
+        tableView.delegate = self
+        tableView.dataSource = self
         
         loadFromDatabase()
     }
     
-    private func setupView() {
-        
-    }
+    private var container : NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+    
+    lazy private var noItemsView = UIView()
     
     // MARK tables
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let items = fetchedResultsController.fetchedObjects else { return 0 }
         return items.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "shoppingListCell", for: indexPath) as? ShoppingListTableViewCell else {
             fatalError("Unexpected Index Path")
         }
@@ -76,40 +98,62 @@ class ShoppingListViewController: UIViewController, UITableViewDelegate, UITable
     }()
     
     func loadFromDatabase(){
-        persistentContainer.loadPersistentStores { (persistentStoreDescription, error) in
+        persistentContainer.loadPersistentStores { [weak self] (persistentStoreDescription, error) in
             if let error = error {
                 print("Unable to Load Persistent Store")
                 print("\(error), \(error.localizedDescription)")
             } else {
                 do {
-                    try self.fetchedResultsController.performFetch()
+                    try self?.fetchedResultsController.performFetch()
                 } catch {
                     let fetchError = error as NSError
                     print("Unable to Perform Fetch Request")
                     print("\(fetchError), \(fetchError.localizedDescription)")
                 }
-                self.updateView()
+                self?.updateView()
             }
         }
     }
     
     private func updateView() {
-        var hasItems = false
         if let items = fetchedResultsController.fetchedObjects {
-            hasItems = items.count > 0
+            tableView.isHidden = !(items.count > 0)
         }
-        
-        tableView.isHidden = !hasItems
     }
     
     private func configureCell(_ cell: ShoppingListTableViewCell, at indexPath: IndexPath) {
         let item = fetchedResultsController.object(at: indexPath)
-        
-        // Configure Cell
-        cell.itemNameLabel.isHidden = false
         cell.itemNameLabel.text = item.name
-        cell.itemNameTextField.isHidden = true
-        cell.itemNameTextField.isUserInteractionEnabled = false
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+        -> UISwipeActionsConfiguration? {
+            
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completionHandler) in
+            
+            let item = self!.fetchedResultsController.object(at: indexPath)
+            if item.shoppingListOnly {
+                item.managedObjectContext?.delete(item)
+            } else {
+                let actionSheet = UIAlertController(title: "Delete Item?", message: "This item will be deleted from your fridge too.", preferredStyle: .alert)
+                
+                let listAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                    item.managedObjectContext!.delete(item)
+                    try! item.managedObjectContext!.save()
+                }
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                actionSheet.addAction(listAction)
+                actionSheet.addAction(cancelAction)
+                self!.present(actionSheet, animated: true, completion: nil)
+            }
+            completionHandler(true)
+        }
+        
+        deleteAction.image = UIImage(systemName: "trash")
+        deleteAction.backgroundColor = .systemRed
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
     }
 
 }
@@ -131,18 +175,13 @@ extension ShoppingListViewController : NSFetchedResultsControllerDelegate {
             case .insert:
                 if let indexPath = newIndexPath {
                     tableView.insertRows(at: [indexPath], with: .fade)
+                }
+            case .delete:
+                if let indexPath = indexPath {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
             }
-//            case .delete:
-//                if let indexPath = indexPath {
-//                    tableView.deleteRows(at: [indexPath], with: .fade)
-//            }
-//            case .update:
-//                if let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) {
-//                    configureCell(cell as! FridgeItemTableCell, at: indexPath)
-//                }
-//                break;
             default:
-                print("...")
+                break
         }
     }
     
