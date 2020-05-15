@@ -80,7 +80,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidAppear(_ animated: Bool){
         self.tableView.reloadData()
     }
-
+    
     private func updateView() {
         var hasItems = false
         if let items = fetchedResultsController.fetchedObjects {
@@ -89,7 +89,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         tableView.isHidden = !hasItems
         emptyTableLabel.isHidden = hasItems
     }
-
+    
     var container : NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
     func addItem(name: String, expiry: Date, favourite: Bool) {
@@ -130,7 +130,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             try? item!.managedObjectContext?.save()
         }
     }
-
+    
     
     // MARK tables
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -180,13 +180,13 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             return "???"
         }
     }
-
+    
     // MARK swipe actions
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
         -> UISwipeActionsConfiguration? {
-
+            
             let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
-
+                
                 let item = self.fetchedResultsController.object(at: indexPath)
                 if item.favourite {
                     item.removed = true
@@ -206,17 +206,17 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 completionHandler(true)
             }
-
+            
             deleteAction.image = UIImage(systemName: "trash")
             deleteAction.backgroundColor = .systemRed
-
+            
             let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
             return configuration
     }
-
+    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let item = self.fetchedResultsController.object(at: indexPath)
-
+        
         let runningLowAction = UIContextualAction(style: .normal, title: item.runningLow ? "In Stock" : "Running Low") { (_, _, completionHandler) in
             item.runningLow = !item.runningLow
             try? item.managedObjectContext?.save()
@@ -231,7 +231,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         runningLowAction.backgroundColor = item.runningLow ? .systemGreen : .systemOrange
         editAction.backgroundColor = .systemGray
         let configuration = UISwipeActionsConfiguration(actions: [runningLowAction, editAction])
-
+        
         return configuration
     }
     
@@ -273,11 +273,11 @@ extension FridgeTableViewController : NSFetchedResultsControllerDelegate {
             case .insert:
                 if let indexPath = newIndexPath {
                     tableView.insertRows(at: [indexPath], with: .fade)
-                }
+            }
             case .delete:
                 if let indexPath = indexPath {
                     tableView.deleteRows(at: [indexPath], with: .fade)
-                }
+            }
             case .update:
                 if let indexPath = indexPath, let cell = tableView.cellForRow(at: indexPath) {
                     configureCell(cell as! FridgeItemTableCell, at: indexPath)
@@ -287,8 +287,6 @@ extension FridgeTableViewController : NSFetchedResultsControllerDelegate {
                 break
         }
     }
-    
-
 }
-    
+
 

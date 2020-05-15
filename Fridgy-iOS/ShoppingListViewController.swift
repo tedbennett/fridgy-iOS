@@ -65,6 +65,7 @@ class ShoppingListViewController: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    
     private func addItemPopup() {
         let alert = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
         
@@ -96,7 +97,7 @@ class ShoppingListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -130,14 +131,14 @@ class ShoppingListViewController: UITableViewController {
     lazy var fetchedResultsController: NSFetchedResultsController<FridgeItem> = {
         
         let fetchRequest: NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
-
+        
         let favouriteAndDeleted = NSCompoundPredicate(andPredicateWithSubpredicates: [
             NSPredicate(format: "favourite == true"), NSPredicate(format: "removed == true")])
         let favouriteAndLow = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "favourite == true"), NSPredicate(format: "runningLow == true")])
-
+        
         fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [favouriteAndDeleted, favouriteAndLow, NSPredicate(format: "shoppingListOnly == true")])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "expiry", ascending: true)]
-
+        
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
@@ -178,33 +179,32 @@ class ShoppingListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
         -> UISwipeActionsConfiguration? {
             
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completionHandler) in
-            
-            let item = self!.fetchedResultsController.object(at: indexPath)
-            if item.shoppingListOnly {
-                item.managedObjectContext?.delete(item)
-            } else {
-                let actionSheet = UIAlertController(title: "Delete Item?", message: "This item will be deleted from your fridge too.", preferredStyle: .alert)
+            let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (_, _, completionHandler) in
                 
-                let listAction = UIAlertAction(title: "OK", style: .default) { (action) in
-                    item.managedObjectContext!.delete(item)
-                    try! item.managedObjectContext!.save()
+                let item = self!.fetchedResultsController.object(at: indexPath)
+                if item.shoppingListOnly {
+                    item.managedObjectContext?.delete(item)
+                } else {
+                    let actionSheet = UIAlertController(title: "Delete Item?", message: "This item will be deleted from your fridge too.", preferredStyle: .alert)
+                    
+                    let listAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                        item.managedObjectContext!.delete(item)
+                        try! item.managedObjectContext!.save()
+                    }
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                    actionSheet.addAction(listAction)
+                    actionSheet.addAction(cancelAction)
+                    self!.present(actionSheet, animated: true, completion: nil)
                 }
-                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-                actionSheet.addAction(listAction)
-                actionSheet.addAction(cancelAction)
-                self!.present(actionSheet, animated: true, completion: nil)
+                completionHandler(true)
             }
-            completionHandler(true)
-        }
-        
-        deleteAction.image = UIImage(systemName: "trash")
-        deleteAction.backgroundColor = .systemRed
-        
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        return configuration
+            
+            deleteAction.image = UIImage(systemName: "trash")
+            deleteAction.backgroundColor = .systemRed
+            
+            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+            return configuration
     }
-
 }
 
 extension ShoppingListViewController : NSFetchedResultsControllerDelegate {
@@ -224,7 +224,7 @@ extension ShoppingListViewController : NSFetchedResultsControllerDelegate {
             case .insert:
                 if let indexPath = newIndexPath {
                     tableView.insertRows(at: [indexPath], with: .fade)
-                }
+            }
             case .delete:
                 if let indexPath = indexPath {
                     tableView.deleteRows(at: [indexPath], with: .fade)

@@ -21,16 +21,15 @@ class AddItemController: UIViewController {
     var expiry = Date()
     
     @IBOutlet weak var nameTextField : UITextField!
-    
     @IBOutlet weak var dateTextField: UITextField!
-
     @IBOutlet weak var favouriteItemOutlet: UISwitch!
+    @IBOutlet weak var doneButtonOutlet: UIButton!
     
     @IBAction func cancelAction(_ sender: UIButton) {
         
         dismiss(animated: true, completion: nil)
     }
-    @IBOutlet weak var doneButtonOutlet: UIButton!
+
     
     private let datePicker = UIDatePicker()
     
@@ -42,10 +41,10 @@ class AddItemController: UIViewController {
     }
     
     func createDatePickerView() {
-    
+        
         // date picker formatting
         datePicker.datePickerMode = .date
-
+        
         // toolbar with done button
         let toolBar = UIToolbar(frame: CGRect(x: 0.0,
                                               y: 0.0,
@@ -54,7 +53,7 @@ class AddItemController: UIViewController {
         let flexible = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let barButton = UIBarButtonItem(barButtonSystemItem: .done, target: target, action: #selector(acceptDate))
         toolBar.setItems([flexible, barButton], animated: false)
-
+        
         dateTextField.inputAccessoryView = toolBar
         dateTextField.inputView = datePicker
     }
@@ -76,7 +75,7 @@ class AddItemController: UIViewController {
         formatter.dateStyle = .medium
         formatter.timeStyle = .none
         
-       return formatter.string(from: date)
+        return formatter.string(from: date)
     }
     
     @objc func acceptDate() {
@@ -89,7 +88,7 @@ class AddItemController: UIViewController {
     @objc func acceptText() {
         self.view.endEditing(true)
     }
-
+    
     @IBAction func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
             
