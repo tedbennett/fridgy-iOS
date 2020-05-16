@@ -9,7 +9,8 @@
 import UIKit
 import CoreData
 
-class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem, EditItem, RemoveItem {
+class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem, EditItem, RemoveItem, FavouriteItem {
+    
     
     @IBOutlet weak var emptyTableLabel: UILabel!
     @IBOutlet weak var addItemOutlet: UIButton!
@@ -106,7 +107,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         item.runningLow =  runningLow ?? false
         item.shoppingListOnly = shoppingListOnly ?? false
         item.removed = removed ?? false
-
+        
         item.uniqueId = uniqueId
         
         try! context.save()
@@ -165,6 +166,24 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    func favouriteItem(uniqueId: String) {
+        guard let context = container?.viewContext else { return }
+        
+        let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
+        request.predicate = NSPredicate(format: "uniqueId = %@", uniqueId)
+        
+        var item : FridgeItem?
+        let matches = try? context.fetch(request)
+        assert(matches?.count == 1, "favourite - Database error")
+        if matches?.count == 1 {
+            item = matches?[0]
+        }
+        if item != nil {
+            item!.favourite = !item!.favourite
+            try? item!.managedObjectContext?.save()
+        }
+    }
+    
     // MARK tables
     func numberOfSections(in tableView: UITableView) -> Int {
         return fetchedResultsController.sections!.count
@@ -182,7 +201,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "fridgeItemCell", for: indexPath) as? FridgeItemTableCell else {
             fatalError("Unexpected Index Path")
         }
-        
         configureCell(cell, at: indexPath)
         return cell
     }
@@ -205,31 +223,35 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     private func configureCell(_ cell: FridgeItemTableCell, at indexPath: IndexPath) {
         let item = fetchedResultsController.object(at: indexPath)
         
-        cell.itemExpiryLabel.text = getExpiryString(for: item.expiry)
+        
         cell.itemNameLabel.text = item.name
         cell.runningLowView.isHidden = !item.runningLow
-        cell.favouriteView.isHidden = !item.favourite
+        cell.favouriteButton.setImage(UIImage.init(systemName: item.favourite ? "star.fill" : "star") , for: UIControl.State.normal)
+        cell.uniqueId = item.uniqueId
+        cell.delegate = self
+        
     }
     
-    private func getExpiryString(for expiry: Date?) -> String {
-        if (expiry != nil) {
-            let startOfDay = Calendar.current.startOfDay(for: Date())
-            let expiryInDays = Calendar.current.dateComponents([.day], from: startOfDay, to: expiry!).day!
-            switch expiryInDays {
-                case _ where expiryInDays > 60: return "In \(expiryInDays/30) months"
-                case _ where expiryInDays > 14: return "In \(expiryInDays/7) weeks"
-                case _ where expiryInDays > 1: return "In \(expiryInDays) days"
-                case 1: return "In 1 day"
-                case 0: return "In <1 day"
-                case -1: return "1 day ago"
-                case _ where expiryInDays < -14: return ">14 days ago"
-                case _ where expiryInDays < -1: return "\(abs(expiryInDays)) days ago"
-                default: return "???"
-            }
-        } else {
-            return "???"
-        }
-    }
+    // Commenting out since I may use this for detail expiry date
+    //    private func getExpiryString(for expiry: Date?) -> String {
+    //        if (expiry != nil) {
+    //            let startOfDay = Calendar.current.startOfDay(for: Date())
+    //            let expiryInDays = Calendar.current.dateComponents([.day], from: startOfDay, to: expiry!).day!
+    //            switch expiryInDays {
+    //                case _ where expiryInDays > 60: return "In \(expiryInDays/30) months"
+    //                case _ where expiryInDays > 14: return "In \(expiryInDays/7) weeks"
+    //                case _ where expiryInDays > 1: return "In \(expiryInDays) days"
+    //                case 1: return "In 1 day"
+    //                case 0: return "In <1 day"
+    //                case -1: return "1 day ago"
+    //                case _ where expiryInDays < -14: return ">14 days ago"
+    //                case _ where expiryInDays < -1: return "\(abs(expiryInDays)) days ago"
+    //                default: return "???"
+    //            }
+    //        } else {
+    //            return "???"
+    //        }
+    //    }
     
     // MARK swipe actions
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -256,7 +278,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             
             completionHandler(true)
         }
-        
         deleteAction.title = item.favourite ? "Out of stock" : "Delete"
         deleteAction.backgroundColor = .systemRed
         
@@ -308,8 +329,8 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 vc.delegate = self
                 
                 if let context = container?.viewContext {
-                
-                     let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
+                    
+                    let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
                     
                     let favouriteAndDeleted = NSCompoundPredicate(andPredicateWithSubpredicates: [
                         NSPredicate(format: "favourite == true"), NSPredicate(format: "removed == true")])

@@ -30,17 +30,8 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9B-uw-kU8">
-                                                            <rect key="frame" x="20" y="17" width="244" height="26"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="244" id="slv-Bd-BAB"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="20" y="17" width="340" height="26"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expiration" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2z-v3-7ps">
-                                                            <rect key="frame" x="264" y="18.666666666666668" width="130" height="23.000000000000004"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -51,32 +42,35 @@
                                                                 <constraint firstAttribute="width" constant="5" id="UYY-JI-Hav"/>
                                                             </constraints>
                                                         </view>
-                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Q9-WU-gw0">
-                                                            <rect key="frame" x="409" y="0.0" width="5" height="60"/>
-                                                            <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmV-vT-kqt">
+                                                            <rect key="frame" x="360" y="16" width="34" height="28"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="5" id="WlO-Ru-7eE"/>
+                                                                <constraint firstAttribute="height" constant="28" id="Sp5-su-UVg"/>
+                                                                <constraint firstAttribute="width" constant="34" id="UAh-RX-Sex"/>
                                                             </constraints>
-                                                        </view>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                            <state key="normal" image="star" catalog="system">
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="22" weight="regular"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="favouriteAction:" destination="Prb-bv-Wx7" eventType="touchUpInside" id="SQJ-Yo-nHG"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="y9B-uw-kU8" firstAttribute="leading" secondItem="J9q-Ws-5AH" secondAttribute="leading" constant="20" id="0pz-c9-RQb"/>
                                                         <constraint firstItem="wj7-Mq-H3a" firstAttribute="centerY" secondItem="J9q-Ws-5AH" secondAttribute="centerY" id="7w3-Wf-nfm"/>
-                                                        <constraint firstItem="F2z-v3-7ps" firstAttribute="centerY" secondItem="y9B-uw-kU8" secondAttribute="centerY" id="LTa-PK-eyI"/>
-                                                        <constraint firstItem="4Q9-WU-gw0" firstAttribute="height" secondItem="J9q-Ws-5AH" secondAttribute="height" id="RvY-Ip-Iwy"/>
+                                                        <constraint firstAttribute="trailing" secondItem="gmV-vT-kqt" secondAttribute="trailing" constant="20" id="OYe-S6-qH8"/>
                                                         <constraint firstItem="wj7-Mq-H3a" firstAttribute="leading" secondItem="J9q-Ws-5AH" secondAttribute="leading" id="Tku-1J-DEM"/>
-                                                        <constraint firstAttribute="trailing" secondItem="4Q9-WU-gw0" secondAttribute="trailing" id="Wfd-hm-U6N"/>
+                                                        <constraint firstItem="gmV-vT-kqt" firstAttribute="leading" secondItem="y9B-uw-kU8" secondAttribute="trailing" id="Vmz-FP-7iF"/>
                                                         <constraint firstItem="wj7-Mq-H3a" firstAttribute="height" secondItem="J9q-Ws-5AH" secondAttribute="height" id="Wv2-BS-HHN"/>
-                                                        <constraint firstAttribute="trailing" secondItem="F2z-v3-7ps" secondAttribute="trailing" constant="20" id="gtG-w3-DTZ"/>
-                                                        <constraint firstItem="4Q9-WU-gw0" firstAttribute="centerY" secondItem="J9q-Ws-5AH" secondAttribute="centerY" id="h6t-i2-co5"/>
+                                                        <constraint firstItem="gmV-vT-kqt" firstAttribute="centerY" secondItem="J9q-Ws-5AH" secondAttribute="centerY" id="XbA-Gk-u0v"/>
                                                         <constraint firstItem="y9B-uw-kU8" firstAttribute="centerY" secondItem="J9q-Ws-5AH" secondAttribute="centerY" id="lff-VQ-m79"/>
-                                                        <constraint firstItem="F2z-v3-7ps" firstAttribute="leading" secondItem="y9B-uw-kU8" secondAttribute="trailing" id="pDn-Vx-I5a"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <gestureRecognizers/>
                                                 <connections>
-                                                    <outlet property="favouriteView" destination="4Q9-WU-gw0" id="DNe-8f-hpE"/>
-                                                    <outlet property="itemExpiryLabel" destination="F2z-v3-7ps" id="Tsz-9k-snG"/>
+                                                    <outlet property="favouriteButton" destination="gmV-vT-kqt" id="QOb-Dm-xH3"/>
                                                     <outlet property="itemNameLabel" destination="y9B-uw-kU8" id="4er-2r-873"/>
                                                     <outlet property="runningLowView" destination="wj7-Mq-H3a" id="bpa-xi-3N8"/>
                                                 </connections>
@@ -141,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1058" y="121"/>
+            <point key="canvasLocation" x="1057.9710144927537" y="120.65217391304348"/>
         </scene>
         <!--Shopping List-->
         <scene sceneID="QXw-E9-4sY">
@@ -507,5 +501,6 @@
     <resources>
         <image name="circle" catalog="system" width="128" height="121"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="star" catalog="system" width="128" height="116"/>
     </resources>
 </document>
