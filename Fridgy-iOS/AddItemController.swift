@@ -22,7 +22,6 @@ class AddItemController: UIViewController {
     
     @IBOutlet weak var nameTextField : UITextField!
     @IBOutlet weak var dateTextField: UITextField!
-    @IBOutlet weak var favouriteItemOutlet: UISwitch!
     @IBOutlet weak var doneButtonOutlet: UIButton!
     
     @IBAction func cancelAction(_ sender: UIButton) {
@@ -91,7 +90,7 @@ class AddItemController: UIViewController {
     
     @IBAction func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
-            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn, runningLow: false, shoppingListOnly: false, removed: false, uniqueId: UUID().uuidString)
+            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: false, runningLow: false, shoppingListOnly: false, removed: false, uniqueId: UUID().uuidString)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -122,7 +121,6 @@ extension UITextField {
 
 class EditItemController : AddItemController {
     
-    
     var name : String?
     var favourite : Bool?
     var uniqueId : String?
@@ -131,14 +129,13 @@ class EditItemController : AddItemController {
         super.viewDidLoad()
         self.nameTextField.text = name
         self.dateTextField.text = formattedDate(expiry)
-        self.favouriteItemOutlet.isOn = favourite ?? false
     }
     
     var editDelegate: EditItem?
     
     @IBAction override func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
-            editDelegate?.editItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn, runningLow: nil, shoppingListOnly: nil, removed: nil, uniqueId: uniqueId ?? "")
+            editDelegate?.editItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: nil, runningLow: nil, shoppingListOnly: nil, removed: nil, uniqueId: uniqueId ?? "")
             dismiss(animated: true, completion: nil)
         }
     }

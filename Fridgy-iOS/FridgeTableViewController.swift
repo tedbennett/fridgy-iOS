@@ -258,7 +258,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         let item = self.fetchedResultsController.object(at: indexPath)
         
-        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title: item.favourite ? "Out of stock" : "Delete") { (_, _, completionHandler) in
             
             if item.favourite {
                 item.removed = true
@@ -278,10 +278,18 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             
             completionHandler(true)
         }
-        deleteAction.title = item.favourite ? "Out of stock" : "Delete"
+        
         deleteAction.backgroundColor = .systemRed
         
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, completionHandler) in
+            
+            self.performSegue(withIdentifier: "Edit Item Segue", sender: item)
+            completionHandler(true)
+        }
+        editAction.backgroundColor = .systemGray
+        
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         return configuration
     }
     
@@ -294,14 +302,10 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             completionHandler(true)
         }
         
-        let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, completionHandler) in
-            
-            self.performSegue(withIdentifier: "Edit Item Segue", sender: item)
-            completionHandler(true)
-        }
+        
         runningLowAction.backgroundColor = item.runningLow ? .systemGreen : .systemOrange
-        editAction.backgroundColor = .systemGray
-        let configuration = UISwipeActionsConfiguration(actions: [runningLowAction, editAction])
+        
+        let configuration = UISwipeActionsConfiguration(actions: [runningLowAction])
         
         return configuration
     }
