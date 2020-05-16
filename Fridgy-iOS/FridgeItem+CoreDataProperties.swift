@@ -26,6 +26,9 @@ extension FridgeItem {
     @NSManaged public var shoppingListOnly: Bool
     @NSManaged public var uniqueId: String?
     @objc public var sectionIdentifier: Int {
+        if expiry == nil {
+            return 0
+        }
         let startOfDay = Calendar.current.startOfDay(for: Date())
         let expiryInDays = Calendar.current.dateComponents([.day], from: startOfDay, to: expiry!).day!
         switch expiryInDays {

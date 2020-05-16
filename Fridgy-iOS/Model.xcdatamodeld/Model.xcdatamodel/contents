@@ -11,12 +11,12 @@
         <attribute name="shoppingListOnly" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="uniqueId" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="ShoppingListItem" representedClassName="ShoppingListItem" syncable="YES" codeGenerationType="class">
+    <entity name="ToDelete" representedClassName="ToDelete" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="uniqueId" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="FridgeItem" positionX="240.76171875" positionY="-69.546875" width="128" height="178"/>
-        <element name="ShoppingListItem" positionX="-63" positionY="27" width="128" height="28"/>
+        <element name="ToDelete" positionX="-63" positionY="27" width="128" height="73"/>
     </elements>
 </model>

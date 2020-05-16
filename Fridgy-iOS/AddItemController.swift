@@ -9,11 +9,11 @@
 import UIKit
 
 protocol AddItem {
-    func addItem(name: String, expiry: Date, favourite: Bool)
+    func addItem(name: String, expiry: Date?, favourite: Bool?, runningLow: Bool?, shoppingListOnly: Bool?, removed: Bool?, uniqueId: String)
 }
 
 protocol EditItem {
-    func editItem(name: String, expiry: Date, favourite: Bool, uniqueId: String)
+    func editItem(name: String?, expiry: Date?, favourite: Bool?, runningLow: Bool?, shoppingListOnly: Bool?, removed: Bool?, uniqueId: String)
 }
 
 class AddItemController: UIViewController {
@@ -91,8 +91,7 @@ class AddItemController: UIViewController {
     
     @IBAction func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
-            
-            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn)
+            delegate?.addItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn, runningLow: false, shoppingListOnly: false, removed: false, uniqueId: UUID().uuidString)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -139,8 +138,7 @@ class EditItemController : AddItemController {
     
     @IBAction override func doneButtonAction(_ sender: UIButton) {
         if nameTextField.text != "", dateTextField.text != "" {
-            
-            editDelegate?.editItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn, uniqueId: uniqueId ?? "")
+            editDelegate?.editItem(name: nameTextField.text ?? "???", expiry: expiry, favourite: favouriteItemOutlet.isOn, runningLow: nil, shoppingListOnly: nil, removed: nil, uniqueId: uniqueId ?? "")
             dismiss(animated: true, completion: nil)
         }
     }

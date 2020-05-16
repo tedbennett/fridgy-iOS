@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem, EditItem {
+class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem, EditItem, RemoveItem {
     
     @IBOutlet weak var emptyTableLabel: UILabel!
     @IBOutlet weak var addItemOutlet: UIButton!
@@ -58,7 +58,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         addItemOutlet.layer.cornerRadius = 8
         
         loadFromDatabase()
-        tableView.reloadData()
     }
     
     func loadFromDatabase(){
@@ -93,24 +92,27 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     
     var container : NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
-    func addItem(name: String, expiry: Date, favourite: Bool) {
+    func addItem(name: String, expiry: Date?, favourite: Bool?, runningLow: Bool?, shoppingListOnly: Bool?, removed: Bool?, uniqueId: String) {
         guard let context = container?.viewContext else { return }
         
         let item = FridgeItem(context: context)
         
         item.name = name
-        item.expiry = expiry
-        item.shelfLife = expiry.timeIntervalSince(Date())
-        item.favourite = favourite
-        item.runningLow = false
-        item.shoppingListOnly = false
-        item.removed = false
-        item.uniqueId = UUID().uuidString
+        if let expiry = expiry {
+            item.expiry = expiry
+            item.shelfLife = expiry.timeIntervalSince(Date())
+        }
+        item.favourite = favourite ?? false
+        item.runningLow =  runningLow ?? false
+        item.shoppingListOnly = shoppingListOnly ?? false
+        item.removed = removed ?? false
+
+        item.uniqueId = uniqueId
         
-        try? context.save()
+        try! context.save()
     }
     
-    func editItem(name: String, expiry: Date, favourite: Bool, uniqueId: String) {
+    func editItem(name: String?, expiry: Date?, favourite: Bool?, runningLow: Bool?, shoppingListOnly: Bool?, removed: Bool?, uniqueId: String) {
         guard let context = container?.viewContext else { return }
         
         let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
@@ -123,11 +125,42 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             item = matches?[0]
         }
         if item != nil {
-            item!.name = name
-            item!.expiry = expiry
-            item!.favourite = favourite
-            
-            item!.uniqueId = UUID().uuidString
+            if let name = name {
+                item!.name = name
+            }
+            if let expiry = expiry {
+                item!.expiry = expiry
+            }
+            if let favourite = favourite {
+                item!.favourite = favourite
+            }
+            if let runningLow = runningLow {
+                item!.runningLow = runningLow
+            }
+            if let shoppingListOnly = shoppingListOnly {
+                item!.shoppingListOnly = shoppingListOnly
+            }
+            if let removed = removed {
+                item!.removed = removed
+            }
+            try? item!.managedObjectContext?.save()
+        }
+    }
+    
+    func removeItem(uniqueId: String) {
+        guard let context = container?.viewContext else { return }
+        
+        let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "uniqueId = %@", uniqueId)
+        var item : FridgeItem?
+        let matches = try? context.fetch(request)
+        assert(matches?.count == 1, "removeItem - Database error")
+        if matches?.count == 1 {
+            item = matches?[0]
+        }
+        if item != nil {
+            item!.managedObjectContext?.delete(item!)
             try? item!.managedObjectContext?.save()
         }
     }
@@ -270,7 +303,27 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 vc.uniqueId = item.uniqueId
             }
         } else if segue.identifier == "Shopping List Segue" {
-            
+            if let vc = segue.destination as? ShoppingListViewController {
+                
+                vc.delegate = self
+                
+                if let context = container?.viewContext {
+                
+                     let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
+                    
+                    let favouriteAndDeleted = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                        NSPredicate(format: "favourite == true"), NSPredicate(format: "removed == true")])
+                    let favouriteAndLow = NSCompoundPredicate(andPredicateWithSubpredicates: [NSPredicate(format: "favourite == true"), NSPredicate(format: "runningLow == true")])
+                    
+                    request.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [favouriteAndDeleted, favouriteAndLow, NSPredicate(format: "shoppingListOnly == true")])
+                    
+                    if let matches = try? context.fetch(request) {
+                        for match in matches {
+                            vc.items.append(ShoppingListItem(name: match.name ?? "", shoppingListOnly: match.shoppingListOnly, uniqueId: match.uniqueId ?? ""))
+                        }
+                    }
+                }
+            }
         }
     }
 }

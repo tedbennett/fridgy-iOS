@@ -76,20 +76,20 @@
 		9F9357EC2456DB4E0026B32D /* Fridgy-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				9FBBD062246F10E300E14E53 /* FridgeItem+CoreDataClass.swift */,
-				9FBBD063246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift */,
-				9FFAE0E4246802FD0004D6CB /* ShoppingListTableViewCell.swift */,
+				9F9357F32456DB4E0026B32D /* Main.storyboard */,
+				9FE720F1245B66720045A4A6 /* FridgeTableViewController.swift */,
 				9F663A612467EECD00817361 /* ShoppingListViewController.swift */,
+				9FC1F4D3245A0B4C0097DFF4 /* AddItemController.swift */,
+				9FFAE0E4246802FD0004D6CB /* ShoppingListTableViewCell.swift */,
+				9FE720F3245B66890045A4A6 /* FridgeItemTableCell.swift */,
+				9FBBD063246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift */,
 				9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */,
 				9FE4C4792465C857007C30F7 /* Unused */,
-				9F9357ED2456DB4E0026B32D /* AppDelegate.swift */,
-				9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */,
-				9FE720F1245B66720045A4A6 /* FridgeTableViewController.swift */,
-				9FE720F3245B66890045A4A6 /* FridgeItemTableCell.swift */,
-				9FC1F4D3245A0B4C0097DFF4 /* AddItemController.swift */,
-				9F9357F32456DB4E0026B32D /* Main.storyboard */,
 				9F9357F62456DB530026B32D /* Assets.xcassets */,
 				9F9357F82456DB530026B32D /* LaunchScreen.storyboard */,
+				9F9357ED2456DB4E0026B32D /* AppDelegate.swift */,
+				9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */,
+				9FBBD062246F10E300E14E53 /* FridgeItem+CoreDataClass.swift */,
 				9F9357FB2456DB530026B32D /* Info.plist */,
 			);
 			path = "Fridgy-iOS";
