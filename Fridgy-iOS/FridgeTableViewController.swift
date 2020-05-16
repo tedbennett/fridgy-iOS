@@ -44,7 +44,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
-        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: "sectionIdentifier", cacheName: nil)
         fetchedResultsController.delegate = self
         
         return fetchedResultsController
@@ -58,6 +58,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         addItemOutlet.layer.cornerRadius = 8
         
         loadFromDatabase()
+        tableView.reloadData()
     }
     
     func loadFromDatabase(){
@@ -131,15 +132,17 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
-    
     // MARK tables
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return fetchedResultsController.sections!.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let items = fetchedResultsController.fetchedObjects else { return 0 }
-        return items.count
+        guard let sections = fetchedResultsController.sections else {
+            fatalError("No sections in fetchedResultsController")
+        }
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -149,6 +152,20 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         configureCell(cell, at: indexPath)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        let sectionInfo = fetchedResultsController.sections![section]
+        switch sectionInfo.indexTitle {
+            case "0": return "Expired"
+            case "1": return "Expires today"
+            case "2": return "Expires within 3 days"
+            case "3": return "Expires this week"
+            case "4": return "Expires this month"
+            case "5": return "Expires in more than a month"
+            default: return "?"
+        }
     }
     
     // MARK table helper functions
@@ -182,36 +199,36 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // MARK swipe actions
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-        -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let item = self.fetchedResultsController.object(at: indexPath)
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
             
-            let deleteAction = UIContextualAction(style: .destructive, title: nil) { (_, _, completionHandler) in
+            if item.favourite {
+                item.removed = true
+                try? item.managedObjectContext?.save()
+            } else {
+                let actionSheet = UIAlertController(title: "Delete Item?", message: "This action cannot be reversed. \n Only your favourites are saved in your shopping list", preferredStyle: .alert)
                 
-                let item = self.fetchedResultsController.object(at: indexPath)
-                if item.favourite {
-                    item.removed = true
+                let listAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                    item.managedObjectContext?.delete(item)
                     try? item.managedObjectContext?.save()
-                } else {
-                    let actionSheet = UIAlertController(title: "Delete Item?", message: "This action cannot be reversed. \n Only your favourites are saved in your shopping list", preferredStyle: .alert)
-                    
-                    let listAction = UIAlertAction(title: "OK", style: .default) { (action) in
-                        item.managedObjectContext?.delete(item)
-                        try? item.managedObjectContext?.save()
-                    }
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-                    actionSheet.addAction(listAction)
-                    actionSheet.addAction(cancelAction)
-                    self.present(actionSheet, animated: true, completion: nil)
                 }
-                
-                completionHandler(true)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+                actionSheet.addAction(listAction)
+                actionSheet.addAction(cancelAction)
+                self.present(actionSheet, animated: true, completion: nil)
             }
             
-            deleteAction.image = UIImage(systemName: "trash")
-            deleteAction.backgroundColor = .systemRed
-            
-            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-            return configuration
+            completionHandler(true)
+        }
+        
+        deleteAction.title = item.favourite ? "Out of stock" : "Delete"
+        deleteAction.backgroundColor = .systemRed
+        
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -246,8 +263,8 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 vc.editDelegate = self
                 vc.name = item.name
-                if item.expiry != nil {
-                    vc.expiry = item.expiry!
+                if let itemExpiry = item.expiry {
+                    vc.expiry = itemExpiry
                 }
                 vc.favourite = item.favourite
                 vc.uniqueId = item.uniqueId
@@ -283,6 +300,23 @@ extension FridgeTableViewController : NSFetchedResultsControllerDelegate {
                     configureCell(cell as! FridgeItemTableCell, at: indexPath)
                 }
                 break
+            default:
+                break
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int,
+                    for type: NSFetchedResultsChangeType) {
+        
+        let section = IndexSet(integer: sectionIndex)
+        
+        switch type {
+            case .delete:
+                tableView.deleteSections(section, with: .automatic)
+            case .insert:
+                tableView.insertSections(section, with: .automatic)
             default:
                 break
         }
