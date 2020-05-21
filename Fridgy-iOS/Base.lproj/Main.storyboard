@@ -18,7 +18,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7RB-e9-0JI">
                                 <rect key="frame" x="0.0" y="44" width="414" height="626"/>
                                 <subviews>
-                                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8S-aF-Tje">
+                                    <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8S-aF-Tje">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="626"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
@@ -119,7 +119,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Fridgy" largeTitleDisplayMode="always" id="Isy-zY-96d">
-                        <barButtonItem key="rightBarButtonItem" image="ellipsis" catalog="system" id="NXX-Jf-YCs">
+                        <barButtonItem key="rightBarButtonItem" title="Shopping List" id="NXX-Jf-YCs">
                             <connections>
                                 <action selector="optionsAction:" destination="BYZ-38-t0r" id="Uq1-BT-WyZ"/>
                             </connections>
@@ -128,6 +128,7 @@
                     <connections>
                         <outlet property="addItemOutlet" destination="1KW-4g-6QL" id="Owm-V0-Lp2"/>
                         <outlet property="emptyTableLabel" destination="tq5-z9-JRP" id="a8R-aK-ac8"/>
+                        <outlet property="optionsOutlet" destination="NXX-Jf-YCs" id="MFH-1s-HjZ"/>
                         <outlet property="tableView" destination="N8S-aF-Tje" id="HeF-HN-4Sv"/>
                         <segue destination="DcF-SE-c9N" kind="presentation" identifier="Edit Item Segue" id="nof-Mn-g5Y"/>
                         <segue destination="biK-48-t94" kind="show" identifier="Shopping List Segue" id="hNG-Au-AsI"/>

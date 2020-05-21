@@ -15,21 +15,104 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var emptyTableLabel: UILabel!
     @IBOutlet weak var addItemOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var optionsOutlet: UIBarButtonItem!
     
     @IBAction func optionsAction(_ sender: UIBarButtonItem) {
-        
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let listAction = UIAlertAction(title: "Shopping List", style: .default) { (action) in
+        if !selectedRows.isEmpty {
+            print(selectedRows)
+            var allRunningLow = true
+            
+            var allFavourited = false
+            
+            for indexPath in self.selectedRows {
+                let item = self.fetchedResultsController.object(at: indexPath)
+                allRunningLow = allRunningLow && item.runningLow
+                allFavourited = allFavourited && item.favourite
+            }
+            
+            
+            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            
+            let listAction = UIAlertAction(title: "Shopping List", style: .default) { (action) in
+                self.performSegue(withIdentifier: "Shopping List Segue", sender: nil)
+            }
+            let searchAction = UIAlertAction(title: "Search for Recipes...", style: .default) { (action) in
+                var selectedItems = [String]()
+                for indexPath in self.selectedRows {
+                    let item = self.fetchedResultsController.object(at: indexPath)
+                    if item.name != nil {
+                        selectedItems.append(item.name!)
+                    }
+                }
+                self.deselectAllItems(animated: true)
+                let searchQuery = selectedItems.joined(separator:"+")
+                if let url = URL(string: "http://www.google.com/search?q=\(searchQuery)+recipes") {
+                    UIApplication.shared.open(url)
+                }
+                
+            }
+            let runningLowAction = UIAlertAction(title: allRunningLow ? "Mark In Stock" : "Mark Running Low", style: .default) { (action) in
+                for indexPath in self.selectedRows {
+                    let item = self.fetchedResultsController.object(at: indexPath)
+                    self.editItem(name: nil, expiry: nil, favourite: nil, runningLow: allRunningLow ? false : true, shoppingListOnly: nil, removed: nil, uniqueId: item.uniqueId!)
+                }
+                self.deselectAllItems(animated: true)
+            }
+            let markEmptyAction = UIAlertAction(title: "Mark Favourites Out of Stock", style: .default) { (action) in
+                var itemsToBeMarked = [FridgeItem]()
+                for indexPath in self.selectedRows {
+                    itemsToBeMarked.append(self.fetchedResultsController.object(at: indexPath))
+                }
+                for item in itemsToBeMarked {
+                    if item.favourite {
+                        self.editItem(name: nil, expiry: nil, favourite: nil, runningLow: nil, shoppingListOnly: nil, removed: true, uniqueId: item.uniqueId!)
+                    }
+                }
+                self.deselectAllItems(animated: true)
+            }
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+                var itemsToBeDeleted = [FridgeItem]()
+                for indexPath in self.selectedRows {
+                    itemsToBeDeleted.append(self.fetchedResultsController.object(at: indexPath))
+                }
+                for item in itemsToBeDeleted {
+                    self.removeItem(uniqueId: item.uniqueId!)
+                }
+                self.deselectAllItems(animated: true)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+            
+            actionSheet.addAction(searchAction)
+            actionSheet.addAction(listAction)
+            actionSheet.addAction(runningLowAction)
+            actionSheet.addAction(markEmptyAction)
+            actionSheet.addAction(deleteAction)
+            actionSheet.addAction(cancelAction)
+            self.present(actionSheet, animated: true, completion: nil)
+        } else {
             self.performSegue(withIdentifier: "Shopping List Segue", sender: nil)
         }
-        let selectAction = UIAlertAction(title: "Select Mode", style: .default)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        actionSheet.addAction(listAction)
-        actionSheet.addAction(selectAction)
-        actionSheet.addAction(cancelAction)
-        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    private var selectedRows = [IndexPath]()
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if selectedRows.isEmpty {
+            optionsOutlet.image = UIImage(systemName: "ellipsis")
+            optionsOutlet.title = nil
+        }
+        if !selectedRows.contains(indexPath) {
+            selectedRows.append(indexPath)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        selectedRows.removeAll(where: {value in value == indexPath} )
+        if selectedRows.isEmpty {
+            optionsOutlet.image = nil
+            optionsOutlet.title = "Shopping List"
+        }
     }
     
     let persistentContainer = NSPersistentContainer.init(name: "Model")
@@ -94,9 +177,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     var container : NSPersistentContainer? = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     
     func addItem(name: String, expiry: Date?, favourite: Bool?, runningLow: Bool?, shoppingListOnly: Bool?, removed: Bool?, uniqueId: String) {
-        guard let context = container?.viewContext else { return }
-        
-        let item = FridgeItem(context: context)
+        let item = FridgeItem(context: fetchedResultsController.managedObjectContext)
         
         item.name = name
         if let expiry = expiry {
@@ -110,17 +191,15 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         
         item.uniqueId = uniqueId
         
-        try! context.save()
+        try! fetchedResultsController.managedObjectContext.save()
     }
     
     func editItem(name: String?, expiry: Date?, favourite: Bool?, runningLow: Bool?, shoppingListOnly: Bool?, removed: Bool?, uniqueId: String) {
-        guard let context = container?.viewContext else { return }
-        
         let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
         
         request.predicate = NSPredicate(format: "uniqueId = %@", uniqueId)
         var item : FridgeItem?
-        let matches = try? context.fetch(request)
+        let matches = try? fetchedResultsController.managedObjectContext.fetch(request)
         assert(matches?.count == 1, "editItem - Database error")
         if matches?.count == 1 {
             item = matches?[0]
@@ -144,25 +223,23 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             if let removed = removed {
                 item!.removed = removed
             }
-            try? item!.managedObjectContext?.save()
+            try? fetchedResultsController.managedObjectContext.save()
         }
     }
     
     func removeItem(uniqueId: String) {
-        guard let context = container?.viewContext else { return }
-        
         let request : NSFetchRequest<FridgeItem> = FridgeItem.fetchRequest()
         
         request.predicate = NSPredicate(format: "uniqueId = %@", uniqueId)
         var item : FridgeItem?
-        let matches = try? context.fetch(request)
+        let matches = try? fetchedResultsController.managedObjectContext.fetch(request)
         assert(matches?.count == 1, "removeItem - Database error")
         if matches?.count == 1 {
             item = matches?[0]
         }
         if item != nil {
-            item!.managedObjectContext?.delete(item!)
-            try? item!.managedObjectContext?.save()
+            fetchedResultsController.managedObjectContext.delete(item!)
+            try? fetchedResultsController.managedObjectContext.save()
         }
     }
     
@@ -398,6 +475,13 @@ extension FridgeTableViewController : NSFetchedResultsControllerDelegate {
             default:
                 break
         }
+    }
+}
+
+extension FridgeTableViewController {
+    func deselectAllItems(animated: Bool) {
+        for indexPath in selectedRows { tableView.deselectRow(at: indexPath, animated: animated) }
+        selectedRows  = [IndexPath]()
     }
 }
 
