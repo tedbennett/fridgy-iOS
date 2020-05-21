@@ -142,6 +142,12 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         addItemOutlet.layer.cornerRadius = 8
         
         loadFromDatabase()
+        
+        let defaults = UserDefaults.standard
+        if !defaults.bool(forKey: "openedAppBefore") {
+            self.performSegue(withIdentifier: "Welcome Segue", sender: nil)
+            defaults.set(true, forKey: "openedAppBefore")
+        }
     }
     
     func loadFromDatabase(){
@@ -387,7 +393,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         return configuration
     }
     
-    // MARK segue stuff
+    // MARK: segue stuff
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Add Item Segue" {
             if let vc = segue.destination as? AddItemController {
