@@ -149,12 +149,10 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         loadFromDatabase()
         
         let defaults = UserDefaults.standard
-        //if !defaults.bool(forKey: "openedAppBefore") {
-        //let welcomeViewController = PageViewController(nibName: "WelcomeController", bundle: nil)
-        //present(welcomeViewController, animated: true, completion: nil)
-        performSegue(withIdentifier: "Welcome Segue", sender: nil)
-        //defaults.set(true, forKey: "openedAppBefore")
-        //}
+        if !defaults.bool(forKey: "openedAppBefore") {
+            performSegue(withIdentifier: "Welcome Segue", sender: nil)
+            defaults.set(true, forKey: "openedAppBefore")
+        }
     }
     
     func loadFromDatabase(){

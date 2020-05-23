@@ -28,28 +28,42 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    
-    func createPages() -> [Page] {
+    private func page(title: String, body: NSAttributedString, hideExit: Bool = true) -> Page {
+        let page = Bundle.main.loadNibNamed("Page", owner: self, options: nil)?.first as! Page
+        page.titleLabel.text = title
+        page.bodyLabel.attributedText = body
+        page.exitLabel.isHidden = hideExit
+        return page
+    }
+    private func createPages() -> [Page] {
         
-        let page1 : Page = Bundle.main.loadNibNamed("Page", owner: self, options: nil)?.first as! Page
-        page1.titleLabel.text = "Welcome To Fridgy"
-        page1.bodyLabel.text = "Fridgy is an app that helps you \norganise your fridge"
-        let page2 : Page = Bundle.main.loadNibNamed("Page", owner: self, options: nil)?.first as! Page
-        page2.titleLabel.text = "No Waste"
-        page2.bodyLabel.text = "Fridgy sorts your fridge by expiration date to help you know what food needs eating\n\n\nNot sure what to make? \nSelect some items from your fridge and search for recipes in the top-right menu"
-        let page3 : Page = Bundle.main.loadNibNamed("Page", owner: self, options: nil)?.first as! Page
-        page3.titleLabel.text = "No Micromanagement"
-        page3.bodyLabel.text = "Running low on something? \njust swipe left on that item.\n\n Run out? \nJust swipe right"
-        let page4 : Page = Bundle.main.loadNibNamed("Page", owner: self, options: nil)?.first as! Page
-        page4.titleLabel.text = "Shopping Lists"
-        page4.bodyLabel.text = "Favourite an item to let Fridgy know it’s something that’s always in your fridge\n\n\nYour favourites are automatically added to your shopping list when they're running low or have run out.\n\n\nOnce you’ve stocked up, you can add any items from your shopping list back into your fridge in one tap"
-        
-        let page5 : Page = Bundle.main.loadNibNamed("Page", owner: self, options: nil)?.first as! Page
-        page5.titleLabel.text = "Enjoy!"
-        page5.bodyLabel.text = "Feel free to leave me some feedback on the App Store :)"
-        page5.exitLabel.isHidden = false
 
-        return [page1, page2, page3, page4, page5]
+        
+        let headerAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        let bodyAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20)]
+
+        let page1body = NSAttributedString(string: "Fridgy is an app that helps you \norganise your fridge", attributes: bodyAttributes)
+        
+        let page2body = NSMutableAttributedString(string: "Know what's about to expire", attributes: headerAttributes)
+        page2body.append(NSAttributedString(string: "\nFridgy sorts your fridge by expiration date to help you know what food needs eating\n\n", attributes: bodyAttributes))
+        page2body.append(NSAttributedString(string: "Not sure what to make?", attributes: headerAttributes))
+        page2body.append(NSAttributedString(string: "\nSelect some items from your fridge and search for recipes in the top-right menu", attributes: bodyAttributes))
+       
+        let page3body = NSMutableAttributedString(string: "Running low on something?\n", attributes: headerAttributes)
+        page3body.append(NSAttributedString(string: "Just swipe left on that item, and Fridgy will remember that for you.\n\n", attributes: bodyAttributes))
+        page3body.append(NSAttributedString(string: "Run out?\n", attributes: headerAttributes))
+        page3body.append(NSAttributedString(string: "Just swipe right!", attributes: bodyAttributes))
+        
+        let page4body = NSAttributedString(string: "Favourite an item to let Fridgy know it’s something that’s always in your fridge\n\nYour favourites are automatically added to your shopping list when they're running low or have run out.\n\nOnce you’ve gone shopping, you can add any items from your shopping list back into your fridge in one tap", attributes: bodyAttributes)
+        
+        let page5body = NSAttributedString(string: "Feel free to leave me some feedback on the App Store :)", attributes: bodyAttributes)
+        
+
+        return [page(title: "Welcome To Fridgy", body: page1body),
+                page(title: "No Waste", body: page2body),
+                page(title: "No Micromanagement", body: page3body),
+                page(title: "Shopping Lists", body: page4body),
+                page(title: "Enjoy!", body: page5body, hideExit: false)]
     }
     
     func setupPageScrollView(slides : [Page]) {
