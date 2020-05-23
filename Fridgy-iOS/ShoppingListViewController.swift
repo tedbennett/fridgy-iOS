@@ -21,6 +21,10 @@ class ShoppingListViewController: UITableViewController {
     var delegate: (AddItem & EditItem & RemoveItem)?
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if selectedRows.isEmpty {
+            addOrRestockButton.image = nil
+            addOrRestockButton.title = "Restock"
+        }
         if !selectedRows.contains(indexPath) {
             selectedRows.append(indexPath)
         }
@@ -30,37 +34,38 @@ class ShoppingListViewController: UITableViewController {
         if selectedRows.contains(indexPath) {
             selectedRows.removeAll(where: {value in value == indexPath} )
         }
+        if selectedRows.isEmpty {
+            addOrRestockButton.title = nil
+            addOrRestockButton.image = UIImage.init(systemName: "plus")
+        }
     }
     
-    @IBAction func optionsAction(_ sender: UIBarButtonItem) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        actionSheet.addAction(UIAlertAction(title: "Add Item", style: .default) { [weak self] (action) in
-            self?.addItemPopup()
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Restock Fridge", style: .default, handler: { [weak self] (_) in
-            self?.restockFridge()
-        }))
-        
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        self.present(actionSheet, animated: true, completion: nil)
+    @IBOutlet weak var addOrRestockButton: UIBarButtonItem!
+    @IBAction func addOrRestockAction(_ sender: UIBarButtonItem) {
+        if selectedRows.isEmpty {
+            addItemPopup()
+        } else {
+            restockFridge()
+        }
     }
     
     private func restockFridge() {
         let alert = UIAlertController(title: "Restock Fridge?", message: "The selected favourited items in this list will be restocked in your fridge using their saved shelf lives", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] (_) in
             if let paths = self?.selectedRows {
+                var itemsToBeRestocked = [ShoppingListItem]()
                 for indexPath in paths {
-                    if let itemToEdit = self?.items[indexPath.row] {
-                        // If it's shopping list only, delete it. Otherwise remove running low/ removed flags
-                        if itemToEdit.shoppingListOnly {
-                            self?.delegate?.removeItem(uniqueId: itemToEdit.uniqueId)
-                        } else {
-                            self?.delegate?.editItem(name: nil, expiry: nil, favourite: nil, runningLow: false, shoppingListOnly: false, removed: false, uniqueId: itemToEdit.uniqueId)
-                        }
-                        self?.items.removeAll(where: {$0 == itemToEdit})
+                    if let item = self?.items[indexPath.row] {
+                        itemsToBeRestocked.append(item)
                     }
+                }
+                for itemToEdit in itemsToBeRestocked {
+                    if itemToEdit.shoppingListOnly {
+                        self?.delegate?.removeItem(uniqueId: itemToEdit.uniqueId)
+                    } else {
+                        self?.delegate?.editItem(name: nil, expiry: nil, favourite: nil, runningLow: false, shoppingListOnly: false, removed: false, uniqueId: itemToEdit.uniqueId)
+                    }
+                    self?.items.removeAll(where: {$0 == itemToEdit})
                 }
                 self?.tableView.reloadData()
             }

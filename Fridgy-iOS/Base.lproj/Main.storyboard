@@ -8,48 +8,38 @@
     </dependencies>
     <scenes>
         <!--Welcome View Controller-->
-        <scene sceneID="VS5-F3-J9r">
+        <scene sceneID="WKa-qu-O70">
             <objects>
-                <viewController id="pjL-zw-ziK" customClass="WelcomeViewController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="hBB-K3-9cT">
+                <viewController id="XXP-9P-pnX" customClass="WelcomeViewController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wpE-ue-mvU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddV-8k-AzJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JYV-XZ-wFU">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to Fridgy!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="75b-zs-TCx">
-                                        <rect key="frame" x="28" y="196" width="357" height="48"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KHD-1P-wUx">
-                                        <rect key="frame" x="85" y="253" width="244" height="211"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">Fridgy helps you organise your fridge by letting you know when your food is about to expire, and automatically creating shopping lists for you.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="kfG-Us-S2A">
-                                        <rect key="frame" x="188" y="671" width="39" height="37"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </pageControl>
-                                </subviews>
-                                <viewLayoutGuide key="contentLayoutGuide" id="QmL-Od-4WT"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="95E-Kw-Ybk"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="wm1-EN-29e"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="T5e-rt-oJr"/>
                             </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="FtN-Vr-YUD">
+                                <rect key="frame" x="187.66666666666666" y="659" width="39" height="37"/>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="GzT-nR-hHB"/>
+                        <constraints>
+                            <constraint firstItem="FtN-Vr-YUD" firstAttribute="centerX" secondItem="pmh-WG-RUY" secondAttribute="centerX" id="HJR-Ed-0rw"/>
+                            <constraint firstItem="pmh-WG-RUY" firstAttribute="bottom" secondItem="FtN-Vr-YUD" secondAttribute="bottom" constant="20" id="r1e-ut-gNU"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pmh-WG-RUY"/>
                     </view>
+                    <connections>
+                        <outlet property="pageControl" destination="FtN-Vr-YUD" id="5F0-2b-idC"/>
+                        <outlet property="scrollView" destination="JYV-XZ-wFU" id="zrs-hy-7Ap"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i22-vK-gfd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gKu-YF-TrJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1044.9275362318842" y="-574.72826086956525"/>
+            <point key="canvasLocation" x="983" y="-615"/>
         </scene>
         <!--Fridgy-->
         <scene sceneID="tne-QT-ifu">
@@ -176,12 +166,12 @@
                         <outlet property="tableView" destination="N8S-aF-Tje" id="HeF-HN-4Sv"/>
                         <segue destination="DcF-SE-c9N" kind="presentation" identifier="Edit Item Segue" id="nof-Mn-g5Y"/>
                         <segue destination="biK-48-t94" kind="show" identifier="Shopping List Segue" id="hNG-Au-AsI"/>
-                        <segue destination="pjL-zw-ziK" kind="presentation" identifier="Welcome Segue" id="bsp-1v-9w7"/>
+                        <segue destination="XXP-9P-pnX" kind="presentation" identifier="Welcome Segue" id="sbJ-mv-4Ij"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1045" y="121"/>
+            <point key="canvasLocation" x="983" y="121"/>
         </scene>
         <!--Shopping List-->
         <scene sceneID="QXw-E9-4sY">
@@ -236,12 +226,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Shopping List" id="0yu-Ty-oIV">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="ellipsis" catalog="system" id="w0q-Rj-Pwc">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="w0q-Rj-Pwc">
                             <connections>
-                                <action selector="optionsAction:" destination="biK-48-t94" id="86j-nT-GzZ"/>
+                                <action selector="addOrRestockAction:" destination="biK-48-t94" id="86j-nT-GzZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addOrRestockButton" destination="w0q-Rj-Pwc" id="JFA-GN-FKb"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cz2-j8-AKx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -516,7 +509,7 @@
     </scenes>
     <resources>
         <image name="circle" catalog="system" width="128" height="121"/>
-        <image name="ellipsis" catalog="system" width="128" height="37"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="star" catalog="system" width="128" height="116"/>
     </resources>
 </document>

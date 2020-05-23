@@ -33,6 +33,10 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             
             let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             
+            let helpAction = UIAlertAction(title: "Help", style: .default) { (action) in
+                self.performSegue(withIdentifier: "Welcome Segue", sender: nil)
+            }
+            
             let listAction = UIAlertAction(title: "Shopping List", style: .default) { (action) in
                 self.performSegue(withIdentifier: "Shopping List Segue", sender: nil)
             }
@@ -83,6 +87,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
             
+            actionSheet.addAction(helpAction)
             actionSheet.addAction(searchAction)
             actionSheet.addAction(listAction)
             actionSheet.addAction(runningLowAction)
@@ -144,10 +149,12 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
         loadFromDatabase()
         
         let defaults = UserDefaults.standard
-        if !defaults.bool(forKey: "openedAppBefore") {
-            self.performSegue(withIdentifier: "Welcome Segue", sender: nil)
-            defaults.set(true, forKey: "openedAppBefore")
-        }
+        //if !defaults.bool(forKey: "openedAppBefore") {
+        //let welcomeViewController = PageViewController(nibName: "WelcomeController", bundle: nil)
+        //present(welcomeViewController, animated: true, completion: nil)
+        performSegue(withIdentifier: "Welcome Segue", sender: nil)
+        //defaults.set(true, forKey: "openedAppBefore")
+        //}
     }
     
     func loadFromDatabase(){
@@ -488,6 +495,8 @@ extension FridgeTableViewController {
     func deselectAllItems(animated: Bool) {
         for indexPath in selectedRows { tableView.deselectRow(at: indexPath, animated: animated) }
         selectedRows  = [IndexPath]()
+        optionsOutlet.image = nil
+        optionsOutlet.title = "Shopping List"
     }
 }
 
