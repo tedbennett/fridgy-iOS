@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AQg-a6-kIT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AQg-a6-kIT">
     <device id="retina5_5" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Welcome View Controller-->
         <scene sceneID="WKa-qu-O70">
             <objects>
-                <viewController id="XXP-9P-pnX" customClass="WelcomeViewController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XXP-9P-pnX" customClass="WelcomeViewController" customModule="Fridgly" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wpE-ue-mvU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,15 +24,15 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="T5e-rt-oJr"/>
                             </scrollView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="FtN-Vr-YUD">
-                                <rect key="frame" x="187.66666666666666" y="659" width="39" height="37"/>
+                                <rect key="frame" x="146.33333333333334" y="668.66666666666663" width="121.33333333333334" height="27.333333333333371"/>
                             </pageControl>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="pmh-WG-RUY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="FtN-Vr-YUD" firstAttribute="centerX" secondItem="pmh-WG-RUY" secondAttribute="centerX" id="HJR-Ed-0rw"/>
                             <constraint firstItem="pmh-WG-RUY" firstAttribute="bottom" secondItem="FtN-Vr-YUD" secondAttribute="bottom" constant="20" id="r1e-ut-gNU"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="pmh-WG-RUY"/>
                     </view>
                     <connections>
                         <outlet property="pageControl" destination="FtN-Vr-YUD" id="5F0-2b-idC"/>
@@ -44,7 +46,7 @@
         <!--Fridgy-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="FridgeTableViewController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="FridgeTableViewController" customModule="Fridgly" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,9 +56,9 @@
                                 <subviews>
                                     <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="N8S-aF-Tje">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="626"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="fridgeItemCell" rowHeight="60" id="Prb-bv-Wx7" customClass="FridgeItemTableCell" customModule="Fridgy_iOS" customModuleProvider="target">
+                                            <tableViewCell opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="fridgeItemCell" rowHeight="60" id="Prb-bv-Wx7" customClass="FridgeItemTableCell" customModule="Fridgly" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Prb-bv-Wx7" id="J9q-Ws-5AH">
@@ -71,7 +73,7 @@
                                                         </label>
                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wj7-Mq-H3a">
                                                             <rect key="frame" x="0.0" y="0.0" width="5" height="60"/>
-                                                            <color key="backgroundColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="5" id="UYY-JI-Hav"/>
                                                             </constraints>
@@ -114,11 +116,11 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your fridge is empty!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tq5-z9-JRP">
                                         <rect key="frame" x="127.66666666666667" y="302.66666666666669" width="158.66666666666663" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <color key="textColor" systemColor="lightTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="tq5-z9-JRP" firstAttribute="centerX" secondItem="7RB-e9-0JI" secondAttribute="centerX" id="3d7-R0-RqX"/>
                                     <constraint firstAttribute="bottom" secondItem="N8S-aF-Tje" secondAttribute="bottom" id="7Do-zA-SsH"/>
@@ -128,7 +130,7 @@
                                     <constraint firstAttribute="trailing" secondItem="N8S-aF-Tje" secondAttribute="trailing" id="nau-z7-RyU"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1KW-4g-6QL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1KW-4g-6QL">
                                 <rect key="frame" x="20" y="681" width="374" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -140,7 +142,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="1KW-4g-6QL" firstAttribute="top" secondItem="N8S-aF-Tje" secondAttribute="bottom" constant="11" id="17l-49-ias"/>
                             <constraint firstItem="7RB-e9-0JI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9UA-St-2p3"/>
@@ -150,9 +153,13 @@
                             <constraint firstItem="1KW-4g-6QL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ZXG-dq-PT4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1KW-4g-6QL" secondAttribute="bottom" constant="11" id="znF-HK-COW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Fridgy" largeTitleDisplayMode="always" id="Isy-zY-96d">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="questionmark.circle" catalog="system" id="In6-aG-G5K">
+                            <connections>
+                                <action selector="helpAction:" destination="BYZ-38-t0r" id="f23-YS-H49"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Shopping List" id="NXX-Jf-YCs">
                             <connections>
                                 <action selector="optionsAction:" destination="BYZ-38-t0r" id="Uq1-BT-WyZ"/>
@@ -176,13 +183,13 @@
         <!--Shopping List-->
         <scene sceneID="QXw-E9-4sY">
             <objects>
-                <tableViewController id="biK-48-t94" customClass="ShoppingListViewController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="biK-48-t94" customClass="ShoppingListViewController" customModule="Fridgly" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Tr5-dC-SVW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="shoppingListCell" id="t01-wm-9ke" customClass="ShoppingListTableViewCell" customModule="Fridgy_iOS" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="shoppingListCell" id="t01-wm-9ke" customClass="ShoppingListTableViewCell" customModule="Fridgly" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="t01-wm-9ke" id="38u-OE-NUP">
@@ -261,7 +268,7 @@
         <!--Add Item Controller-->
         <scene sceneID="40n-yV-owd">
             <objects>
-                <viewController id="Uof-dV-j9L" customClass="AddItemController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Uof-dV-j9L" customClass="AddItemController" customModule="Fridgly" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ukt-BL-sOr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -273,13 +280,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYP-pM-QJz">
-                                <rect key="frame" x="20" y="79" width="94" height="24"/>
+                                <rect key="frame" x="20" y="79" width="95" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Name" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="k4t-O3-i3D">
-                                <rect key="frame" x="114" y="78" width="280" height="26"/>
+                                <rect key="frame" x="115" y="78" width="279" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
@@ -297,13 +304,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expiry Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cph-hi-ds3">
-                                <rect key="frame" x="20.000000000000007" y="128" width="99.666666666666686" height="24"/>
+                                <rect key="frame" x="20" y="128" width="100" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Date" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LBR-aD-Ud2">
-                                <rect key="frame" x="119.66666666666666" y="127" width="274.33333333333337" height="26"/>
+                                <rect key="frame" x="120" y="127" width="274" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -316,7 +323,7 @@
                                     <constraint firstAttribute="width" constant="374" id="I9S-V3-5np"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xi9-9R-OzX">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xi9-9R-OzX">
                                 <rect key="frame" x="20" y="205" width="374" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -327,9 +334,9 @@
                                     <action selector="doneButtonAction:" destination="Uof-dV-j9L" eventType="touchUpInside" id="g1C-Uc-r0W"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho1-fh-ndh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho1-fh-ndh">
                                 <rect key="frame" x="20" y="265" width="378" height="44"/>
-                                <color key="backgroundColor" systemColor="systemGray4Color" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Etx-T3-qpP"/>
                                 </constraints>
@@ -342,7 +349,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="G1h-lH-XWU"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ho1-fh-ndh" firstAttribute="top" secondItem="Xi9-9R-OzX" secondAttribute="bottom" constant="16" id="0vT-ow-8IQ"/>
                             <constraint firstItem="G1h-lH-XWU" firstAttribute="trailing" secondItem="Xi9-9R-OzX" secondAttribute="trailing" constant="20" id="3bZ-g6-8ad"/>
@@ -370,7 +378,6 @@
                             <constraint firstItem="k4t-O3-i3D" firstAttribute="leading" secondItem="lYP-pM-QJz" secondAttribute="trailing" id="sj9-8A-OZw"/>
                             <constraint firstItem="lYP-pM-QJz" firstAttribute="top" secondItem="kGD-Y5-XqM" secondAttribute="bottom" constant="20" id="v5l-fM-6Kn"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="G1h-lH-XWU"/>
                     </view>
                     <connections>
                         <outlet property="dateTextField" destination="LBR-aD-Ud2" id="Clc-ba-N0T"/>
@@ -385,7 +392,7 @@
         <!--Edit Item Controller-->
         <scene sceneID="KuR-9R-jaV">
             <objects>
-                <viewController id="DcF-SE-c9N" customClass="EditItemController" customModule="Fridgy_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="DcF-SE-c9N" customClass="EditItemController" customModule="Fridgly" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MBL-mc-xi0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -397,13 +404,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JGO-B2-a4C">
-                                <rect key="frame" x="20" y="79" width="94" height="24"/>
+                                <rect key="frame" x="20" y="79" width="95" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Name" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="70j-L4-U6y">
-                                <rect key="frame" x="114" y="78" width="280" height="26"/>
+                                <rect key="frame" x="115" y="78" width="279" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <userDefinedRuntimeAttributes>
@@ -421,13 +428,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expiry Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWH-oj-X3T">
-                                <rect key="frame" x="20.000000000000007" y="128" width="99.666666666666686" height="24"/>
+                                <rect key="frame" x="20" y="128" width="100" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Date" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gvM-dA-bAE">
-                                <rect key="frame" x="119.66666666666666" y="127" width="274.33333333333337" height="26"/>
+                                <rect key="frame" x="120" y="127" width="274" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -440,7 +447,7 @@
                                     <constraint firstAttribute="height" constant="1" id="TR0-po-yg0"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DvV-nO-2hi">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DvV-nO-2hi">
                                 <rect key="frame" x="20" y="205" width="374" height="44"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
@@ -451,9 +458,9 @@
                                     <action selector="doneButtonAction:" destination="DcF-SE-c9N" eventType="touchUpInside" id="nyq-SJ-s4j"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CL0-jR-Z1P">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CL0-jR-Z1P">
                                 <rect key="frame" x="20" y="265" width="378" height="44"/>
-                                <color key="backgroundColor" systemColor="systemGray4Color" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="cgv-Hc-Me5"/>
                                 </constraints>
@@ -466,7 +473,8 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="akB-E4-Hgl"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="CL0-jR-Z1P" firstAttribute="top" secondItem="DvV-nO-2hi" secondAttribute="bottom" constant="16" id="1xR-qB-DV6"/>
                             <constraint firstItem="akB-E4-Hgl" firstAttribute="trailing" secondItem="CL0-jR-Z1P" secondAttribute="trailing" constant="16" id="4iG-SA-UUJ"/>
@@ -494,7 +502,6 @@
                             <constraint firstItem="mWH-oj-X3T" firstAttribute="leading" secondItem="akB-E4-Hgl" secondAttribute="leading" constant="20" id="pC6-FI-Iyd"/>
                             <constraint firstItem="DvV-nO-2hi" firstAttribute="top" secondItem="mWH-oj-X3T" secondAttribute="bottom" constant="53" id="uXY-ya-Gbm"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="akB-E4-Hgl"/>
                     </view>
                     <connections>
                         <outlet property="dateTextField" destination="gvM-dA-bAE" id="2tC-zr-kbU"/>
@@ -510,6 +517,19 @@
     <resources>
         <image name="circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <systemColor name="lightTextColor">
+            <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

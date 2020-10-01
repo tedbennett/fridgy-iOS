@@ -16,6 +16,9 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var addItemOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var optionsOutlet: UIBarButtonItem!
+    @IBAction func helpAction(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "Welcome Segue", sender: nil)
+    }
     
     @IBAction func optionsAction(_ sender: UIBarButtonItem) {
         if !selectedRows.isEmpty {
@@ -30,12 +33,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 allFavourited = allFavourited && item.favourite
             }
             
-            
             let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            
-            let helpAction = UIAlertAction(title: "Help", style: .default) { (action) in
-                self.performSegue(withIdentifier: "Welcome Segue", sender: nil)
-            }
             
             let listAction = UIAlertAction(title: "Shopping List", style: .default) { (action) in
                 self.performSegue(withIdentifier: "Shopping List Segue", sender: nil)
@@ -87,7 +85,6 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
             
-            actionSheet.addAction(helpAction)
             actionSheet.addAction(searchAction)
             actionSheet.addAction(listAction)
             actionSheet.addAction(runningLowAction)

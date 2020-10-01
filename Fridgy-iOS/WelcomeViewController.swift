@@ -51,7 +51,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
        
         let page3body = NSMutableAttributedString(string: "Running low on something?\n", attributes: headerAttributes)
         page3body.append(NSAttributedString(string: "Just swipe left on that item, and Fridgy will remember that for you.\n\n", attributes: bodyAttributes))
-        page3body.append(NSAttributedString(string: "Run out?\n", attributes: headerAttributes))
+        page3body.append(NSAttributedString(string: "Ran out?\n", attributes: headerAttributes))
         page3body.append(NSAttributedString(string: "Just swipe right!", attributes: bodyAttributes))
         
         let page4body = NSAttributedString(string: "Favourite an item to let Fridgy know it’s something that’s always in your fridge\n\nYour favourites are automatically added to your shopping list when they're running low or have run out.\n\nOnce you’ve gone shopping, you can add any items from your shopping list back into your fridge in one tap", attributes: bodyAttributes)
