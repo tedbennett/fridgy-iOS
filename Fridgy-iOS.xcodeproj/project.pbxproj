@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9F58BBCA2465615100E5F8A1 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */; };
-		9F663A622467EECD00817361 /* OldShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F663A612467EECD00817361 /* OldShoppingListViewController.swift */; };
 		9F89B31426E379F6002B91C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F89B31326E379F6002B91C7 /* Main.storyboard */; };
 		9F89B31726E37CE5002B91C7 /* FridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */; };
 		9F89B31B26E387A8002B91C7 /* PantryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F89B31A26E387A8002B91C7 /* PantryViewController.swift */; };
@@ -18,26 +17,15 @@
 		9F89B32326E387CE002B91C7 /* Fridge.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F89B32226E387CE002B91C7 /* Fridge.storyboard */; };
 		9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357ED2456DB4E0026B32D /* AppDelegate.swift */; };
 		9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */; };
-		9F9357F52456DB4E0026B32D /* OldMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F32456DB4E0026B32D /* OldMain.storyboard */; };
 		9F9357F72456DB530026B32D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F62456DB530026B32D /* Assets.xcassets */; };
 		9F9357FA2456DB530026B32D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F82456DB530026B32D /* LaunchScreen.storyboard */; };
-		9FBBD064246F10E300E14E53 /* FridgeItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBBD062246F10E300E14E53 /* FridgeItem+CoreDataClass.swift */; };
-		9FBBD065246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBBD063246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift */; };
-		9FC1F4D4245A0B4C0097DFF4 /* AddItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC1F4D3245A0B4C0097DFF4 /* AddItemController.swift */; };
 		9FDFBA0F246695C400DEEFD7 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */; };
-		9FE720F2245B66720045A4A6 /* FridgeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE720F1245B66720045A4A6 /* FridgeTableViewController.swift */; };
-		9FE720F4245B66890045A4A6 /* FridgeItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE720F3245B66890045A4A6 /* FridgeItemTableCell.swift */; };
 		9FE84D5B246581A5000F8055 /* AddDateTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE84D59246581A5000F8055 /* AddDateTableCell.swift */; };
 		9FE84D5C246581A5000F8055 /* AddDateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FE84D5A246581A5000F8055 /* AddDateTableViewCell.xib */; };
-		9FFAE0E5246802FD0004D6CB /* ShoppingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFAE0E4246802FD0004D6CB /* ShoppingListTableViewCell.swift */; };
-		9FFFA64A24795FCA00F232DD /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFFA64924795FCA00F232DD /* WelcomeViewController.swift */; };
-		9FFFA64C24795FF600F232DD /* Page.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FFFA64B24795FF600F232DD /* Page.xib */; };
-		9FFFA64E2479600800F232DD /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFFA64D2479600800F232DD /* Page.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
-		9F663A612467EECD00817361 /* OldShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldShoppingListViewController.swift; sourceTree = "<group>"; };
 		9F89B31126E37881002B91C7 /* Fridgy v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Fridgy v2.xcdatamodel"; sourceTree = "<group>"; };
 		9F89B31326E379F6002B91C7 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeViewController.swift; sourceTree = "<group>"; };
@@ -49,22 +37,12 @@
 		9F9357EA2456DB4E0026B32D /* Fridgly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fridgly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9357ED2456DB4E0026B32D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9F9357F42456DB4E0026B32D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/OldMain.storyboard; sourceTree = "<group>"; };
 		9F9357F62456DB530026B32D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F9357F92456DB530026B32D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F9357FB2456DB530026B32D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9FBBD062246F10E300E14E53 /* FridgeItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FridgeItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9FBBD063246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FridgeItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9FC1F4D3245A0B4C0097DFF4 /* AddItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemController.swift; sourceTree = "<group>"; };
 		9FDFBA0E246695C400DEEFD7 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		9FE720F1245B66720045A4A6 /* FridgeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeTableViewController.swift; sourceTree = "<group>"; };
-		9FE720F3245B66890045A4A6 /* FridgeItemTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeItemTableCell.swift; sourceTree = "<group>"; };
 		9FE84D59246581A5000F8055 /* AddDateTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateTableCell.swift; sourceTree = "<group>"; };
 		9FE84D5A246581A5000F8055 /* AddDateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddDateTableViewCell.xib; sourceTree = "<group>"; };
-		9FFAE0E4246802FD0004D6CB /* ShoppingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewCell.swift; sourceTree = "<group>"; };
-		9FFFA64924795FCA00F232DD /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		9FFFA64B24795FF600F232DD /* Page.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Page.xib; sourceTree = "<group>"; };
-		9FFFA64D2479600800F232DD /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,24 +65,6 @@
 				9F89B31226E379EB002B91C7 /* Main */,
 			);
 			path = Modules;
-			sourceTree = "<group>";
-		};
-		9F89B31026E37842002B91C7 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				9F9357F32456DB4E0026B32D /* OldMain.storyboard */,
-				9FFFA64924795FCA00F232DD /* WelcomeViewController.swift */,
-				9FFFA64B24795FF600F232DD /* Page.xib */,
-				9FFFA64D2479600800F232DD /* Page.swift */,
-				9FE720F1245B66720045A4A6 /* FridgeTableViewController.swift */,
-				9F663A612467EECD00817361 /* OldShoppingListViewController.swift */,
-				9FC1F4D3245A0B4C0097DFF4 /* AddItemController.swift */,
-				9FFAE0E4246802FD0004D6CB /* ShoppingListTableViewCell.swift */,
-				9FE720F3245B66890045A4A6 /* FridgeItemTableCell.swift */,
-				9FBBD063246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift */,
-				9FBBD062246F10E300E14E53 /* FridgeItem+CoreDataClass.swift */,
-			);
-			path = Old;
 			sourceTree = "<group>";
 		};
 		9F89B31226E379EB002B91C7 /* Main */ = {
@@ -168,7 +128,6 @@
 				9F9357F82456DB530026B32D /* LaunchScreen.storyboard */,
 				9F9357ED2456DB4E0026B32D /* AppDelegate.swift */,
 				9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */,
-				9F89B31026E37842002B91C7 /* Old */,
 				9F9357FB2456DB530026B32D /* Info.plist */,
 			);
 			path = "Fridgy-iOS";
@@ -211,7 +170,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Ted Bennett";
 				TargetAttributes = {
 					9F9357E92456DB4E0026B32D = {
@@ -244,11 +203,9 @@
 			files = (
 				9F89B31F26E387BA002B91C7 /* ShoppingList.storyboard in Resources */,
 				9F9357FA2456DB530026B32D /* LaunchScreen.storyboard in Resources */,
-				9FFFA64C24795FF600F232DD /* Page.xib in Resources */,
 				9F89B32326E387CE002B91C7 /* Fridge.storyboard in Resources */,
 				9F9357F72456DB530026B32D /* Assets.xcassets in Resources */,
 				9F89B31426E379F6002B91C7 /* Main.storyboard in Resources */,
-				9F9357F52456DB4E0026B32D /* OldMain.storyboard in Resources */,
 				9F89B32126E387C4002B91C7 /* Pantry.storyboard in Resources */,
 				9FE84D5C246581A5000F8055 /* AddDateTableViewCell.xib in Resources */,
 			);
@@ -261,22 +218,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FBBD064246F10E300E14E53 /* FridgeItem+CoreDataClass.swift in Sources */,
 				9F89B31D26E387B2002B91C7 /* ShoppingListViewController.swift in Sources */,
-				9FC1F4D4245A0B4C0097DFF4 /* AddItemController.swift in Sources */,
 				9F89B31B26E387A8002B91C7 /* PantryViewController.swift in Sources */,
 				9F89B31726E37CE5002B91C7 /* FridgeViewController.swift in Sources */,
-				9FFAE0E5246802FD0004D6CB /* ShoppingListTableViewCell.swift in Sources */,
-				9FFFA64E2479600800F232DD /* Page.swift in Sources */,
-				9F663A622467EECD00817361 /* OldShoppingListViewController.swift in Sources */,
 				9FE84D5B246581A5000F8055 /* AddDateTableCell.swift in Sources */,
-				9FBBD065246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift in Sources */,
-				9FFFA64A24795FCA00F232DD /* WelcomeViewController.swift in Sources */,
-				9FE720F2245B66720045A4A6 /* FridgeTableViewController.swift in Sources */,
 				9FDFBA0F246695C400DEEFD7 /* Model.xcdatamodeld in Sources */,
 				9F58BBCA2465615100E5F8A1 /* AddItemTableViewCell.swift in Sources */,
 				9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */,
-				9FE720F4245B66890045A4A6 /* FridgeItemTableCell.swift in Sources */,
 				9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,14 +232,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9F9357F32456DB4E0026B32D /* OldMain.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9F9357F42456DB4E0026B32D /* Base */,
-			);
-			name = OldMain.storyboard;
-			sourceTree = "<group>";
-		};
 		9F9357F82456DB530026B32D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -329,6 +269,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -389,6 +330,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
