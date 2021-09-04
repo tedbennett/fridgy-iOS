@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="FridgeItem" representedClassName=".FridgeItem" syncable="YES">
-        <attribute name="expiry" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="favourite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="removed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="runningLow" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="sectionIdentifier" optional="YES" transient="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="shelfLife" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="shoppingListOnly" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="uniqueId" optional="YES" attributeType="String"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Fridge" representedClassName="Fridge" syncable="YES" codeGenerationType="class">
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item"/>
     </entity>
-    <entity name="ToDelete" representedClassName="ToDelete" syncable="YES">
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="inShoppingList" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="uniqueId" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Pantry" representedClassName="Pantry" syncable="YES" codeGenerationType="class">
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Item"/>
+    </entity>
+    <entity name="ShoppingList" representedClassName="ShoppingList" syncable="YES" codeGenerationType="class"/>
     <elements>
-        <element name="FridgeItem" positionX="240.76171875" positionY="-69.546875" width="128" height="178"/>
-        <element name="ToDelete" positionX="-63" positionY="27" width="128" height="73"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="59"/>
+        <element name="Fridge" positionX="-36" positionY="27" width="128" height="44"/>
+        <element name="Pantry" positionX="-18" positionY="36" width="128" height="44"/>
+        <element name="ShoppingList" positionX="0" positionY="45" width="128" height="29"/>
     </elements>
 </model>
