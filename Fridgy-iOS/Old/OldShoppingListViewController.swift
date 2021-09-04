@@ -13,7 +13,7 @@ protocol RemoveItem {
     func removeItem(uniqueId: String)
 }
 
-class ShoppingListViewController: UITableViewController {
+class OldShoppingListViewController: UITableViewController {
     
     private var selectedRows = [IndexPath]()
     var items = [ShoppingListItem]()

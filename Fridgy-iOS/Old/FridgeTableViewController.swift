@@ -413,7 +413,7 @@ class FridgeTableViewController: UIViewController, UITableViewDelegate, UITableV
                 vc.uniqueId = item.uniqueId
             }
         } else if segue.identifier == "Shopping List Segue" {
-            if let vc = segue.destination as? ShoppingListViewController {
+            if let vc = segue.destination as? OldShoppingListViewController {
                 
                 vc.delegate = self
                 
