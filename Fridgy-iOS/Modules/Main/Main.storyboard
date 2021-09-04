@@ -4,59 +4,9 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Pantry-->
-        <scene sceneID="qwT-v0-WzX">
-            <objects>
-                <viewController id="ndS-fe-ey2" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="53v-V1-pwh">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="MjC-xB-kbw"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Pantry" id="vVr-Z8-KdG"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cBi-Dd-Kgo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1101" y="117"/>
-        </scene>
-        <!--Shopping List-->
-        <scene sceneID="qjP-5t-ccT">
-            <objects>
-                <viewController id="fKZ-H3-Z3U" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ofv-3m-MLg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="dZT-C2-rTf"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Shopping List" id="yao-yQ-W4Q"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ed5-tQ-BLW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1801" y="117"/>
-        </scene>
-        <!--Fridge-->
-        <scene sceneID="DUR-2B-tj7">
-            <objects>
-                <viewController id="dWs-Ji-rgD" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="kml-xT-Oki">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="OaJ-ru-bKs"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Fridge" id="KHm-39-LBq"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YVq-Rq-WEW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="400" y="117"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="OP4-ZX-xjn">
             <objects>
@@ -67,19 +17,44 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="dWs-Ji-rgD" kind="relationship" relationship="viewControllers" id="e1n-k8-LlD"/>
-                        <segue destination="ndS-fe-ey2" kind="relationship" relationship="viewControllers" id="k0Y-3l-eOL"/>
-                        <segue destination="fKZ-H3-Z3U" kind="relationship" relationship="viewControllers" id="aaQ-Aw-cr0"/>
+                        <segue destination="hVh-wY-fx3" kind="relationship" relationship="viewControllers" id="A6f-3I-RhN"/>
+                        <segue destination="Usa-yt-0ll" kind="relationship" relationship="viewControllers" id="9UD-jv-pWc"/>
+                        <segue destination="rxo-cD-l47" kind="relationship" relationship="viewControllers" id="SrW-57-yMJ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tHp-J1-vy2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-777" y="117"/>
         </scene>
+        <!--Fridge-->
+        <scene sceneID="Amt-te-tEa">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Fridge" id="hVh-wY-fx3" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="yeB-Ft-Ob3"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x4O-lV-ojX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="30"/>
+        </scene>
+        <!--Pantry-->
+        <scene sceneID="hiJ-QL-Chf">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Pantry" id="Usa-yt-0ll" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="SUp-sS-bRl"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iZI-vz-sJj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="117"/>
+        </scene>
+        <!--ShoppingList-->
+        <scene sceneID="Thp-QK-Ny8">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ShoppingList" id="rxo-cD-l47" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="q2f-TB-igj"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cik-ZM-fnE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-175" y="201"/>
+        </scene>
     </scenes>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

@@ -8,8 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		9F58BBCA2465615100E5F8A1 /* AddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */; };
-		9F663A622467EECD00817361 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F663A612467EECD00817361 /* ShoppingListViewController.swift */; };
+		9F663A622467EECD00817361 /* OldShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F663A612467EECD00817361 /* OldShoppingListViewController.swift */; };
 		9F89B31426E379F6002B91C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F89B31326E379F6002B91C7 /* Main.storyboard */; };
+		9F89B31726E37CE5002B91C7 /* FridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */; };
+		9F89B31B26E387A8002B91C7 /* PantryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F89B31A26E387A8002B91C7 /* PantryViewController.swift */; };
+		9F89B31D26E387B2002B91C7 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F89B31C26E387B2002B91C7 /* ShoppingListViewController.swift */; };
+		9F89B31F26E387BA002B91C7 /* ShoppingList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F89B31E26E387BA002B91C7 /* ShoppingList.storyboard */; };
+		9F89B32126E387C4002B91C7 /* Pantry.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F89B32026E387C4002B91C7 /* Pantry.storyboard */; };
+		9F89B32326E387CE002B91C7 /* Fridge.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F89B32226E387CE002B91C7 /* Fridge.storyboard */; };
 		9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357ED2456DB4E0026B32D /* AppDelegate.swift */; };
 		9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */; };
 		9F9357F52456DB4E0026B32D /* OldMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F32456DB4E0026B32D /* OldMain.storyboard */; };
@@ -31,9 +37,15 @@
 
 /* Begin PBXFileReference section */
 		9F58BBC92465615100E5F8A1 /* AddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewCell.swift; sourceTree = "<group>"; };
-		9F663A612467EECD00817361 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
+		9F663A612467EECD00817361 /* OldShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldShoppingListViewController.swift; sourceTree = "<group>"; };
 		9F89B31126E37881002B91C7 /* Fridgy v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Fridgy v2.xcdatamodel"; sourceTree = "<group>"; };
 		9F89B31326E379F6002B91C7 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeViewController.swift; sourceTree = "<group>"; };
+		9F89B31A26E387A8002B91C7 /* PantryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryViewController.swift; sourceTree = "<group>"; };
+		9F89B31C26E387B2002B91C7 /* ShoppingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListViewController.swift; sourceTree = "<group>"; };
+		9F89B31E26E387BA002B91C7 /* ShoppingList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ShoppingList.storyboard; sourceTree = "<group>"; };
+		9F89B32026E387C4002B91C7 /* Pantry.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Pantry.storyboard; sourceTree = "<group>"; };
+		9F89B32226E387CE002B91C7 /* Fridge.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Fridge.storyboard; sourceTree = "<group>"; };
 		9F9357EA2456DB4E0026B32D /* Fridgly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fridgly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9357ED2456DB4E0026B32D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +81,9 @@
 		9F89B30F26E3782A002B91C7 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				9F89B31926E38787002B91C7 /* Shopping List */,
+				9F89B31826E38779002B91C7 /* Pantry */,
+				9F89B31526E37CD2002B91C7 /* Fridge */,
 				9F89B31226E379EB002B91C7 /* Main */,
 			);
 			path = Modules;
@@ -82,7 +97,7 @@
 				9FFFA64B24795FF600F232DD /* Page.xib */,
 				9FFFA64D2479600800F232DD /* Page.swift */,
 				9FE720F1245B66720045A4A6 /* FridgeTableViewController.swift */,
-				9F663A612467EECD00817361 /* ShoppingListViewController.swift */,
+				9F663A612467EECD00817361 /* OldShoppingListViewController.swift */,
 				9FC1F4D3245A0B4C0097DFF4 /* AddItemController.swift */,
 				9FFAE0E4246802FD0004D6CB /* ShoppingListTableViewCell.swift */,
 				9FE720F3245B66890045A4A6 /* FridgeItemTableCell.swift */,
@@ -98,6 +113,33 @@
 				9F89B31326E379F6002B91C7 /* Main.storyboard */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		9F89B31526E37CD2002B91C7 /* Fridge */ = {
+			isa = PBXGroup;
+			children = (
+				9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */,
+				9F89B32226E387CE002B91C7 /* Fridge.storyboard */,
+			);
+			path = Fridge;
+			sourceTree = "<group>";
+		};
+		9F89B31826E38779002B91C7 /* Pantry */ = {
+			isa = PBXGroup;
+			children = (
+				9F89B31A26E387A8002B91C7 /* PantryViewController.swift */,
+				9F89B32026E387C4002B91C7 /* Pantry.storyboard */,
+			);
+			path = Pantry;
+			sourceTree = "<group>";
+		};
+		9F89B31926E38787002B91C7 /* Shopping List */ = {
+			isa = PBXGroup;
+			children = (
+				9F89B31C26E387B2002B91C7 /* ShoppingListViewController.swift */,
+				9F89B31E26E387BA002B91C7 /* ShoppingList.storyboard */,
+			);
+			path = "Shopping List";
 			sourceTree = "<group>";
 		};
 		9F9357E12456DB4E0026B32D = {
@@ -200,11 +242,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F89B31F26E387BA002B91C7 /* ShoppingList.storyboard in Resources */,
 				9F9357FA2456DB530026B32D /* LaunchScreen.storyboard in Resources */,
 				9FFFA64C24795FF600F232DD /* Page.xib in Resources */,
+				9F89B32326E387CE002B91C7 /* Fridge.storyboard in Resources */,
 				9F9357F72456DB530026B32D /* Assets.xcassets in Resources */,
 				9F89B31426E379F6002B91C7 /* Main.storyboard in Resources */,
 				9F9357F52456DB4E0026B32D /* OldMain.storyboard in Resources */,
+				9F89B32126E387C4002B91C7 /* Pantry.storyboard in Resources */,
 				9FE84D5C246581A5000F8055 /* AddDateTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,10 +262,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FBBD064246F10E300E14E53 /* FridgeItem+CoreDataClass.swift in Sources */,
+				9F89B31D26E387B2002B91C7 /* ShoppingListViewController.swift in Sources */,
 				9FC1F4D4245A0B4C0097DFF4 /* AddItemController.swift in Sources */,
+				9F89B31B26E387A8002B91C7 /* PantryViewController.swift in Sources */,
+				9F89B31726E37CE5002B91C7 /* FridgeViewController.swift in Sources */,
 				9FFAE0E5246802FD0004D6CB /* ShoppingListTableViewCell.swift in Sources */,
 				9FFFA64E2479600800F232DD /* Page.swift in Sources */,
-				9F663A622467EECD00817361 /* ShoppingListViewController.swift in Sources */,
+				9F663A622467EECD00817361 /* OldShoppingListViewController.swift in Sources */,
 				9FE84D5B246581A5000F8055 /* AddDateTableCell.swift in Sources */,
 				9FBBD065246F10E300E14E53 /* FridgeItem+CoreDataProperties.swift in Sources */,
 				9FFFA64A24795FCA00F232DD /* WelcomeViewController.swift in Sources */,
