@@ -12,46 +12,6 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if false {
-        let fetch: NSFetchRequest = Item.fetchRequest()
-        let items = try! AppDelegate.viewContext.fetch(fetch)
-        items.forEach {
-            AppDelegate.viewContext.delete($0)
-        }
-        try! AppDelegate.viewContext.save()
-        
-        let fridgeItem1 = Item(context: AppDelegate.viewContext)
-        fridgeItem1.name = "Chicken"
-            fridgeItem1.category = "none"
-        fridgeItem1.inShoppingList = false
-        
-        fridgeItem1.index = 0
-        
-        let fridgeItem2 = Item(context: AppDelegate.viewContext)
-        fridgeItem2.name = "Bacon"
-            fridgeItem2.category = "none"
-        fridgeItem2.inShoppingList = false
-        
-        fridgeItem2.index = 1
-        
-        let fridgeItem3 = Item(context: AppDelegate.viewContext)
-        fridgeItem3.name = "Cucumber"
-            fridgeItem3.category = "veges"
-        fridgeItem3.inShoppingList = false
-        
-        fridgeItem3.index = 0
-        
-        let fridgeItem4 = Item(context: AppDelegate.viewContext)
-        fridgeItem4.name = "Cucumber"
-            fridgeItem4.category = "leftovers"
-        fridgeItem4.inShoppingList = false
-        
-        fridgeItem4.index = 1
-            
-            AppDelegate.saveContext()
-        }
-        
-        
         return true
     }
 

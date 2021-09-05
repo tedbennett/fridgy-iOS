@@ -190,24 +190,48 @@ extension FridgeViewController: UITableViewDelegate {
         let items = getItems(for: indexPath.section)
         guard indexPath.row < items.count else { return nil }
         
-        let addItemToShoppingList = UIContextualAction(
-            style: .normal,
-            title: "Add to Shopping List"
-        ) { [weak self] (action, view, completionHandler) in
-            self?.addToShoppingList(at: indexPath)
-            completionHandler(true)
+        let item = getItem(for: indexPath)
+        if item.shoppingListItem != nil {
+            let action = UIContextualAction(
+                style: .normal,
+                title: "Remove from Shopping List"
+            ) { [weak self] _, _, completionHandler in
+                self?.removeFromShoppingList(at: indexPath)
+                completionHandler(true)
+            }
+            action.backgroundColor = .systemYellow
+            return UISwipeActionsConfiguration(actions: [action])
+        } else {
+            let action = UIContextualAction(
+                style: .normal,
+                title: "Add to Shopping List"
+            ) { [weak self] _, _, completionHandler in
+                self?.addToShoppingList(at: indexPath)
+                completionHandler(true)
+            }
+            action.backgroundColor = .systemYellow
+            return UISwipeActionsConfiguration(actions: [action])
         }
-        
-        return UISwipeActionsConfiguration(actions: [addItemToShoppingList])
     }
     
     func addToShoppingList(at indexPath: IndexPath) {
+        let item = getItem(for: indexPath)
+        let shoppingListItem = ShoppingListItem(context: AppDelegate.viewContext)
+        shoppingListItem.name = item.name
+        shoppingListItem.fridgeItem = item
+        
+        AppDelegate.saveContext()
+        tableView.reloadData()
+    }
+    
+    func removeFromShoppingList(at indexPath: IndexPath) {
         let category = categories[indexPath.section]
         if lookup[category] != nil {
-            lookup[category]?[indexPath.row].inShoppingList.toggle()
-            tableView.reloadData()
-            
-            AppDelegate.saveContext()
+            if let shoppingListItem = lookup[category]?[indexPath.row].shoppingListItem {
+                AppDelegate.viewContext.delete(shoppingListItem)
+                AppDelegate.saveContext()
+                tableView.reloadData()
+            }
         }
     }
     
@@ -316,7 +340,6 @@ extension FridgeViewController: EditorTableViewCellDelegate {
             item.name = text
             item.category = category
             item.index = Int16(items.count)
-            item.inShoppingList = false
             
             AppDelegate.saveContext()
             

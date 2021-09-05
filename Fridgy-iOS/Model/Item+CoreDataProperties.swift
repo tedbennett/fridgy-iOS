@@ -18,9 +18,10 @@ extension Item {
     }
 
     @NSManaged public var index: Int16
-    @NSManaged public var inShoppingList: Bool
     @NSManaged public var name: String
     @NSManaged public var category: String
+    
+    @NSManaged public var shoppingListItem: ShoppingListItem?
 
 }
 

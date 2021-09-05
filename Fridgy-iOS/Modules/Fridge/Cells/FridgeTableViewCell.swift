@@ -26,7 +26,7 @@ class FridgeTableViewCell: UITableViewCell {
     }
     
     func setup(item: Item) {
-        shoppingListImageView.isHidden = !item.inShoppingList
+        shoppingListImageView.isHidden = item.shoppingListItem == nil
         textLabel?.text = item.name
     }
 

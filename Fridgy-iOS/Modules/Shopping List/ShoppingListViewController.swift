@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ShoppingListViewController: UIViewController {
 
@@ -17,10 +18,24 @@ class ShoppingListViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.isEditing = true
+        populateItems()
     }
     
-    var data: [String] = ["One", "Two", "Three", "Four"]
+    var items: [ShoppingListTableItem] = []
+    
+    func populateItems() {
+        let shoppingListFetch: NSFetchRequest = ShoppingListItem.fetchRequest()
+        if let fetchedItems = try? AppDelegate.viewContext.fetch(shoppingListFetch) {
+            items = fetchedItems.map { ShoppingListTableItem($0) }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        populateItems()
+        tableView.reloadData()
+    }
 }
 
 
@@ -38,39 +53,41 @@ extension ShoppingListViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        return data.count
+        return items.count
     }
     
     func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FridgeTableViewCell", for: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ShoppingListTableViewCell.identifier, for: indexPath) as? ShoppingListTableViewCell else {
+            fatalError("Failed to dequeue ShoppingListTableViewCell")
+        }
+        cell.setup(name: items[indexPath.row].name)
         return cell
     }
+}
+
+
+struct ShoppingListTableItem {
+    var fridgeItem: Item?
+    var shoppingItem: ShoppingListItem?
     
-    func tableView(
-        _ tableView: UITableView,
-        editingStyleForRowAt indexPath: IndexPath
-    ) -> UITableViewCell.EditingStyle {
-        return .none
+    init(_ fridgeItem: Item) {
+        self.fridgeItem = fridgeItem
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        shouldIndentWhileEditingRowAt indexPath: IndexPath
-    ) -> Bool {
-        return false
+    init(_ shoppingItem: ShoppingListItem) {
+        self.shoppingItem = shoppingItem
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        moveRowAt sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath
-    ) {
-        let movedObject = data[sourceIndexPath.row]
-        data.remove(at: sourceIndexPath.row)
-        data.insert(movedObject, at: destinationIndexPath.row)
+    var name: String {
+        if let fridgeItem = fridgeItem {
+            return fridgeItem.name
+        }
+        if let shoppingItem = shoppingItem {
+            return shoppingItem.name
+        }
+        fatalError("ShoppingListTableItem has no item set")
     }
 }
