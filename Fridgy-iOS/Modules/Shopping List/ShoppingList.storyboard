@@ -55,7 +55,7 @@
         <scene sceneID="CkD-Uj-g24">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jrL-6u-NA9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Shopping List" id="Mnj-c7-QgU"/>
+                    <tabBarItem key="tabBarItem" title="Shopping List" image="scroll" catalog="system" selectedImage="scroll.fill" id="Mnj-c7-QgU"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="2VF-J9-BnK">
@@ -73,6 +73,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="scroll" catalog="system" width="128" height="116"/>
+        <image name="scroll.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
