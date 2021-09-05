@@ -29,6 +29,30 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FridgeEditorTableViewCell" id="gUn-zi-dsG" customClass="FridgeEditorTableViewCell" customModule="Fridgly" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="93" width="374" height="42.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gUn-zi-dsG" id="Wy6-H3-23c">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="42.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o7m-MZ-QK3">
+                                                    <rect key="frame" x="15" y="10" width="354" height="22.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="o7m-MZ-QK3" secondAttribute="bottom" constant="10" id="3dt-0g-DSV"/>
+                                                <constraint firstAttribute="trailing" secondItem="o7m-MZ-QK3" secondAttribute="trailing" constant="5" id="MSB-F1-xlJ"/>
+                                                <constraint firstItem="o7m-MZ-QK3" firstAttribute="leading" secondItem="Wy6-H3-23c" secondAttribute="leading" constant="15" id="k4x-dO-ZQE"/>
+                                                <constraint firstItem="o7m-MZ-QK3" firstAttribute="top" secondItem="Wy6-H3-23c" secondAttribute="top" constant="10" id="wha-uW-lIm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="textField" destination="o7m-MZ-QK3" id="y9t-HT-Jj3"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
@@ -42,7 +66,13 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Fridge" id="EIO-uB-A3y"/>
-                    <navigationItem key="navigationItem" title="Your Fridge" id="glw-hD-w0O"/>
+                    <navigationItem key="navigationItem" title="Your Fridge" id="glw-hD-w0O">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="7D0-aq-W8k">
+                            <connections>
+                                <action selector="onAddButtonPressed:" destination="3hT-QI-7nL" id="hvS-vX-ydi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="VAM-TO-IoG" id="IqD-xu-t0W"/>
