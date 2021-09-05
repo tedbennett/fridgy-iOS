@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="FridgeItem" representedClassName="FridgeItem" syncable="YES" codeGenerationType="class">
-        <attribute name="expiresSoon" attributeType="Boolean" usesScalarValueType="YES"/>
+    <entity name="Item" representedClassName="Item" syncable="YES">
+        <attribute name="category" attributeType="String"/>
         <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="inShoppingList" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-    </entity>
-    <entity name="PantryItem" representedClassName="PantryItem" syncable="YES" codeGenerationType="class">
-        <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="inShoppingList" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="needsRestock" attributeType="Boolean" usesScalarValueType="YES"/>
     </entity>
     <entity name="ShoppingListItem" representedClassName="ShoppingListItem" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String"/>
     </entity>
     <elements>
-        <element name="FridgeItem" positionX="-63" positionY="-18" width="128" height="89"/>
-        <element name="PantryItem" positionX="-18" positionY="36" width="128" height="89"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="89"/>
         <element name="ShoppingListItem" positionX="27" positionY="81" width="128" height="44"/>
     </elements>
 </model>
