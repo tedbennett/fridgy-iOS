@@ -11,11 +11,47 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        if false {
+        let fetch: NSFetchRequest = Item.fetchRequest()
+        let items = try! AppDelegate.viewContext.fetch(fetch)
+        items.forEach {
+            AppDelegate.viewContext.delete($0)
+        }
+        try! AppDelegate.viewContext.save()
+        
+        let fridgeItem1 = Item(context: AppDelegate.viewContext)
+        fridgeItem1.name = "Chicken"
+            fridgeItem1.category = "none"
+        fridgeItem1.inShoppingList = false
+        
+        fridgeItem1.index = 0
+        
+        let fridgeItem2 = Item(context: AppDelegate.viewContext)
+        fridgeItem2.name = "Bacon"
+            fridgeItem2.category = "none"
+        fridgeItem2.inShoppingList = false
+        
+        fridgeItem2.index = 1
+        
+        let fridgeItem3 = Item(context: AppDelegate.viewContext)
+        fridgeItem3.name = "Cucumber"
+            fridgeItem3.category = "veges"
+        fridgeItem3.inShoppingList = false
+        
+        fridgeItem3.index = 0
+        
+        let fridgeItem4 = Item(context: AppDelegate.viewContext)
+        fridgeItem4.name = "Cucumber"
+            fridgeItem4.category = "leftovers"
+        fridgeItem4.inShoppingList = false
+        
+        fridgeItem4.index = 1
+            
+            AppDelegate.saveContext()
+        }
+        
+        
         return true
     }
 
@@ -72,11 +108,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Core Data Saving support
     
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
+    static func saveContext () {
+        if viewContext.hasChanges {
             do {
-                try context.save()
+                try viewContext.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
