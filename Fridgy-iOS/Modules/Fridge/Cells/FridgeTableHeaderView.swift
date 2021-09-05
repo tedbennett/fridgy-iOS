@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol HeaderTableViewCellDelegate: AnyObject {
+    func didStartEditing(at index: Int)
+}
+
 class FridgeTableHeaderView: UITableViewHeaderFooterView {
     
     static let identifier = "FridgeTableHeaderView"
     
-    var action: () -> Void = {}
+    var section: Int?
+    weak var delegate: HeaderTableViewCellDelegate?
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -77,12 +82,14 @@ class FridgeTableHeaderView: UITableViewHeaderFooterView {
         ])
     }
     
-    func setup(title: String, action: @escaping () -> Void) {
+    func setup(title: String, section: Int, delegate: HeaderTableViewCellDelegate) {
         titleLabel.text = title.uppercased()
-        self.action = action
+        self.delegate = delegate
+        self.section = section
     }
     
     @objc private func onPress(_ sender: UIButton) {
-        action()
+        guard let section = section else { return }
+        delegate?.didStartEditing(at: section)
     }
 }

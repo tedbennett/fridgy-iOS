@@ -42,17 +42,9 @@ class FridgeEditorTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let section = section, let text = textField.text else { return true  }
-        textFieldResignFirstResponder()
+        textField.resignFirstResponder()
         delegate?.didEndEditing(at: section, text: text)
         textField.text = ""
         return false
-    }
-    
-    func textFieldBecomeFirstResponder() {
-        textField.becomeFirstResponder()
-    }
-    
-    func textFieldResignFirstResponder() {
-        textField.resignFirstResponder()
     }
 }
