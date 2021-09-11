@@ -18,6 +18,7 @@ extension ShoppingListItem {
     }
 
     @NSManaged public var name: String
+    @NSManaged public var uniqueId: String
     
     @NSManaged public var fridgeItem: Item?
 }

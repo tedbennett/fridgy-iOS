@@ -8,50 +8,37 @@
 
 import UIKit
 import CoreData
+import MobileCoreServices
 
 class FridgeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var lookup: [String: [Item]] = [:]
-    var categories: [String] = [] {
-        didSet {
-            UserDefaults.standard.setValue(categories, forKey: "categories")
-        }
-    }
-    
-    func getItems(for section: Int) -> [Item] {
-        let category = categories[section]
-        guard let items = lookup[category] else {
-            fatalError("Category not found in lookup")
-        }
-        return items
-    }
-    
-    func getItem(for indexPath: IndexPath) -> Item {
-        let items = getItems(for: indexPath.section)
-        return items[indexPath.row]
-    }
+    var model = FridgeModel()
     
     var categoryBeingEdited: Int?
+    var cellBeingEdited: IndexPath?
+    
+    var rowBeingDragged: IndexPath?
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         tableView.delegate = self
         tableView.dataSource = self
         
-//        tableView.dragDelegate = self
-//        tableView.dropDelegate = self
+        tableView.dragDelegate = self
+        tableView.dropDelegate = self
         tableView.dragInteractionEnabled = true
         
         tableView.register(
             FridgeTableHeaderView.self,
            forHeaderFooterViewReuseIdentifier: FridgeTableHeaderView.identifier
         )
+        
+        setupNavbar()
         
         NotificationCenter.default.addObserver(
             self,
@@ -66,40 +53,23 @@ class FridgeViewController: UIViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
-
-        loadFromStore()
-    }
-    
-    func loadFromStore() {
-        let fetchRequest: NSFetchRequest = Item.fetchRequest()
-        if let fetchedItems = try? AppDelegate.viewContext.fetch(fetchRequest) {
-            if let retrievedCategories = UserDefaults.standard.array(forKey: "categories") as? [String] {
-                categories = retrievedCategories
-            }
-            // Make sure no categories are set to nil
-            categories.forEach {
-                lookup[$0] = []
-            }
-            
-            fetchedItems.forEach { item in
-                // Optional but we just populated lookup keys
-                lookup[item.category]?.append(item)
-            }
-            
-            lookup.forEach { key, array in
-                lookup[key] = array.sorted { $0.index < $1.index }
+        
+        if GlobalSettings.updateAppVersion() != GlobalSettings.appVersion {
+            if GlobalSettings.appVersion == "2.0.0" {
+                performSegue(withIdentifier: "presentWelcomeView", sender: self)
             }
         }
     }
     
-    private func updateIndices() {
-        lookup.forEach { category, items in
-            items.enumerated().forEach { index, item in
-                item.category = category
-                item.index = Int16(index)
-            }
-        }
-        AppDelegate.saveContext()
+    func setupNavbar() {
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        model.refresh()
+        tableView.reloadData()
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
@@ -110,6 +80,65 @@ class FridgeViewController: UIViewController {
     
     @objc func keyboardWillHide(_ notification:Notification) {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "presentEditCategories" {
+            guard let nav = segue.destination as? UINavigationController else { return }
+            guard let vc = nav.viewControllers.first as? EditCategoriesViewController else { return }
+            vc.model = model
+            vc.delegate = self
+        }
+    }
+}
+
+
+// MARK: IBActions
+
+extension FridgeViewController {
+    @IBAction func onMenuButtonPressed(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(
+            title: "Options",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        
+        alert.view.tintColor = .systemGreen
+        
+        alert.addAction(
+            UIAlertAction(
+                title: "Edit Categories",
+                style: .default,
+                handler:{ [weak self] (UIAlertAction) in
+                    guard let self = self else { return }
+                    self.performSegue(withIdentifier: "presentEditCategories", sender: self)
+                }
+            )
+        )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: "Show Info",
+                style: .default,
+                handler:{ [weak self] (UIAlertAction) in
+                    guard let self = self else { return }
+                    self.performSegue(withIdentifier: "presentWelcomeView", sender: self)
+                }
+            )
+        )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: nil
+            )
+        )
+        
+        
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
     }
 }
 
@@ -126,7 +155,7 @@ extension FridgeViewController: UITableViewDelegate {
         let view = tableView.dequeueReusableHeaderFooterView(
             withIdentifier: FridgeTableHeaderView.identifier
         ) as! FridgeTableHeaderView
-        let category = categories[section]
+        let category = model.getCategory(at: section)
         view.setup(title: category, section: section, delegate: self)
         return view
     }
@@ -138,44 +167,21 @@ extension FridgeViewController: UITableViewDelegate {
         return 40
     }
     
-    // MARK: TableView Editing
-    
-    func tableView(
-        _ tableView: UITableView,
-        editingStyleForRowAt indexPath: IndexPath
-    ) -> UITableViewCell.EditingStyle {
-        return .none
-    }
-    
-    func tableView(
-        _ tableView: UITableView,
-        shouldIndentWhileEditingRowAt indexPath: IndexPath
-    ) -> Bool {
-        return false
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let items = getItems(for: indexPath.section)
-        if indexPath.row == items.count {
-            return false
-        }
-        return true
-    }
-    
     // MARK: TableView Swipe Actions
     
     func tableView(
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        let items = getItems(for: indexPath.section)
+        let items = model.getItems(for: indexPath.section)
         guard indexPath.row < items.count else { return nil }
         
         let removeItem = UIContextualAction(
             style: .destructive,
             title: "Delete"
         ) { [weak self] (action, view, completionHandler) in
-            self?.removeItem(at: indexPath)
+            self?.model.removeItem(at: indexPath)
+            self?.tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         }
         
@@ -187,65 +193,41 @@ extension FridgeViewController: UITableViewDelegate {
         leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
         // Prevent swipe actions for editing cell
-        let items = getItems(for: indexPath.section)
+        let items = model.getItems(for: indexPath.section)
         guard indexPath.row < items.count else { return nil }
         
-        let item = getItem(for: indexPath)
+        let item = model.getItem(for: indexPath)
         if item.shoppingListItem != nil {
             let action = UIContextualAction(
                 style: .normal,
                 title: "Remove from Shopping List"
             ) { [weak self] _, _, completionHandler in
-                self?.removeFromShoppingList(at: indexPath)
+                self?.model.removeFromShoppingList(at: indexPath)
+                self?.tableView.reloadRows(at: [indexPath], with: .none)
                 completionHandler(true)
             }
-            action.backgroundColor = .systemYellow
+            action.backgroundColor = .systemGreen
             return UISwipeActionsConfiguration(actions: [action])
         } else {
             let action = UIContextualAction(
                 style: .normal,
                 title: "Add to Shopping List"
             ) { [weak self] _, _, completionHandler in
-                self?.addToShoppingList(at: indexPath)
+                self?.model.addToShoppingList(at: indexPath)
+                self?.tableView.reloadRows(at: [indexPath], with: .none)
                 completionHandler(true)
             }
-            action.backgroundColor = .systemYellow
+            action.backgroundColor = .systemGreen
             return UISwipeActionsConfiguration(actions: [action])
         }
     }
     
-    func addToShoppingList(at indexPath: IndexPath) {
-        let item = getItem(for: indexPath)
-        let shoppingListItem = ShoppingListItem(context: AppDelegate.viewContext)
-        shoppingListItem.name = item.name
-        shoppingListItem.fridgeItem = item
-        
-        AppDelegate.saveContext()
-        tableView.reloadData()
-    }
-    
-    func removeFromShoppingList(at indexPath: IndexPath) {
-        let category = categories[indexPath.section]
-        if lookup[category] != nil {
-            if let shoppingListItem = lookup[category]?[indexPath.row].shoppingListItem {
-                AppDelegate.viewContext.delete(shoppingListItem)
-                AppDelegate.saveContext()
-                tableView.reloadData()
-            }
-        }
-    }
-    
-    func removeItem(at indexPath: IndexPath) {
-        let category = categories[indexPath.section]
-        if let item = lookup[category]?.remove(at: indexPath.row) {
-            AppDelegate.viewContext.delete(item)
-        }
-        
-        updateIndices()
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if categoryBeingEdited == nil && cellBeingEdited == nil {
+            cellBeingEdited = indexPath
+            tableView.reloadRows(at: [indexPath], with: .none)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
         return nil
     }
 }
@@ -258,7 +240,7 @@ extension FridgeViewController: UITableViewDataSource {
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
     ) -> Int {
-        let items = getItems(for: section)
+        let items = model.getItems(for: section)
         if categoryBeingEdited == section {
             return items.count + 1
         }
@@ -267,7 +249,7 @@ extension FridgeViewController: UITableViewDataSource {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return categories.count
+        return model.categories.count
     }
     
     
@@ -278,7 +260,7 @@ extension FridgeViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         
-        let items = getItems(for: indexPath.section)
+        let items = model.getItems(for: indexPath.section)
         if categoryBeingEdited == indexPath.section && indexPath.row == items.count {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: FridgeEditorTableViewCell.identifier,
@@ -286,7 +268,19 @@ extension FridgeViewController: UITableViewDataSource {
             ) as? FridgeEditorTableViewCell else {
                 fatalError("Failed to dequeue FridgeEditorTableViewCell")
             }
-            cell.setup(section: indexPath.section, delegate: self)
+            cell.setup(text: nil, isShoppingList: false, delegate: self)
+            return cell
+        }
+        
+        if cellBeingEdited == indexPath {
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: FridgeEditorTableViewCell.identifier,
+                for: indexPath
+            ) as? FridgeEditorTableViewCell else {
+                fatalError("Failed to dequeue FridgeEditorTableViewCell")
+            }
+            let item = model.getItem(for: indexPath)
+            cell.setup(text: item.name, isShoppingList: item.inShoppingList, delegate: self)
             return cell
         }
         
@@ -296,7 +290,7 @@ extension FridgeViewController: UITableViewDataSource {
         ) as? FridgeTableViewCell  else {
             fatalError("Failed to dequeue FridgeTableViewCell")
         }
-        cell.setup(item: items[indexPath.row])
+        cell.setup(item: model.getItem(for: indexPath))
         return cell
     }
     
@@ -304,53 +298,23 @@ extension FridgeViewController: UITableViewDataSource {
         guard let cell = cell as? FridgeEditorTableViewCell else { return }
         cell.textField.becomeFirstResponder()
     }
-    
-    // MARK: TableView Moving Cells
-    
-    func tableView(
-        _ tableView: UITableView,
-        moveRowAt sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath
-    ) {
-        let sourceCategory = categories[sourceIndexPath.section]
-
-        guard let movedObject = lookup[sourceCategory]?[sourceIndexPath.row] else {
-            fatalError("Category not found in lookup")
-        }
-        
-        let destinationCategory = categories[destinationIndexPath.section]
-        
-        lookup[sourceCategory]?.remove(at: sourceIndexPath.row)
-        lookup[destinationCategory]?.insert(movedObject, at: destinationIndexPath.row)
-        
-        updateIndices()
-    }
 }
 
 // MARK: EditorTableViewCellDelegate
 
 extension FridgeViewController: EditorTableViewCellDelegate {
     
-    func didEndEditing(at index: Int, text: String) {
-        let category = categories[index]
-        
-        let items = getItems(for: index)
+    func didEndEditing(text: String) {
         if text != "" {
-            let item = Item(context: AppDelegate.viewContext)
-            item.name = text
-            item.category = category
-            item.index = Int16(items.count)
-            
-            AppDelegate.saveContext()
-            
-            if lookup[category] != nil {
-                lookup[category]?.append(item)
-            } else {
-                lookup[category] = [item]
+            if let categoryBeingEdited = categoryBeingEdited {
+                model.addItem(text: text, section: categoryBeingEdited)
+            } else if let cellBeingEdited = cellBeingEdited {
+                model.updateItem(at: cellBeingEdited, text: text)
             }
         }
         
         categoryBeingEdited = nil
+        cellBeingEdited = nil
         tableView.reloadData()
     }
 }
@@ -360,51 +324,114 @@ extension FridgeViewController: EditorTableViewCellDelegate {
 extension FridgeViewController: HeaderTableViewCellDelegate {
     func didStartEditing(at index: Int) {
         if self.categoryBeingEdited == nil {
+            cellBeingEdited = nil
             categoryBeingEdited = index
             tableView.reloadData()
-            let row = getItems(for: index).count
+            let row = model.getItems(for: index).count
             tableView.scrollToRow(at: IndexPath(row: row, section: index), at: .bottom, animated: true)
         }
     }
 }
 
+// MARK: EditCategoriesDelegate
+
+extension FridgeViewController: EditCategoriesDelegate {
+    func didFinishEditingCategories() {
+        tableView.reloadData()
+    }
+}
 
 // MARK: UITableViewDragDelegate
 
-//extension FridgeViewController: UITableViewDragDelegate {
-//    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-//        let item = getItem(for: indexPath)
-//        let itemProvider = NSItemProvider(object: item)
-//
-//        let dragItem = UIDragItem(itemProvider: itemProvider)
-//
-//        return [dragItem]
-//    }
-//
-//    func dragItems(for indexPath: IndexPath) -> [UIDragItem] {
-//        let placeName = placeNames[indexPath.row]
-//
-//        let data = placeName.data(using: .utf8)
-//        let itemProvider = NSItemProvider()
-//
-//        itemProvider.registerDataRepresentation(forTypeIdentifier: kUTTypePlainText as String, visibility: .all) { completion in
-//            completion(data, nil)
-//            return nil
-//        }
-//
-//        return [
-//            UIDragItem(itemProvider: itemProvider)
-//        ]
-//    }
-//}
-
+extension FridgeViewController: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        rowBeingDragged = indexPath
+        guard model.isInBounds(indexPath) else {
+            return []
+        }
+        
+        let item = model.getItem(for: indexPath)
+        
+        let data = item.uniqueId.data(using: .utf8)
+            
+        let itemProvider = NSItemProvider()
+        
+        itemProvider.registerDataRepresentation(forTypeIdentifier: kUTTypePlainText as String, visibility: .all) { completion in
+            completion(data, nil)
+            return nil
+        }
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        return [
+            UIDragItem(itemProvider: itemProvider)
+        ]
+    }
+}
 
 // MARK: UITableViewDropDelegate
 
-//extension FridgeViewController: UITableViewDropDelegate {
-//    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
-//        <#code#>
-//    }
-//
-//
-//}
+extension FridgeViewController: UITableViewDropDelegate {
+    
+    func tableView(
+        _ tableView: UITableView,
+        dropSessionDidUpdate session: UIDropSession,
+        withDestinationIndexPath destinationIndexPath: IndexPath?
+    ) -> UITableViewDropProposal {
+        var dropProposal = UITableViewDropProposal(operation: .cancel)
+        
+        // Accept only one drag item.
+        guard session.items.count == 1 else {
+            rowBeingDragged = nil
+            return dropProposal
+        }
+        
+        // The .move drag operation is available only for dragging within this app and while in edit mode.
+        if tableView.hasActiveDrag {
+            dropProposal = UITableViewDropProposal(
+                operation: .move,
+                intent: .insertAtDestinationIndexPath
+            )
+        } else {
+            rowBeingDragged = nil
+        }
+        
+        return dropProposal
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        canHandle session: UIDropSession
+    ) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self)
+    }
+    
+    func tableView(
+        _ tableView: UITableView,
+        performDropWith coordinator: UITableViewDropCoordinator
+    ) {
+        guard let rowBeingDragged = rowBeingDragged else {
+            return
+        }
+        
+        let destinationIndexPath: IndexPath
+        
+        if let indexPath = coordinator.destinationIndexPath {
+            destinationIndexPath = indexPath
+        } else {
+            // Get last index path of table view.
+            let section = tableView.numberOfSections - 1
+            let row = tableView.numberOfRows(inSection: section)
+            destinationIndexPath = IndexPath(row: row, section: section)
+        }
+        
+        self.model.moveItem(from: rowBeingDragged, to: destinationIndexPath)
+
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+        
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [rowBeingDragged], with: .fade)
+        tableView.insertRows(at: [destinationIndexPath], with: .fade)
+        tableView.endUpdates()
+    }
+}

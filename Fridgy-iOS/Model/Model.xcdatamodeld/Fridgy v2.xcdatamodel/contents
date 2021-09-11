@@ -4,14 +4,16 @@
         <attribute name="category" attributeType="String"/>
         <attribute name="index" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <attribute name="uniqueId" optional="YES" attributeType="String"/>
         <relationship name="shoppingListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="fridgeItem" inverseEntity="ShoppingListItem"/>
     </entity>
     <entity name="ShoppingListItem" representedClassName="ShoppingListItem" syncable="YES">
         <attribute name="name" attributeType="String"/>
+        <attribute name="uniqueId" optional="YES" attributeType="String"/>
         <relationship name="fridgeItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="shoppingListItem" inverseEntity="Item"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="89"/>
-        <element name="ShoppingListItem" positionX="27" positionY="81" width="128" height="59"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="ShoppingListItem" positionX="27" positionY="81" width="128" height="74"/>
     </elements>
 </model>

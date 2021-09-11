@@ -18,11 +18,16 @@ extension Item {
     }
 
     @NSManaged public var index: Int16
+    @NSManaged public var uniqueId: String
     @NSManaged public var name: String
     @NSManaged public var category: String
     
     @NSManaged public var shoppingListItem: ShoppingListItem?
 
+    var inShoppingList: Bool {
+        shoppingListItem != nil
+    }
+    
 }
 
 extension Item : Identifiable {
