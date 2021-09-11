@@ -9,17 +9,17 @@
 import UIKit
 
 protocol EditorTableViewCellDelegate: AnyObject {
-    func didEndEditing(at index: Int, text: String)
+    func didEndEditing(text: String)
 }
 
 class FridgeEditorTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     static let identifier = "FridgeEditorTableViewCell"
 
+    @IBOutlet weak var shoppingListImageView: UIImageView!
     @IBOutlet weak var textField: UITextField!
     
     weak var delegate: EditorTableViewCellDelegate?
-    var section: Int?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -35,15 +35,17 @@ class FridgeEditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Configure the view for the selected state
     }
     
-    func setup(section: Int, delegate: EditorTableViewCellDelegate) {
-        self.section = section
+    func setup(text: String?, isShoppingList: Bool, delegate: EditorTableViewCellDelegate) {
         self.delegate = delegate
+        
+        textField.text = text
+        shoppingListImageView.isHidden = !isShoppingList
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let section = section, let text = textField.text else { return true  }
+        guard let text = textField.text else { return true  }
         textField.resignFirstResponder()
-        delegate?.didEndEditing(at: section, text: text)
+        delegate?.didEndEditing(text: text)
         textField.text = ""
         return false
     }

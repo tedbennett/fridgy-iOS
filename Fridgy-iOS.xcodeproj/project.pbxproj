@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213B26ECA82200D74502 /* GlobalSettings.swift */; };
+		9F32213E26ECAE5500D74502 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */; };
 		9F843E8D26E4052C0020BB3A /* FridgeTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */; };
 		9F843E9126E426EC0020BB3A /* Item+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E8F26E426EC0020BB3A /* Item+CoreDataProperties.swift */; };
 		9F843E9626E427AD0020BB3A /* Item+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E9426E427AD0020BB3A /* Item+CoreDataClass.swift */; };
@@ -24,10 +26,16 @@
 		9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9357EF2456DB4E0026B32D /* SceneDelegate.swift */; };
 		9F9357F72456DB530026B32D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F62456DB530026B32D /* Assets.xcassets */; };
 		9F9357FA2456DB530026B32D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F9357F82456DB530026B32D /* LaunchScreen.storyboard */; };
+		9FA4C8F426EAA4C1004ECA44 /* FridgeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4C8F326EAA4C0004ECA44 /* FridgeModel.swift */; };
+		9FA4C8F626EABE7C004ECA44 /* EditCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4C8F526EABE7C004ECA44 /* EditCategoriesViewController.swift */; };
+		9FA4C8F826EAC5A9004ECA44 /* AddCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4C8F726EAC5A9004ECA44 /* AddCategoryTableViewCell.swift */; };
+		9FA4C8FA26EBFAE4004ECA44 /* ShoppingListAddItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA4C8F926EBFAE3004ECA44 /* ShoppingListAddItemTableViewCell.swift */; };
 		9FDFBA0F246695C400DEEFD7 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F32213B26ECA82200D74502 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
+		9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeTableHeaderView.swift; sourceTree = "<group>"; };
 		9F843E8F26E426EC0020BB3A /* Item+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9F843E9426E427AD0020BB3A /* Item+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Item+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -48,6 +56,10 @@
 		9F9357F62456DB530026B32D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F9357F92456DB530026B32D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F9357FB2456DB530026B32D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9FA4C8F326EAA4C0004ECA44 /* FridgeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeModel.swift; sourceTree = "<group>"; };
+		9FA4C8F526EABE7C004ECA44 /* EditCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoriesViewController.swift; sourceTree = "<group>"; };
+		9FA4C8F726EAC5A9004ECA44 /* AddCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryTableViewCell.swift; sourceTree = "<group>"; };
+		9FA4C8F926EBFAE3004ECA44 /* ShoppingListAddItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListAddItemTableViewCell.swift; sourceTree = "<group>"; };
 		9FDFBA0E246695C400DEEFD7 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9F32213A26ECA81800D74502 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9F32213B26ECA82200D74502 /* GlobalSettings.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		9F843E9226E426FB0020BB3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +90,7 @@
 				9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */,
 				9F843E8F26E426EC0020BB3A /* Item+CoreDataProperties.swift */,
 				9F843E9426E427AD0020BB3A /* Item+CoreDataClass.swift */,
+				9FA4C8F326EAA4C0004ECA44 /* FridgeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -90,6 +111,7 @@
 				9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */,
 				9F843E9826E431F90020BB3A /* FridgeEditorTableViewCell.swift */,
 				9F843E9A26E50C990020BB3A /* FridgeTableViewCell.swift */,
+				9FA4C8F726EAC5A9004ECA44 /* AddCategoryTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -116,8 +138,10 @@
 			isa = PBXGroup;
 			children = (
 				9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */,
-				9F843E9C26E50C9E0020BB3A /* Cells */,
+				9FA4C8F526EABE7C004ECA44 /* EditCategoriesViewController.swift */,
+				9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */,
 				9F89B32226E387CE002B91C7 /* Fridge.storyboard */,
+				9F843E9C26E50C9E0020BB3A /* Cells */,
 			);
 			path = Fridge;
 			sourceTree = "<group>";
@@ -127,6 +151,7 @@
 			children = (
 				9F89B31C26E387B2002B91C7 /* ShoppingListViewController.swift */,
 				9F843E9D26E5123E0020BB3A /* ShoppingListTableViewCell.swift */,
+				9FA4C8F926EBFAE3004ECA44 /* ShoppingListAddItemTableViewCell.swift */,
 				9F89B31E26E387BA002B91C7 /* ShoppingList.storyboard */,
 			);
 			path = "Shopping List";
@@ -151,6 +176,7 @@
 		9F9357EC2456DB4E0026B32D /* Fridgy-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				9F32213A26ECA81800D74502 /* Utilities */,
 				9F843E9326E427180020BB3A /* App */,
 				9F89B30F26E3782A002B91C7 /* Modules */,
 				9F843E9226E426FB0020BB3A /* Model */,
@@ -234,17 +260,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F843EA226E5149B0020BB3A /* ShoppingListItem+CoreDataProperties.swift in Sources */,
+				9F32213E26ECAE5500D74502 /* WelcomeViewController.swift in Sources */,
 				9F89B31D26E387B2002B91C7 /* ShoppingListViewController.swift in Sources */,
 				9F843E9E26E5123E0020BB3A /* ShoppingListTableViewCell.swift in Sources */,
+				9FA4C8FA26EBFAE4004ECA44 /* ShoppingListAddItemTableViewCell.swift in Sources */,
+				9FA4C8F826EAC5A9004ECA44 /* AddCategoryTableViewCell.swift in Sources */,
 				9F89B31726E37CE5002B91C7 /* FridgeViewController.swift in Sources */,
 				9F843E9126E426EC0020BB3A /* Item+CoreDataProperties.swift in Sources */,
+				9FA4C8F626EABE7C004ECA44 /* EditCategoriesViewController.swift in Sources */,
 				9F843E8D26E4052C0020BB3A /* FridgeTableHeaderView.swift in Sources */,
 				9F843E9926E431F90020BB3A /* FridgeEditorTableViewCell.swift in Sources */,
 				9FDFBA0F246695C400DEEFD7 /* Model.xcdatamodeld in Sources */,
+				9FA4C8F426EAA4C1004ECA44 /* FridgeModel.swift in Sources */,
 				9F843E9B26E50C990020BB3A /* FridgeTableViewCell.swift in Sources */,
 				9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */,
 				9F843E9626E427AD0020BB3A /* Item+CoreDataClass.swift in Sources */,
 				9F843EA126E5149B0020BB3A /* ShoppingListItem+CoreDataClass.swift in Sources */,
+				9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */,
 				9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

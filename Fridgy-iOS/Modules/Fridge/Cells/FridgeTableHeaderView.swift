@@ -28,8 +28,19 @@ class FridgeTableHeaderView: UITableViewHeaderFooterView {
     
     let button: UIButton = {
         let button = UIButton()
-        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .default)
-        button.setImage(UIImage(systemName: "plus", withConfiguration: config), for: .normal)
+        let config = UIImage.SymbolConfiguration(
+            pointSize: 20,
+            weight: .regular,
+            scale: .default
+        )
+        button.setImage(
+            UIImage(
+                systemName: "plus",
+                withConfiguration: config
+            ),
+            for: .normal
+        )
+        button.tintColor = .systemGreen
         return button
     }()
     
@@ -90,6 +101,8 @@ class FridgeTableHeaderView: UITableViewHeaderFooterView {
     
     @objc private func onPress(_ sender: UIButton) {
         guard let section = section else { return }
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
         delegate?.didStartEditing(at: section)
     }
 }

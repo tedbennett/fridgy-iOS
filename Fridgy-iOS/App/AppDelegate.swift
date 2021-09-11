@@ -12,6 +12,20 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        var titleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
+        titleFont = UIFont(
+            descriptor:
+                titleFont.fontDescriptor
+                .withDesign(.rounded)? /// make rounded
+                .withSymbolicTraits(.traitBold) ?? titleFont.fontDescriptor,
+            size: titleFont.pointSize
+        )
+        UINavigationBar.appearance().largeTitleTextAttributes = [
+            .font: titleFont,
+            .foregroundColor: UIColor.systemGreen
+        ]
+        
         return true
     }
 
