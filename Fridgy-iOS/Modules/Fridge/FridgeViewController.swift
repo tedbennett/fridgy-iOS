@@ -38,8 +38,6 @@ class FridgeViewController: UIViewController {
            forHeaderFooterViewReuseIdentifier: FridgeTableHeaderView.identifier
         )
         
-        setupNavbar()
-        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillShow),
@@ -59,10 +57,6 @@ class FridgeViewController: UIViewController {
                 performSegue(withIdentifier: "presentWelcomeView", sender: self)
             }
         }
-    }
-    
-    func setupNavbar() {
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -156,7 +150,7 @@ extension FridgeViewController: UITableViewDelegate {
             withIdentifier: FridgeTableHeaderView.identifier
         ) as! FridgeTableHeaderView
         let category = model.getCategory(at: section)
-        view.setup(title: category, section: section, delegate: self)
+        view.setup(title: category.name, section: section, delegate: self)
         return view
     }
     
@@ -197,7 +191,7 @@ extension FridgeViewController: UITableViewDelegate {
         guard indexPath.row < items.count else { return nil }
         
         let item = model.getItem(for: indexPath)
-        if item.shoppingListItem != nil {
+        if item.inShoppingList {
             let action = UIContextualAction(
                 style: .normal,
                 title: "Remove from Shopping List"

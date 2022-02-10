@@ -76,7 +76,7 @@ extension EditCategoriesViewController: UITableViewDelegate {
             return .none
         } else if editingCategory == indexPath {
             return .none
-        } else if indexPath.row < model.categories.count && model.categories[indexPath.row] == "Other" {
+        } else if indexPath.row < model.categories.count && model.categories[indexPath.row].name == "Other" {
             return .none
         }
         return .delete
@@ -92,7 +92,7 @@ extension EditCategoriesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if !model.getItems(for: indexPath.row).isEmpty {
-                let alert = UIAlertController(title: "Category Not Empty", message: "Deleting this category will also delete its  items!", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Category Not Empty", message: "Deleting this category will also delete its items!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
                 
                 alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
@@ -115,8 +115,7 @@ extension EditCategoriesViewController: UITableViewDelegate {
         moveRowAt sourceIndexPath: IndexPath,
         to destinationIndexPath: IndexPath
     ) {
-        let category = model.categories.remove(at: sourceIndexPath.row)
-        model.categories.insert(category, at: destinationIndexPath.row)
+        model.moveCategory(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 }
 
@@ -152,11 +151,11 @@ extension EditCategoriesViewController: UITableViewDataSource {
             ) as? AddCategoryTableViewCell else {
                 fatalError("Failed to dequeue AddCategoryTableViewCell")
             }
-            cell.setup(text: model.categories[indexPath.row], delegate: self)
+            cell.setup(text: model.categories[indexPath.row].name, delegate: self)
             return cell
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "editCategoryCell")!
-        cell.textLabel?.text = model.categories[indexPath.row]
+        cell.textLabel?.text = model.categories[indexPath.row].name
         return cell
     }
 }

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5750E91527AEA8070090C048 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E91427AEA8070090C048 /* NetworkManager.swift */; };
+		5750E92027B46E140090C048 /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E91E27B46E140090C048 /* Category+CoreDataClass.swift */; };
+		5750E92127B46E140090C048 /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E91F27B46E140090C048 /* Category+CoreDataProperties.swift */; };
+		5750E92527B4893E0090C048 /* ShoppingListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E92327B4893E0090C048 /* ShoppingListItem+CoreDataClass.swift */; };
+		5750E92627B4893E0090C048 /* ShoppingListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E92427B4893E0090C048 /* ShoppingListItem+CoreDataProperties.swift */; };
+		5750E92927B5A9380090C048 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E92727B5A9380090C048 /* GroupViewController.swift */; };
+		5750E92A27B5A9380090C048 /* GroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5750E92827B5A9380090C048 /* GroupViewController.xib */; };
 		9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213B26ECA82200D74502 /* GlobalSettings.swift */; };
 		9F32213E26ECAE5500D74502 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */; };
 		9F843E8D26E4052C0020BB3A /* FridgeTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */; };
@@ -15,8 +22,6 @@
 		9F843E9926E431F90020BB3A /* FridgeEditorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E9826E431F90020BB3A /* FridgeEditorTableViewCell.swift */; };
 		9F843E9B26E50C990020BB3A /* FridgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E9A26E50C990020BB3A /* FridgeTableViewCell.swift */; };
 		9F843E9E26E5123E0020BB3A /* ShoppingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E9D26E5123E0020BB3A /* ShoppingListTableViewCell.swift */; };
-		9F843EA126E5149B0020BB3A /* ShoppingListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E9F26E5149B0020BB3A /* ShoppingListItem+CoreDataClass.swift */; };
-		9F843EA226E5149B0020BB3A /* ShoppingListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843EA026E5149B0020BB3A /* ShoppingListItem+CoreDataProperties.swift */; };
 		9F89B31426E379F6002B91C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F89B31326E379F6002B91C7 /* Main.storyboard */; };
 		9F89B31726E37CE5002B91C7 /* FridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */; };
 		9F89B31D26E387B2002B91C7 /* ShoppingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F89B31C26E387B2002B91C7 /* ShoppingListViewController.swift */; };
@@ -34,6 +39,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5750E91427AEA8070090C048 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5750E91727AEBEFD0090C048 /* Fridgy v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Fridgy v3.xcdatamodel"; sourceTree = "<group>"; };
+		5750E91E27B46E140090C048 /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5750E91F27B46E140090C048 /* Category+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5750E92327B4893E0090C048 /* ShoppingListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5750E92427B4893E0090C048 /* ShoppingListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5750E92727B5A9380090C048 /* GroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
+		5750E92827B5A9380090C048 /* GroupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupViewController.xib; sourceTree = "<group>"; };
 		9F32213B26ECA82200D74502 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
 		9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeTableHeaderView.swift; sourceTree = "<group>"; };
@@ -42,8 +55,6 @@
 		9F843E9826E431F90020BB3A /* FridgeEditorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeEditorTableViewCell.swift; sourceTree = "<group>"; };
 		9F843E9A26E50C990020BB3A /* FridgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeTableViewCell.swift; sourceTree = "<group>"; };
 		9F843E9D26E5123E0020BB3A /* ShoppingListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListTableViewCell.swift; sourceTree = "<group>"; };
-		9F843E9F26E5149B0020BB3A /* ShoppingListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9F843EA026E5149B0020BB3A /* ShoppingListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShoppingListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9F89B31126E37881002B91C7 /* Fridgy v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Fridgy v2.xcdatamodel"; sourceTree = "<group>"; };
 		9F89B31326E379F6002B91C7 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9F89B31626E37CE5002B91C7 /* FridgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +85,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5750E91327AEA7FA0090C048 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				5750E91427AEA8070090C048 /* NetworkManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		5750E91627AEBDF40090C048 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				5750E92727B5A9380090C048 /* GroupViewController.swift */,
+				5750E92827B5A9380090C048 /* GroupViewController.xib */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		5750E92227B4825E0090C048 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				5750E91F27B46E140090C048 /* Category+CoreDataProperties.swift */,
+				5750E91E27B46E140090C048 /* Category+CoreDataClass.swift */,
+				9F843E8F26E426EC0020BB3A /* Item+CoreDataProperties.swift */,
+				9F843E9426E427AD0020BB3A /* Item+CoreDataClass.swift */,
+				5750E92427B4893E0090C048 /* ShoppingListItem+CoreDataProperties.swift */,
+				5750E92327B4893E0090C048 /* ShoppingListItem+CoreDataClass.swift */,
+				9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */,
+			);
+			path = "Core Data";
+			sourceTree = "<group>";
+		};
 		9F32213A26ECA81800D74502 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,12 +127,8 @@
 		9F843E9226E426FB0020BB3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9F843E9F26E5149B0020BB3A /* ShoppingListItem+CoreDataClass.swift */,
-				9F843EA026E5149B0020BB3A /* ShoppingListItem+CoreDataProperties.swift */,
-				9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */,
-				9F843E8F26E426EC0020BB3A /* Item+CoreDataProperties.swift */,
-				9F843E9426E427AD0020BB3A /* Item+CoreDataClass.swift */,
 				9FA4C8F326EAA4C0004ECA44 /* FridgeModel.swift */,
+				5750E92227B4825E0090C048 /* Core Data */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -121,6 +159,7 @@
 			children = (
 				9F89B31926E38787002B91C7 /* Shopping List */,
 				9F89B31526E37CD2002B91C7 /* Fridge */,
+				5750E91627AEBDF40090C048 /* Group */,
 				9F89B31226E379EB002B91C7 /* Main */,
 			);
 			path = Modules;
@@ -179,6 +218,7 @@
 				9F32213A26ECA81800D74502 /* Utilities */,
 				9F843E9326E427180020BB3A /* App */,
 				9F89B30F26E3782A002B91C7 /* Modules */,
+				5750E91327AEA7FA0090C048 /* Managers */,
 				9F843E9226E426FB0020BB3A /* Model */,
 				9F9357F62456DB530026B32D /* Assets.xcassets */,
 				9F9357FB2456DB530026B32D /* Info.plist */,
@@ -244,6 +284,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5750E92A27B5A9380090C048 /* GroupViewController.xib in Resources */,
 				9F89B31F26E387BA002B91C7 /* ShoppingList.storyboard in Resources */,
 				9F9357FA2456DB530026B32D /* LaunchScreen.storyboard in Resources */,
 				9F89B32326E387CE002B91C7 /* Fridge.storyboard in Resources */,
@@ -259,24 +300,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F843EA226E5149B0020BB3A /* ShoppingListItem+CoreDataProperties.swift in Sources */,
 				9F32213E26ECAE5500D74502 /* WelcomeViewController.swift in Sources */,
+				5750E92527B4893E0090C048 /* ShoppingListItem+CoreDataClass.swift in Sources */,
 				9F89B31D26E387B2002B91C7 /* ShoppingListViewController.swift in Sources */,
 				9F843E9E26E5123E0020BB3A /* ShoppingListTableViewCell.swift in Sources */,
 				9FA4C8FA26EBFAE4004ECA44 /* ShoppingListAddItemTableViewCell.swift in Sources */,
 				9FA4C8F826EAC5A9004ECA44 /* AddCategoryTableViewCell.swift in Sources */,
+				5750E92927B5A9380090C048 /* GroupViewController.swift in Sources */,
+				5750E92027B46E140090C048 /* Category+CoreDataClass.swift in Sources */,
 				9F89B31726E37CE5002B91C7 /* FridgeViewController.swift in Sources */,
+				5750E92127B46E140090C048 /* Category+CoreDataProperties.swift in Sources */,
 				9F843E9126E426EC0020BB3A /* Item+CoreDataProperties.swift in Sources */,
 				9FA4C8F626EABE7C004ECA44 /* EditCategoriesViewController.swift in Sources */,
 				9F843E8D26E4052C0020BB3A /* FridgeTableHeaderView.swift in Sources */,
 				9F843E9926E431F90020BB3A /* FridgeEditorTableViewCell.swift in Sources */,
 				9FDFBA0F246695C400DEEFD7 /* Model.xcdatamodeld in Sources */,
+				5750E91527AEA8070090C048 /* NetworkManager.swift in Sources */,
 				9FA4C8F426EAA4C1004ECA44 /* FridgeModel.swift in Sources */,
 				9F843E9B26E50C990020BB3A /* FridgeTableViewCell.swift in Sources */,
 				9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */,
 				9F843E9626E427AD0020BB3A /* Item+CoreDataClass.swift in Sources */,
-				9F843EA126E5149B0020BB3A /* ShoppingListItem+CoreDataClass.swift in Sources */,
 				9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */,
+				5750E92627B4893E0090C048 /* ShoppingListItem+CoreDataProperties.swift in Sources */,
 				9F9357F02456DB4E0026B32D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,10 +525,11 @@
 		9FDFBA0D246695C400DEEFD7 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				5750E91727AEBEFD0090C048 /* Fridgy v3.xcdatamodel */,
 				9F89B31126E37881002B91C7 /* Fridgy v2.xcdatamodel */,
 				9FDFBA0E246695C400DEEFD7 /* Model.xcdatamodel */,
 			);
-			currentVersion = 9F89B31126E37881002B91C7 /* Fridgy v2.xcdatamodel */;
+			currentVersion = 5750E91727AEBEFD0090C048 /* Fridgy v3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

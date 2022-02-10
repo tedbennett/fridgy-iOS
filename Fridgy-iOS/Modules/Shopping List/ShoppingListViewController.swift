@@ -36,15 +36,21 @@ class ShoppingListViewController: UIViewController {
     }
     
     var isAddingItem = false
+    var defaultCategory: Category?
     
     var items: [ShoppingListItem] = []
     var idsToRemove: [String] = [] // Items that will be deleted
     
     func populateItems() {
-        let shoppingListFetch: NSFetchRequest = ShoppingListItem.fetchRequest()
+        let shoppingListFetch = ShoppingListItem.fetchRequest()
+        shoppingListFetch.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
         if let fetchedItems = try? AppDelegate.viewContext.fetch(shoppingListFetch) {
             items = fetchedItems
         }
+        
+        let categoryFetch = Category.fetchRequest()
+        categoryFetch.predicate = NSPredicate(format: "name == %@", "Other")
+        defaultCategory = (try? AppDelegate.viewContext.fetch(categoryFetch))?.first
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,15 +71,18 @@ class ShoppingListViewController: UIViewController {
     }
     
     func deleteItem(at index: Int) {
-        let item = self.items.remove(at: index)
+        let item = items.remove(at: index)
         
         // TODO: Add to fridge if we want
         if item.fridgeItem == nil {
             // Conditionally add to fridge
-            let fridgeItem = Item(context: AppDelegate.viewContext)
-            fridgeItem.name = item.name
-            fridgeItem.uniqueId = item.uniqueId
-            fridgeItem.category = "Other"
+            let fridgeItem = Item(
+                name: item.name,
+                context: AppDelegate.viewContext
+            )
+            if let defaultCategory = defaultCategory {
+                defaultCategory.addToChildren(fridgeItem)
+            }
         }
         
         AppDelegate.viewContext.delete(item)
@@ -184,9 +193,7 @@ extension ShoppingListViewController: ShoppingListSelectDelegate {
 extension ShoppingListViewController: AddItemToShoppingListDelegate {
     func didFinishEditing(text: String) {
         isAddingItem = false
-        let item = ShoppingListItem(context: AppDelegate.viewContext)
-        item.name = text
-        item.uniqueId = UUID().uuidString
+        let item = ShoppingListItem(name: text, fridgeItem: nil, context: AppDelegate.viewContext)
         AppDelegate.saveContext()
         
         items.append(item)

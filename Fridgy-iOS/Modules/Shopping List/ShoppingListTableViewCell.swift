@@ -11,7 +11,6 @@ import UIKit
 protocol ShoppingListSelectDelegate: AnyObject {
     func didSelectItem(with id: String)
     func didDeselectItem(with id: String)
-    func showInShoppingListAlert()
 }
 
 
@@ -21,7 +20,6 @@ class ShoppingListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var checkButton: UIButton!
-    @IBOutlet weak var inShoppingListButton: UIButton!
     
     var cellChecked = false
     var id: String?
@@ -38,8 +36,6 @@ class ShoppingListTableViewCell: UITableViewCell {
         nameLabel.text = item.name
         cellChecked = false
         
-        inShoppingListButton.isHidden = item.fridgeItem != nil
-        
         let largeConfig = UIImage.SymbolConfiguration(
             pointSize: 20,
             weight: .regular,
@@ -48,11 +44,6 @@ class ShoppingListTableViewCell: UITableViewCell {
         
         checkButton.setImage(
             UIImage(systemName: "circle",
-                    withConfiguration: largeConfig),
-            for: .normal
-        )
-        inShoppingListButton.setImage(
-            UIImage(systemName: "rays",
                     withConfiguration: largeConfig),
             for: .normal
         )
@@ -83,9 +74,5 @@ extension ShoppingListTableViewCell {
         }
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
-    }
-    
-    @IBAction func onShoppingListButtonPressed(_ sender: UIButton) {
-        delegate?.showInShoppingListAlert()
     }
 }
