@@ -13,6 +13,7 @@ import MobileCoreServices
 class FridgeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    let refreshControl = UIRefreshControl()
     
     var model = FridgeModel()
     
@@ -37,6 +38,8 @@ class FridgeViewController: UIViewController {
             FridgeTableHeaderView.self,
            forHeaderFooterViewReuseIdentifier: FridgeTableHeaderView.identifier
         )
+        
+        setupRefreshControl()
         
         NotificationCenter.default.addObserver(
             self,
@@ -427,5 +430,32 @@ extension FridgeViewController: UITableViewDropDelegate {
         tableView.deleteRows(at: [rowBeingDragged], with: .fade)
         tableView.insertRows(at: [destinationIndexPath], with: .fade)
         tableView.endUpdates()
+    }
+}
+
+// MARK: UIRefreshControl
+
+extension FridgeViewController {
+    func setupRefreshControl() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to sync")
+        refreshControl.addTarget(self, action: #selector(onRefreshTriggered), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
+    @objc func onRefreshTriggered() {
+        let context = AppDelegate.persistentContainer.newBackgroundContext()
+        Task {
+            do {
+                try await FridgeManager.shared.fetchFridge(context: context)
+                await MainActor.run {
+                    refreshControl.endRefreshing()
+                    model.refresh()
+                    tableView.reloadData()
+                }
+            } catch {
+                // Show alert
+                print(error)
+            }
+        }
     }
 }

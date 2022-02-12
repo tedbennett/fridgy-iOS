@@ -25,6 +25,7 @@ class FridgeModel {
     // MARK: Lifecycle
     
     private func loadFromStore() {
+        AppDelegate.viewContext.refreshAllObjects()
         let fetchRequest: NSFetchRequest = Category.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
         if let fetchedItems = try? AppDelegate.viewContext.fetch(fetchRequest) {

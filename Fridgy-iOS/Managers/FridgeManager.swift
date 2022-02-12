@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class FridgeManager {
     static var shared = FridgeManager()
@@ -27,45 +28,32 @@ class FridgeManager {
         }
     }
     
-    func fetchFridge() throws {
+    func fetchFridge(context: NSManagedObjectContext) async throws {
         // First check that all
         
         if !pendingRecords.isEmpty {
-            let group = DispatchGroup()
             let store = PendingRecordsStore()
+            // Execute records synchronously
             for record in pendingRecords {
-                group.enter()
-                Task {
-                    let success = try await executeRecord(record)
-                    if !success {
-                        await store.append(record)
-                    }
-                    group.leave()
+                let success = try await executeRecord(record)
+                if !success {
+                    await store.append(record)
                 }
             }
-            group.notify(queue: .main) {
-                
-                Task {
-                    let records = await store.records
-                    if !records.isEmpty {
-                        // Send message to user that not all
-                        self.pendingRecords = records
-                    }
-                    let fridge = try await NetworkManager.shared.getFridge()
-                    try self.syncDatabase(fridge: fridge)
-                }
+            let records = await store.records
+            if !records.isEmpty {
+                // Send message to user that not all
+                self.pendingRecords = records
             }
+            let fridge = try await NetworkManager.shared.getFridge()
+            try self.syncDatabase(fridge: fridge, context: context)
         } else {
-            Task {
-                let fridge = try await NetworkManager.shared.getFridge()
-                try syncDatabase(fridge: fridge)
-            }
+            let fridge = try await NetworkManager.shared.getFridge()
+            try syncDatabase(fridge: fridge, context: context)
         }
-        
     }
     
-    func syncDatabase(fridge: Fridge) throws {
-        let context = AppDelegate.viewContext
+    func syncDatabase(fridge: Fridge, context: NSManagedObjectContext) throws {
         let categories = try context.fetch(Category.fetchRequest())
         
         for category in fridge.categories {
@@ -82,7 +70,7 @@ class FridgeManager {
                         localCategory.addToChildren(new)
                     }
                 }
-                
+
                 // Now check that all local items were in the remote and haven't been deleted
                 for localItem in localCategory.items {
                     if !category.items.contains(where: { $0.id == localItem.uniqueId }) {
@@ -93,7 +81,12 @@ class FridgeManager {
                 // If category doesn't exist, add it
                 let _ = Category(category: category, context: context)
             }
-            
+        }
+        
+        for category in categories {
+            if !fridge.categories.contains(where: {$0.id == category.uniqueId}) {
+                context.delete(category)
+            }
         }
         
         try context.save()

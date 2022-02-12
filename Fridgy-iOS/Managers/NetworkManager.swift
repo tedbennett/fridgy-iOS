@@ -20,11 +20,18 @@ class NetworkManager {
     func getFridge() async throws -> Fridge {
         guard let id = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
         
-        let doc = try await db.collection("fridges").document(id).getDocument()
-        guard let fridge = try doc.data(as: Fridge.self) else {
-            throw ApiError.failedToDecodeData
+        let categoryCollection = try await db.collection("fridges/\(id)/categories").getDocuments()
+        
+        var categories: [FridgeCategory] = []
+        
+        for category in categoryCollection.documents {
+            let itemCollection = try await db.collection("fridges/\(id)/categories/\(category.documentID)/items").getDocuments()
+            guard let name = category.data()["name"] as? String else { continue }
+            let items: [FridgeItem] = itemCollection.documents.compactMap { try? $0.data(as: FridgeItem.self) }
+            categories.append(FridgeCategory(items: items, id: category.documentID, name: name))
         }
-        return fridge
+        
+        return Fridge(categories: categories)
     }
     
     func addFridgeItem(name: String, inShoppingList: Bool, inFridge: Bool, id: String, category: String) async throws {
@@ -33,7 +40,8 @@ class NetworkManager {
         try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).setData([
             "name": name,
             "inFridge": inFridge,
-            "inShoppingList": inShoppingList
+            "inShoppingList": inShoppingList,
+            "id": id
         ])
     }
     
@@ -49,7 +57,8 @@ class NetworkManager {
         try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).setData([
             "name": name,
             "inShoppingList": inShoppingList,
-            "inFridge": inFridge
+            "inFridge": inFridge,
+            "id": id
         ])
     }
     
@@ -58,9 +67,9 @@ class NetworkManager {
         
         let doc = try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).getDocument()
         
-        db.collection("fridges/\(fridge)/categories/\(destination)").addDocument(data: doc.data()!)
+        try await db.collection("fridges/\(fridge)/categories/\(destination)/items").document(id).setData(doc.data()!)
         
-        try await db.collection("fridges/\(fridge)/categories/\(category)").document(id).delete()
+        try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).delete()
     }
     
     func createCategory(id: String, name: String) async throws {
@@ -68,6 +77,7 @@ class NetworkManager {
         
         try await db.collection("fridges/\(fridge)/categories").document(id).setData([
             "name": name,
+            "id": id
         ])
     }
     
@@ -101,8 +111,8 @@ class NetworkManager {
 
 
 struct Fridge: Codable {
-    var id: String
-    var users: [User]
+//    var id: String
+//    var users: [User]
     var categories: [FridgeCategory]
 }
 
