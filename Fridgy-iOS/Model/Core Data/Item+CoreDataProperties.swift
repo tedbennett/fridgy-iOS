@@ -21,9 +21,11 @@ extension Item {
     @NSManaged public var name: String
     @NSManaged public var index: Int32
     @NSManaged public var category: Category?
-    @NSManaged public var shoppingListItem: ShoppingListItem?
+    @NSManaged public var inShoppingList: Bool
+    @NSManaged public var inFridge: Bool
     
-    convenience init(name: String, index: Int? = nil, context: NSManagedObjectContext) {
+    
+    convenience init(name: String, index: Int? = nil, inShoppingList: Bool, context: NSManagedObjectContext) {
         self.init(context: context)
         self.name = name
         if let index = index {
@@ -31,13 +33,23 @@ extension Item {
         } else {
             self.index = Int32.max
         }
-        self.uniqueId = UUID().uuidString
-        self.shoppingListItem = nil
+        uniqueId = UUID().uuidString
+        inFridge = !inShoppingList
+        self.inShoppingList = inShoppingList
+        
+        
+        let categoryFetch = Category.fetchRequest()
+        categoryFetch.predicate = NSPredicate(format: "name == %@", "Other")
+        category = (try? context.fetch(categoryFetch))?.first
     }
     
-    
-    var inShoppingList: Bool {
-        shoppingListItem != nil
+    convenience init(item: FridgeItem, context: NSManagedObjectContext) {
+        self.init(context: context)
+        name = item.name
+        index = Int32.max
+        uniqueId = item.id
+        inFridge = item.inFridge
+        inShoppingList = item.inShoppingList
     }
 }
 

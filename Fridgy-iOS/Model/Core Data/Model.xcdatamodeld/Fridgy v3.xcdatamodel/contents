@@ -8,20 +8,14 @@
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES">
         <attribute name="index" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="inFridge" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="inShoppingList" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="uniqueId" optional="YES" attributeType="String"/>
         <relationship name="category" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="children" inverseEntity="Category"/>
-        <relationship name="shoppingListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="fridgeItem" inverseEntity="ShoppingListItem"/>
-    </entity>
-    <entity name="ShoppingListItem" representedClassName="ShoppingListItem" syncable="YES">
-        <attribute name="index" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="uniqueId" attributeType="String"/>
-        <relationship name="fridgeItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Item" inverseName="shoppingListItem" inverseEntity="Item"/>
     </entity>
     <elements>
         <element name="Category" positionX="-9" positionY="63" width="128" height="89"/>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="104"/>
-        <element name="ShoppingListItem" positionX="-18" positionY="81" width="128" height="89"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="119"/>
     </elements>
 </model>

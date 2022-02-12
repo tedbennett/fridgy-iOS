@@ -26,11 +26,22 @@ extension Category {
         self.init(context: context)
         self.name = name
         self.index = Int32(index)
-        self.uniqueId = UUID().uuidString
+        uniqueId = UUID().uuidString
+    }
+    
+    convenience init(category: FridgeCategory, context: NSManagedObjectContext) {
+        self.init(context: context)
+        name = category.name
+        uniqueId = category.id
+        index = Int32.max
+        
+        children = Set(category.items.map {
+            Item(item: $0, context: context)
+        }) as? NSSet
     }
     
     var items: [Item] {
-        (children?.allObjects as? [Item])?.sorted { $0.index < $1.index } ?? []
+        (children?.allObjects as? [Item])?.filter { $0.inFridge }.sorted { $0.index < $1.index } ?? []
     }
 
 }

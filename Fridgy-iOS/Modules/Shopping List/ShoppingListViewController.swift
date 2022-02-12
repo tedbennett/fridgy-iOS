@@ -36,21 +36,17 @@ class ShoppingListViewController: UIViewController {
     }
     
     var isAddingItem = false
-    var defaultCategory: Category?
     
-    var items: [ShoppingListItem] = []
+    var items: [Item] = []
     var idsToRemove: [String] = [] // Items that will be deleted
     
     func populateItems() {
-        let shoppingListFetch = ShoppingListItem.fetchRequest()
+        let shoppingListFetch = Item.fetchRequest()
+        shoppingListFetch.predicate = NSPredicate(format: "inShoppingList == %@", NSNumber(value: true))
         shoppingListFetch.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]
         if let fetchedItems = try? AppDelegate.viewContext.fetch(shoppingListFetch) {
             items = fetchedItems
         }
-        
-        let categoryFetch = Category.fetchRequest()
-        categoryFetch.predicate = NSPredicate(format: "name == %@", "Other")
-        defaultCategory = (try? AppDelegate.viewContext.fetch(categoryFetch))?.first
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,19 +69,10 @@ class ShoppingListViewController: UIViewController {
     func deleteItem(at index: Int) {
         let item = items.remove(at: index)
         
-        // TODO: Add to fridge if we want
-        if item.fridgeItem == nil {
-            // Conditionally add to fridge
-            let fridgeItem = Item(
-                name: item.name,
-                context: AppDelegate.viewContext
-            )
-            if let defaultCategory = defaultCategory {
-                defaultCategory.addToChildren(fridgeItem)
-            }
-        }
+        item.inShoppingList = false
+        item.inFridge = true
+        FridgeManager.shared.updateItem(item)
         
-        AppDelegate.viewContext.delete(item)
         AppDelegate.saveContext()
         
         let indexPath = IndexPath(row: index, section: 0)
@@ -193,8 +180,9 @@ extension ShoppingListViewController: ShoppingListSelectDelegate {
 extension ShoppingListViewController: AddItemToShoppingListDelegate {
     func didFinishEditing(text: String) {
         isAddingItem = false
-        let item = ShoppingListItem(name: text, fridgeItem: nil, context: AppDelegate.viewContext)
+        let item = Item(name: text, index: nil, inShoppingList: true, context: AppDelegate.viewContext)
         AppDelegate.saveContext()
+        FridgeManager.shared.addItem(item)
         
         items.append(item)
         tableView.reloadData()

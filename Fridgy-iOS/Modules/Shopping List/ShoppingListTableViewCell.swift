@@ -30,7 +30,7 @@ class ShoppingListTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    func setup(item: ShoppingListItem, delegate: ShoppingListSelectDelegate) {
+    func setup(item: Item, delegate: ShoppingListSelectDelegate) {
         self.delegate = delegate
         id = item.uniqueId
         nameLabel.text = item.name

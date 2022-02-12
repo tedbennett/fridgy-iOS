@@ -60,6 +60,7 @@ class FridgeModel {
             context: AppDelegate.viewContext
         )
         try! AppDelegate.viewContext.save()
+        FridgeManager.shared.createCategory(category)
         
         if let index = index {
             categories.insert(category, at: index)
@@ -71,6 +72,7 @@ class FridgeModel {
     func removeCategory(at index: Int) {
         let category = categories.remove(at: index)
         AppDelegate.viewContext.delete(category)
+        FridgeManager.shared.deleteCategory(id: category.uniqueId)
         AppDelegate.saveContext()
     }
     
@@ -93,16 +95,20 @@ class FridgeModel {
     func addItem(text: String, section: Int) {
         let category = categories[section]
         let index = category.items.count
-        let item = Item(name: text, index: index, context: AppDelegate.viewContext)
+        let item = Item(name: text, index: index, inShoppingList: false, context: AppDelegate.viewContext)
         
         category.addToChildren(item)
         AppDelegate.saveContext()
+        
+        FridgeManager.shared.addItem(item)
     }
     
     func updateItem(at indexPath: IndexPath, text: String) {
         let item = getItem(for: indexPath)
         item.name = text
         AppDelegate.saveContext()
+        
+        FridgeManager.shared.updateItem(item)
     }
     
     @discardableResult
@@ -130,6 +136,7 @@ class FridgeModel {
         
         if origin.section != destination.section {
             destinationCategory.addToChildren(item)
+            FridgeManager.shared.changeItemCategory(item, previous: category.uniqueId)
         }
         
         updateIndices()
@@ -141,6 +148,8 @@ class FridgeModel {
         let item = category.items[indexPath.row]
         category.removeFromChildren(item)
         AppDelegate.viewContext.delete(item)
+        
+        FridgeManager.shared.deleteItem(id: item.uniqueId, category: category.uniqueId)
         updateIndices()
     }
     
@@ -155,20 +164,15 @@ class FridgeModel {
     
     func addToShoppingList(at indexPath: IndexPath) {
         let item = getItem(for: indexPath)
-        let _ = ShoppingListItem(
-            name: item.name,
-            fridgeItem: item,
-            context: AppDelegate.viewContext
-        )
-        
+        item.inShoppingList = true
         AppDelegate.saveContext()
+        FridgeManager.shared.updateItem(item)
     }
     
     func removeFromShoppingList(at indexPath: IndexPath) {
         let item = getItem(for: indexPath)
-        if let shoppingListItem = item.shoppingListItem {
-            AppDelegate.viewContext.delete(shoppingListItem)
-            AppDelegate.saveContext()
-        }
+        item.inShoppingList = false
+        AppDelegate.saveContext()
+        FridgeManager.shared.updateItem(item)
     }
 }
