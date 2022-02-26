@@ -41,6 +41,7 @@ class ShoppingListViewController: UIViewController {
     var idsToRemove: [String] = [] // Items that will be deleted
     
     func populateItems() {
+        AppDelegate.viewContext.refreshAllObjects()
         let shoppingListFetch = Item.fetchRequest()
         shoppingListFetch.predicate = NSPredicate(format: "inShoppingList == %@", NSNumber(value: true))
         shoppingListFetch.sortDescriptors = [NSSortDescriptor(key: "index", ascending: true)]

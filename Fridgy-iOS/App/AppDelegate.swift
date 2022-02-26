@@ -9,13 +9,25 @@
 import UIKit
 import CoreData
 import Firebase
+import FirebaseAuth
+import StoreKit
+import AuthenticationServices
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        UserDefaults.standard.set("test", forKey: "fridgeId")
+        
+//        if Auth.auth().currentUser == nil {
+//            Auth.auth().signIn(withEmail: "test@test.com", password: "test123", completion: {
+//                authResult, error in
+//                print(error)
+//                Task {
+//                try await NetworkManager.shared.createUser(name: "James", email: "test@test.com", id: authResult!.user.uid)
+//                }
+//            })
+//        }
         
         var titleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
         titleFont = UIFont(
@@ -30,7 +42,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .foregroundColor: UIColor.systemGreen
         ]
         
+        
+        SKPaymentQueue.default().add(StoreObserver.shared)
+        
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        
+        SKPaymentQueue.default().remove(StoreObserver.shared)
+    }
+    
+    func checkLogin() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        guard let appleIdUid = UserDefaults.standard.string(forKey: "") else {
+            // Logout
+            return
+        }
+        appleIDProvider.getCredentialState(forUserID: appleIdUid) { (credentialState, error) in
+            switch credentialState {
+                case .authorized:
+                    break // The Apple ID credential is valid.
+                case .revoked, .notFound:
+                    if UserManager.shared.isLoggedIn {
+                        try? UserManager.shared.logout()
+                        Task {
+                            try await UserManager.shared.deleteAccount()
+                        }
+                    }
+                default:
+                    break
+            }
+        }
     }
 
     // MARK: UISceneSession Lifecycle

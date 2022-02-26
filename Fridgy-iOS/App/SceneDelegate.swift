@@ -18,6 +18,45 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        if let url = connectionOptions.userActivities.first?.webpageURL {
+            guard url.host == "www.fridgy-app.com" || url.host == "fridgy-app.com",
+                  url.pathComponents.count == 3,
+                  url.pathComponents[1] == "groups" else {
+                      return
+                  }
+            if let tabBarController = window?.rootViewController as? UITabBarController {
+                tabBarController.selectedIndex = 2
+            }
+        }
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        if let url = userActivity.webpageURL {
+            guard url.host == "www.fridgy-app.com" || url.host == "fridgy-app.com",
+                  url.pathComponents.count == 3,
+                  url.pathComponents[1] == "groups" else {
+                      return
+                  }
+            let groupId = url.pathComponents[2]
+            if let tabBarController = self.window?.rootViewController as? UITabBarController {
+                tabBarController.selectedIndex = 2
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+               
+                
+                if let tabBarController = self.window?.rootViewController as? UITabBarController,
+                   let nav = tabBarController.selectedViewController as? UINavigationController {
+                    if let groupVC = nav.visibleViewController as? GroupViewController {
+                        groupVC.handleJoinSession(id: groupId)
+                    } else if let signupVC = nav.visibleViewController as? GroupSignUpViewController {
+                        signupVC.handleJoinSession(id: groupId)
+                    }
+                }
+                
+            }
+            
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

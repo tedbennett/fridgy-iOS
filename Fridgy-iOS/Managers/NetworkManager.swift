@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class NetworkManager {
@@ -16,6 +17,10 @@ class NetworkManager {
     private init() {}
     
     private var db = Firestore.firestore()
+    
+    // ========================================================================
+    // MARK: Fridge
+    // ========================================================================
     
     func getFridge() async throws -> Fridge {
         guard let id = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
@@ -31,8 +36,34 @@ class NetworkManager {
             categories.append(FridgeCategory(items: items, id: category.documentID, name: name))
         }
         
-        return Fridge(categories: categories)
+        let users = try await getUsers(fridgeId: id)
+        
+        let details = try await db.collection("fridges").document(id).getDocument()
+        
+        guard let admin = details.data()?["admin"] as? String else { throw ApiError.failedToDecodeData }
+        
+        return Fridge(users: users, categories: categories, admin: admin)
     }
+    
+    func createFridge(name: String, admin: String) async throws -> String {
+        let id = UUID().uuidString
+        try await db.collection("fridges").document(id).setData([
+            "name": name,
+            "admin": admin,
+            "id": id
+        ])
+        return id
+    }
+    
+    func checkFridgeExists(id: String) async throws -> Bool {
+        let doc = try await db.collection("fridges").document(id).getDocument()
+        
+        return doc.exists
+    }
+    
+    // ========================================================================
+    // MARK: Items
+    // ========================================================================
     
     func addFridgeItem(name: String, inShoppingList: Bool, inFridge: Bool, id: String, category: String) async throws {
         guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
@@ -72,6 +103,10 @@ class NetworkManager {
         try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).delete()
     }
     
+    // ========================================================================
+    // MARK: Categories
+    // ========================================================================
+    
     func createCategory(id: String, name: String) async throws {
         guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
         
@@ -87,24 +122,67 @@ class NetworkManager {
         try await db.collection("fridges/\(fridge)/categories").document(id).delete()
     }
     
+    // ========================================================================
+    // MARK: Users
+    // ========================================================================
+    
+    func createUser(name: String?, email: String?, id: String) async throws {
+        try await db.collection("users").document(id).setData([
+            "name": name ?? NSNull(),
+            "email": email ?? NSNull(),
+            "id": id,
+            "provider": "apple"
+        ])
+    }
+    
+    func getUser(id: String) async throws -> User {
+        let doc = try await db.collection("users").document(id).getDocument()
+        guard let user = try doc.data(as: User.self) else { throw ApiError.failedToDecodeData }
+        return user
+    }
+    
+    func getUsers(fridgeId: String) async throws -> [User] {
+        let userCollection = try await db.collection("users").whereField("fridgeId", isEqualTo: fridgeId).getDocuments()
+        
+        let users = userCollection.documents.compactMap { try? $0.data(as: User.self) }
+        
+        return users
+    }
+    
+    func deleteUser(id: String) async throws {
+        try await db.collection("users").document(id).delete()
+    }
+    
+    func checkUserExists(id: String) async throws -> Bool {
+        let doc = try await db.collection("users").document(id).getDocument()
+        return doc.data() != nil
+    }
+    
+    // ========================================================================
+    // MARK: Membership
+    // ========================================================================
+    
+    func checkInFridge(userId: String, fridgeId: String) async throws -> Bool {
+        let doc = try await db.collection("fridges").document(fridgeId).getDocument()
+        return doc.data() != nil
+    }
+    
     func joinFridge(userId: String, fridgeId: String) async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
-        
-        
+        try await db.collection("users").document(userId).updateData([
+            "fridgeId": fridgeId
+        ])
     }
     
-    func leaveFridge() async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
-        
-        
+    func leaveFridge(userId: String) async throws {
+        try await db.collection("users").document(userId).updateData([
+            "fridgeId": NSNull()
+        ])
     }
     
-    private func decode<T: Decodable>(_ json: [String:Any]) throws -> T {
-        let data = try JSONSerialization.data(withJSONObject: json)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .secondsSince1970
-        let decoded = try decoder.decode(T.self, from: data)
-        return decoded
+    func deleteFridge() async throws {
+        guard let id = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        
+        try await db.collection("fridges").document(id).delete()
     }
 }
 
@@ -112,8 +190,9 @@ class NetworkManager {
 
 struct Fridge: Codable {
 //    var id: String
-//    var users: [User]
+    var users: [User]
     var categories: [FridgeCategory]
+    var admin: String
 }
 
 struct FridgeCategory: Codable {
@@ -133,7 +212,6 @@ struct FridgeItem: Codable {
 struct User: Codable {
     var name: String
     var id: String
-    var isAdmin: Bool
 }
 
 enum ApiError: Error {
