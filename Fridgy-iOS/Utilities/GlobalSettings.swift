@@ -10,12 +10,12 @@ import Foundation
 
 struct GlobalSettings {
     
-    static var appVersion = "2.0.0"
+    static var appVersion = "3.0.0"
     
     // This checks whether we are opening the app for the first time since an update to show
     static func updateAppVersion() -> String? {
-        let oldVersion = UserDefaults.standard.string(forKey: "LAST_OPENED_VERSION")
-        UserDefaults.standard.setValue(appVersion, forKey: "LAST_OPENED_VERSION")
+        let oldVersion = Utility.lastOpenedVersion
+        Utility.lastOpenedVersion = appVersion
         return oldVersion
     }
 }

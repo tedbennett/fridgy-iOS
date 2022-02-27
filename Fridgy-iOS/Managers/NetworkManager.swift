@@ -10,6 +10,8 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseFunctions
+import FirebaseFunctionsSwift
 
 class NetworkManager {
     static var shared = NetworkManager()
@@ -17,13 +19,14 @@ class NetworkManager {
     private init() {}
     
     private var db = Firestore.firestore()
+    lazy private var functions = Functions.functions()
     
     // ========================================================================
     // MARK: Fridge
     // ========================================================================
     
     func getFridge() async throws -> Fridge {
-        guard let id = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let id = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         let categoryCollection = try await db.collection("fridges/\(id)/categories").getDocuments()
         
@@ -66,7 +69,7 @@ class NetworkManager {
     // ========================================================================
     
     func addFridgeItem(name: String, inShoppingList: Bool, inFridge: Bool, id: String, category: String) async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let fridge = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).setData([
             "name": name,
@@ -77,13 +80,13 @@ class NetworkManager {
     }
     
     func deleteFridgeItem(id: String, category: String) async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let fridge = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).delete()
     }
     
     func updateItem(name: String, inShoppingList: Bool, inFridge: Bool, id: String, category: String) async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let fridge = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).setData([
             "name": name,
@@ -94,7 +97,7 @@ class NetworkManager {
     }
     
     func changeItemCategory(destination: String, id: String, category: String) async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let fridge = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         let doc = try await db.collection("fridges/\(fridge)/categories/\(category)/items").document(id).getDocument()
         
@@ -108,7 +111,7 @@ class NetworkManager {
     // ========================================================================
     
     func createCategory(id: String, name: String) async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let fridge = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         try await db.collection("fridges/\(fridge)/categories").document(id).setData([
             "name": name,
@@ -117,7 +120,7 @@ class NetworkManager {
     }
     
     func deleteCategory(id: String) async throws {
-        guard let fridge = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let fridge = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         try await db.collection("fridges/\(fridge)/categories").document(id).delete()
     }
@@ -150,7 +153,7 @@ class NetworkManager {
     }
     
     func deleteUser(id: String) async throws {
-        try await db.collection("users").document(id).delete()
+        try await functions.httpsCallable("deleteUser").call(["userId": id])
     }
     
     func checkUserExists(id: String) async throws -> Bool {
@@ -163,8 +166,10 @@ class NetworkManager {
     // ========================================================================
     
     func checkInFridge(userId: String, fridgeId: String) async throws -> Bool {
-        let doc = try await db.collection("fridges").document(fridgeId).getDocument()
-        return doc.data() != nil
+        let doc = try await db.collection("users").document(userId).getDocument()
+        guard let data = doc.data(),
+              let id = data["fridgeId"] as? String else { return false }
+        return id == fridgeId
     }
     
     func joinFridge(userId: String, fridgeId: String) async throws {
@@ -180,7 +185,7 @@ class NetworkManager {
     }
     
     func deleteFridge() async throws {
-        guard let id = UserDefaults.standard.string(forKey: "fridgeId") else { throw ApiError.noFridgeId }
+        guard let id = Utility.fridgeId else { throw ApiError.noFridgeId }
         
         try await db.collection("fridges").document(id).delete()
     }

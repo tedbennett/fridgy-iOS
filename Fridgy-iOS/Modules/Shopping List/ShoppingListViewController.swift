@@ -12,12 +12,15 @@ import CoreData
 class ShoppingListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.delegate = self
         tableView.dataSource = self
+        setupRefreshControl()
+        
         populateItems()
         
         NotificationCenter.default.addObserver(
@@ -187,5 +190,39 @@ extension ShoppingListViewController: AddItemToShoppingListDelegate {
         
         items.append(item)
         tableView.reloadData()
+    }
+}
+
+// MARK: UIRefreshControl
+
+extension ShoppingListViewController {
+    func setupRefreshControl() {
+        if FridgeManager.shared.inSharedFridge {
+            refreshControl.addTarget(self, action: #selector(onRefreshTriggered), for: .valueChanged)
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.refreshControl = nil
+        }
+    }
+    
+    @objc func onRefreshTriggered() {
+        let context = AppDelegate.persistentContainer.newBackgroundContext()
+        Task {
+            do {
+                try await FridgeManager.shared.fetchFridge(context: context)
+                await MainActor.run {
+                    populateItems()
+                    CATransaction.begin()
+                    CATransaction.setCompletionBlock { () -> Void in
+                        self.tableView.reloadData()
+                    }
+                    refreshControl.endRefreshing()
+                    CATransaction.commit()
+                }
+            } catch {
+                // Show alert
+                print(error)
+            }
+        }
     }
 }

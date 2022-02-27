@@ -17,7 +17,10 @@ class GroupViewController: UIViewController {
     
     var isAdmin = false
     
+    weak var leaveDelegate: GroupLeaveDelegate?
+    
     @IBOutlet weak var userTableView: UITableView!
+    let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +44,11 @@ class GroupViewController: UIViewController {
         
         userTableView.delegate = self
         userTableView.dataSource = self
+        setupRefreshControl()
     }
     
     func handleJoinSession(id: String) {
-        if id != UserDefaults.standard.string(forKey: "fridgeId") {
+        if id != Utility.fridgeId {
             let alert = UIAlertController(
                 title: "Already in Group",
                 message: "Leave your current group before joining another",
@@ -88,6 +92,7 @@ class GroupViewController: UIViewController {
             try await FridgeManager.shared.leaveFridge(user: user)
             await MainActor.run { [weak self] in
                 _ = self?.navigationController?.popViewController(animated: true)
+                leaveDelegate?.didLeaveGroup()
             }
         }
     }
@@ -106,7 +111,7 @@ class GroupViewController: UIViewController {
     }
     
     @objc func onAddUserPressed() {
-        guard let fridgeId = UserDefaults.standard.string(forKey: "fridgeId") else { return }
+        guard let fridgeId = Utility.fridgeId else { return }
         let items: [Any] = ["Join my fridge on Fridgy!", URL(string: "https://www.fridgy-app.com/group/\(fridgeId)")!]
         let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
         present(ac, animated: true)
@@ -199,6 +204,35 @@ extension GroupViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: UIRefreshControl
+
+extension GroupViewController {
+    func setupRefreshControl() {
+        refreshControl.addTarget(self, action: #selector(onRefreshTriggered), for: .valueChanged)
+        userTableView.refreshControl = refreshControl
+    }
+    
+    @objc func onRefreshTriggered() {
+        guard let fridgeId = Utility.fridgeId else { return }
+        Task {
+            let exists = try await NetworkManager.shared.checkFridgeExists(id: fridgeId)
+            if !exists {
+                leaveGroup()
+                return
+            }
+            
+            let users = try await NetworkManager.shared.getUsers(fridgeId: fridgeId)
+            await MainActor.run {
+                let admin = groupHost.id
+                groupMembers = users.filter { $0.id != admin }.sorted(by: { $0.name > $1.name })
+                Utility.users = users
+                userTableView.reloadData()
+                refreshControl.endRefreshing()
+            }
+        }
+    }
+}
+
 class GroupTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -206,3 +240,4 @@ class GroupTableViewCell: UITableViewCell {
         nameLabel.text = name
     }
 }
+

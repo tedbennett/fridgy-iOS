@@ -13,6 +13,7 @@
 		573AA90927CAB6CD009FCE62 /* StoreObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573AA90827CAB6CD009FCE62 /* StoreObserver.swift */; };
 		573AA90C27CAC200009FCE62 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 573AA90B27CAC200009FCE62 /* SwiftKeychainWrapper */; };
 		573AA90E27CAC23B009FCE62 /* AppExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573AA90D27CAC23B009FCE62 /* AppExtensions.swift */; };
+		573AA91027CAE534009FCE62 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573AA90F27CAE534009FCE62 /* Utility.swift */; };
 		5750E91527AEA8070090C048 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E91427AEA8070090C048 /* NetworkManager.swift */; };
 		5750E92027B46E140090C048 /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E91E27B46E140090C048 /* Category+CoreDataClass.swift */; };
 		5750E92127B46E140090C048 /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E91F27B46E140090C048 /* Category+CoreDataProperties.swift */; };
@@ -27,6 +28,8 @@
 		5750E93D27B6DAE20090C048 /* FridgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750E93C27B6DAE20090C048 /* FridgeManager.swift */; };
 		5750E93F27B7B4E00090C048 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 5750E93E27B7B4E00090C048 /* .gitignore */; };
 		5788A07F27C6B584006F6A81 /* GroupSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5788A07E27C6B584006F6A81 /* GroupSignUpViewController.swift */; };
+		578B523F27CBFCC6007263CC /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 578B523E27CBFCC6007263CC /* FirebaseFunctions */; };
+		578B524127CBFCC6007263CC /* FirebaseFunctionsSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 578B524027CBFCC6007263CC /* FirebaseFunctionsSwift-Beta */; };
 		9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213B26ECA82200D74502 /* GlobalSettings.swift */; };
 		9F32213E26ECAE5500D74502 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */; };
 		9F843E8D26E4052C0020BB3A /* FridgeTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */; };
@@ -57,6 +60,7 @@
 		573AA90627CAA40B009FCE62 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		573AA90827CAB6CD009FCE62 /* StoreObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreObserver.swift; sourceTree = "<group>"; };
 		573AA90D27CAC23B009FCE62 /* AppExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtensions.swift; sourceTree = "<group>"; };
+		573AA90F27CAE534009FCE62 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		5750E91427AEA8070090C048 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		5750E91727AEBEFD0090C048 /* Fridgy v3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Fridgy v3.xcdatamodel"; sourceTree = "<group>"; };
 		5750E91E27B46E140090C048 /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -103,11 +107,13 @@
 				5750E93127B5B52F0090C048 /* FirebaseAnalyticsSwift-Beta in Frameworks */,
 				573AA90727CAA40B009FCE62 /* StoreKit.framework in Frameworks */,
 				5750E93527B5B52F0090C048 /* FirebaseFirestore in Frameworks */,
+				578B523F27CBFCC6007263CC /* FirebaseFunctions in Frameworks */,
 				5750E93727B5B52F0090C048 /* FirebaseFirestoreSwift-Beta in Frameworks */,
 				5750E93B27B6CAE90090C048 /* CloudKit.framework in Frameworks */,
 				5750E93327B5B52F0090C048 /* FirebaseAuth in Frameworks */,
 				573AA90C27CAC200009FCE62 /* SwiftKeychainWrapper in Frameworks */,
 				5750E92F27B5B52F0090C048 /* FirebaseAnalytics in Frameworks */,
+				578B524127CBFCC6007263CC /* FirebaseFunctionsSwift-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +167,7 @@
 			children = (
 				9F32213B26ECA82200D74502 /* GlobalSettings.swift */,
 				573AA90D27CAC23B009FCE62 /* AppExtensions.swift */,
+				573AA90F27CAE534009FCE62 /* Utility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -294,6 +301,8 @@
 				5750E93427B5B52F0090C048 /* FirebaseFirestore */,
 				5750E93627B5B52F0090C048 /* FirebaseFirestoreSwift-Beta */,
 				573AA90B27CAC200009FCE62 /* SwiftKeychainWrapper */,
+				578B523E27CBFCC6007263CC /* FirebaseFunctions */,
+				578B524027CBFCC6007263CC /* FirebaseFunctionsSwift-Beta */,
 			);
 			productName = "Fridgy-iOS";
 			productReference = 9F9357EA2456DB4E0026B32D /* Fridgly.app */;
@@ -379,6 +388,7 @@
 				5750E91527AEA8070090C048 /* NetworkManager.swift in Sources */,
 				9FA4C8F426EAA4C1004ECA44 /* FridgeModel.swift in Sources */,
 				9F843E9B26E50C990020BB3A /* FridgeTableViewCell.swift in Sources */,
+				573AA91027CAE534009FCE62 /* Utility.swift in Sources */,
 				9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */,
 				9F843E9626E427AD0020BB3A /* Item+CoreDataClass.swift in Sources */,
 				9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */,
@@ -634,6 +644,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5750E92D27B5B52F0090C048 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreSwift-Beta";
+		};
+		578B523E27CBFCC6007263CC /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5750E92D27B5B52F0090C048 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		578B524027CBFCC6007263CC /* FirebaseFunctionsSwift-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5750E92D27B5B52F0090C048 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFunctionsSwift-Beta";
 		};
 /* End XCSwiftPackageProductDependency section */
 

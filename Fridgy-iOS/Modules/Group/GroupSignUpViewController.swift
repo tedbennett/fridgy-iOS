@@ -10,12 +10,41 @@ import UIKit
 import AuthenticationServices
 import CryptoKit
 import FirebaseAuth
+import StoreKit
+
+protocol GroupLeaveDelegate: AnyObject {
+    func didLeaveGroup()
+}
 
 class GroupSignUpViewController: UIViewController {
     
+    enum State {
+        case notLoggedIn
+        case loggedIn(product: SKProduct)
+        case loggedInNoProduct
+        case plus
+    }
+    
+    var state: State = .notLoggedIn {
+        didSet {
+            updateView()
+        }
+    }
+    @IBOutlet weak var notLoggedInView: UIView!
+    @IBOutlet weak var loggedInView: UIView!
+    @IBOutlet weak var plusView: UIView!
+    
     @IBOutlet weak var authorizationButtonParent: UIView!
+    @IBOutlet weak var createFridgeButton: UIButton!
+    @IBOutlet weak var upgradeButton: UIButton!
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var currentNonce: String?
+    
+    private var product: SKProduct?
     
     var authorizationButton: ASAuthorizationAppleIDButton = {
         var button: ASAuthorizationAppleIDButton
@@ -29,37 +58,70 @@ class GroupSignUpViewController: UIViewController {
         button.addTarget(self, action: #selector(handleLogInWithAppleID), for: .touchUpInside)
         return button
     }()
-    @IBOutlet weak var createFridgeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createFridgeButton.layer.cornerRadius = 10
+        upgradeButton.titleLabel?.textAlignment = .center
         authorizationButtonParent.addSubview(authorizationButton)
-        authorizationButtonParent.layer.cornerRadius = 10
-        
         NSLayoutConstraint.activate([
             authorizationButton.leadingAnchor.constraint(equalTo: authorizationButtonParent.leadingAnchor, constant: 1),
             authorizationButton.trailingAnchor.constraint(equalTo: authorizationButtonParent.trailingAnchor, constant: -1),
             authorizationButton.topAnchor.constraint(equalTo: authorizationButtonParent.topAnchor, constant: 1),
             authorizationButton.bottomAnchor.constraint(equalTo: authorizationButtonParent.bottomAnchor, constant: -1)
         ])
-        updateView()
-        updateNavBar()
         
-        if UserDefaults.standard.string(forKey: "fridgeId") != nil {
+        
+        if UserManager.shared.isLoggedIn {
+            if let plusId = Utility.plusId,
+               plusId == Auth.auth().currentUser?.uid {
+                state = .plus
+            } else {
+                state = .loggedInNoProduct
+            }
+        } else {
+            state = .notLoggedIn
+        }
+        
+        StoreObserver.shared.delegate = self
+        StoreObserver.shared.fetchProducts()
+        showLoadingView()
+        
+        if Utility.fridgeId != nil {
             presentGroupView()
         }
     }
     
     func updateView() {
-        let signedIn = Auth.auth().currentUser != nil
-        authorizationButtonParent.isHidden = signedIn
-        createFridgeButton.isHidden = !signedIn
+        switch state {
+            case .notLoggedIn:
+                plusView.isHidden = true
+                loggedInView.isHidden = true
+                notLoggedInView.isHidden = false
+            case .loggedIn(let product):
+                plusView.isHidden = true
+                loggedInView.isHidden = false
+                notLoggedInView.isHidden = true
+                upgradeButton.isHidden = false
+                if let price = product.regularPrice {
+                    upgradeButton.setTitle("Upgrade to Fridgy Plus\n\(price)", for: .normal)
+                } else {
+                    upgradeButton.setTitle("Upgrade to Fridgy Plus", for: .normal)
+                }
+                infoLabel.text = "Upgrade to Fridgy Plus to create a shared fridge!"
+                
+            case .loggedInNoProduct:
+                plusView.isHidden = true
+                loggedInView.isHidden = false
+                notLoggedInView.isHidden = true
+                upgradeButton.isHidden = true
+                infoLabel.text = "Unable to contact storefront for Fridgy Plus"
+                
+            case .plus:
+                plusView.isHidden = false
+                loggedInView.isHidden = true
+                notLoggedInView.isHidden = true
+        }
         
-        updateNavBar()
-    }
-    
-    func updateNavBar() {
         if Auth.auth().currentUser != nil {
             let optionsButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(onOptionsPressed))
             optionsButton.tintColor = .systemGreen
@@ -88,18 +150,6 @@ class GroupSignUpViewController: UIViewController {
                 }
             )
         )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: "Restore Purchase",
-                style: .destructive,
-                handler:{ [weak self] (UIAlertAction) in
-                    guard let self = self else { return }
-                    self.restorePurchases()
-                }
-            )
-        )
-        
         alert.addAction(
             UIAlertAction(
                 title: "Cancel",
@@ -108,8 +158,7 @@ class GroupSignUpViewController: UIViewController {
             )
         )
         
-        self.present(alert, animated: true, completion: {
-        })
+        present(alert, animated: true)
     }
     
     func logout() {
@@ -118,17 +167,14 @@ class GroupSignUpViewController: UIViewController {
         } catch {
             print("Failed to sign out")
         }
-        updateView()
-    }
-    
-    func restorePurchases() {
-        StoreObserver.shared.restore()
+        state = .notLoggedIn
     }
     
     func handleJoinSession(id: String) {
         if let user = Auth.auth().currentUser  {
             let context = AppDelegate.persistentContainer.newBackgroundContext()
             // User signed in and not in session, join session
+            showLoadingView()
             Task {
                 let fridgeExists = try await NetworkManager.shared.checkFridgeExists(id: id)
                 
@@ -141,60 +187,82 @@ class GroupSignUpViewController: UIViewController {
                 } else {
                     // Notify user
                     await MainActor.run {
-                        let alert = UIAlertController(
-                            title: "Shared Fridge Not Found",
-                            message: nil,
-                            preferredStyle: .alert
-                        )
-                        alert.addAction(
-                            UIAlertAction(title: "OK", style: .default, handler: nil)
-                        )
-                        present(alert, animated: true, completion: nil)
+                        alert(with: "Shared Fridge Not Found", message: "")
                     }
                 }
             }
             
         } else {
             // User not signed in
-            let alert = UIAlertController(
-                title: "Sign up before joining",
-                message: "You need to sign up for a free account before joining",
-                preferredStyle: .alert
-            )
-            alert.addAction(
-                UIAlertAction(title: "OK", style: .default, handler: nil)
-            )
-            present(alert, animated: true, completion: nil)
+            alert(with: "Sign up before joining", message: "You need to sign up for a free account before joining")
         }
         
     }
     
     func presentGroupView() {
-        guard UserDefaults.standard.string(forKey: "fridgeId") != nil,
-              UserDefaults.standard.string(forKey: "admin") != nil,
-              UserDefaults.standard.object(forKey: "users") != nil else {
+        guard Utility.fridgeId != nil,
+              Utility.admin != nil,
+              Utility.users != nil else {
                   // TODO: Show error message
                   return
               }
+        hideLoadingView()
         performSegue(withIdentifier: "presentGroupSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "presentGroupSegue",
            let vc = segue.destination as? GroupViewController,
-           let admin = UserDefaults.standard.string(forKey: "admin"),
-           let data = UserDefaults.standard.data(forKey: "users"),
-           let users = try? JSONDecoder().decode([User].self, from: data) {
+           let admin = Utility.admin,
+           let users = Utility.users {
             vc.groupMembers = users.filter { $0.id != admin }.sorted(by: { $0.name > $1.name })
             vc.groupHost = users.first(where: { $0.id == admin })
-            vc.isAdmin = Auth.auth().currentUser?.uid == UserDefaults.standard.string(forKey: "admin")
+            vc.isAdmin = Auth.auth().currentUser?.uid == Utility.admin
+            vc.leaveDelegate = self
         }
+    }
+}
+
+// MARK: IBActions
+
+extension GroupSignUpViewController {
+    
+    @objc func handleLogInWithAppleID() {
+        showLoadingView()
+        UserManager.shared.handleLogInWithAppleID { [weak self] success in
+            if success {
+                if let plusId = Utility.plusId,
+                   plusId == Auth.auth().currentUser?.uid {
+                    self?.state = .plus
+                } else if let product = self?.product {
+                    self?.state = .loggedIn(product: product)
+                } else {
+                    self?.state = .loggedInNoProduct
+                }
+            }
+            self?.hideLoadingView()
+        }
+    }
+    
+    @IBAction func onUpgradeButtonPressed(_ sender: UIButton) {
+        guard let product = product else {
+            return
+        }
+        showLoadingView()
+        
+        StoreObserver.shared.buy(product)
+    }
+    
+    @IBAction func onRestoreButtonPressed(_ sender: UIButton) {
+        showLoadingView()
+        StoreObserver.shared.restore()
     }
     
     @IBAction func onCreateFridgePressed(_ sender: UIButton) {
         guard let user = Auth.auth().currentUser?.uid else {
             return
         }
+        showLoadingView()
         let categories = try! AppDelegate.viewContext.fetch(Category.fetchRequest())
         Task {
             try await FridgeManager.shared.createFridge(user: user, name: "My Fridge", categories: categories)
@@ -205,112 +273,97 @@ class GroupSignUpViewController: UIViewController {
     }
 }
 
+// MARK: StoreObserverDelegate
 
-extension GroupSignUpViewController: ASAuthorizationControllerDelegate {
+extension GroupSignUpViewController: StoreObserverDelegate {
     
-    @objc func handleLogInWithAppleID() {
-        
-        let request = ASAuthorizationAppleIDProvider().createRequest()
-        request.requestedScopes = [.fullName, .email]
-        currentNonce = randomNonceString()
-        request.nonce = sha256(currentNonce!)
-        
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        
-        controller.delegate = self
-        controller.presentationContextProvider = self
-        
-        controller.performRequests()
+    func didReceiveProducts(_ products: [SKProduct]) {
+        hideLoadingView()
+        if products.first?.productIdentifier == "fridgy_iap_1" {
+            // Show button
+            let product = products.first!
+            self.product = product
+            switch state {
+                case .loggedInNoProduct:
+                    self.state = .loggedIn(product: product)
+                default: break
+            }
+        } else {
+            // Show error
+            alert(with: "Something went wrong", message: "Oops, it seems that Fridgy Plus is unavailable")
+        }
     }
     
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-            case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                guard let nonce = currentNonce,
-                      let appleIDToken = appleIDCredential.identityToken,
-                      let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                          fatalError("Invalid state: A login callback was received, but no login request was sent.")
-                      }
-                
-                let credential = OAuthProvider.credential(
-                    withProviderID: "apple.com",
-                    idToken: idTokenString,
-                    rawNonce: nonce
-                )
-                
-                Auth.auth().signIn(with: credential) { (authResult, error) in
-                    guard let authResult = authResult else {
-                        print(error!.localizedDescription)
-                        return
-                    }
-                    
-                    // Check if user exists
-                    Task {
-                        let exists = try await NetworkManager.shared.checkUserExists(id: authResult.user.uid)
-                        
-                        if !exists {
-                            let name = appleIDCredential.fullName?.givenName
-                            let email = appleIDCredential.email
-                            try await NetworkManager.shared.createUser(name: name, email: email, id: authResult.user.uid)
-                        }
-                        // TODO: Check if user is in a group already
-                        await MainActor.run { [weak self] in
-                            self?.updateView()
-                        }
-                    }
-                }
-                break
-            default:
-                break
+    func failedToReceiveProducts() {
+        // Show error
+        alert(with: "Something went wrong", message: "Oops, it seems that Fridgy Plus is unavailable")
+    }
+    
+    func restoreDidSucceed(_ productId: String) {
+        hideLoadingView()
+        if productId == "fridgy_iap_1" {
+            Utility.plusId = Auth.auth().currentUser?.uid
+            state = .plus
+            alert(with: "Restore Succeeded", message: "Fridgy Plus purchase restored")
+        } else {
+            alert(with: "Something went wrong", message: "Unrecognised restored purchase")
         }
+    }
+    
+    func purchaseDidSucceed() {
+        hideLoadingView()
+        Utility.plusId = Auth.auth().currentUser?.uid
+        state = .plus
+    }
+    
+    func purchaseCancelled() {
+        hideLoadingView()
+    }
+    
+    func restoreCancelled() {
+        hideLoadingView()
+    }
+    
+    func restoreDidFail(with error: Error) {
+        hideLoadingView()
+        print("Restore Failed: \(error.localizedDescription)")
+        alert(with: "Restore Failed", message: "Please try again later.")
+    }
+    
+    func purchaseDidFail(with error: Error) {
+        hideLoadingView()
+        print("Purchase Failed: \(error.localizedDescription)")
+        alert(with: "Purchase Failed", message: "You have not been charged.")
+    }
+    
+}
+
+// MARK: LoadingView
+
+extension GroupSignUpViewController {
+    func showLoadingView() {
+        activityIndicator.startAnimating()
+        navigationController?.navigationBar.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.loadingView.alpha = 1
+        })
+    }
+    
+    func hideLoadingView() {
+        activityIndicator.stopAnimating()
+        navigationController?.navigationBar.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.loadingView.alpha = 0
+        })
     }
 }
 
-extension GroupSignUpViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
+// MARK: GroupLeaveDelegate
+
+extension GroupSignUpViewController: GroupLeaveDelegate {
+    func didLeaveGroup() {
+        alert(with: "Shared Fridge left", message: "Your fridge will no longer be shared with others")
     }
-    
-    private func randomNonceString() -> String {
-        let length = 32
-        let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-        var result = ""
-        var remainingLength = length
-        
-        while remainingLength > 0 {
-            let randoms: [UInt8] = (0 ..< 16).map { _ in
-                var random: UInt8 = 0
-                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-                if errorCode != errSecSuccess {
-                    fatalError(
-                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-                    )
-                }
-                return random
-            }
-            
-            randoms.forEach { random in
-                if remainingLength == 0 {
-                    return
-                }
-                
-                if random < charset.count {
-                    result.append(charset[Int(random)])
-                    remainingLength -= 1
-                }
-            }
-        }
-        return result
-    }
-    
-    private func sha256(_ input: String) -> String {
-        let inputData = Data(input.utf8)
-        let hashedData = SHA256.hash(data: inputData)
-        let hashString = hashedData.compactMap {
-            String(format: "%02x", $0)
-        }.joined()
-        
-        return hashString
-    }
-    
 }

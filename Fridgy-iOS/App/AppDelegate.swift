@@ -22,9 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        if Auth.auth().currentUser == nil {
 //            Auth.auth().signIn(withEmail: "test@test.com", password: "test123", completion: {
 //                authResult, error in
-//                print(error)
 //                Task {
-//                try await NetworkManager.shared.createUser(name: "James", email: "test@test.com", id: authResult!.user.uid)
+//                    try await NetworkManager.shared.createUser(name: "James", email: "test@test.com", id: authResult!.user.uid)
 //                }
 //            })
 //        }
@@ -45,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SKPaymentQueue.default().add(StoreObserver.shared)
         
+        checkLogin()
+        
         return true
     }
     
@@ -55,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func checkLogin() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
-        guard let appleIdUid = UserDefaults.standard.string(forKey: "") else {
+        guard let appleIdUid = Utility.appleIdUid else {
             // Logout
             return
         }
@@ -64,10 +65,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 case .authorized:
                     break // The Apple ID credential is valid.
                 case .revoked, .notFound:
-                    if UserManager.shared.isLoggedIn {
+                    if UserManager.shared.isLoggedIn,
+                       let id = Auth.auth().currentUser?.uid {
                         try? UserManager.shared.logout()
                         Task {
-                            try await UserManager.shared.deleteAccount()
+                            try await UserManager.shared.deleteAccount(id: id)
                         }
                     }
                 default:
@@ -75,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

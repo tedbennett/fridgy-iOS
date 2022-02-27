@@ -13,10 +13,10 @@ class FridgeModel {
     
     var categories: [Category] = []
     init() {
-        if !UserDefaults.standard.bool(forKey: "launchedBefore") {
+        if !Utility.launchedBefore {
             let _ = Category(name: "Other", index: 0, context: AppDelegate.viewContext)
             try? AppDelegate.viewContext.save()
-            UserDefaults.standard.setValue(true, forKey: "launchedBefore")
+            Utility.launchedBefore = true
         } else {
             loadFromStore()
         }

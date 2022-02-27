@@ -8,6 +8,7 @@
 
 import Foundation
 import StoreKit
+import UIKit
 
 
 // MARK: - SKProduct
@@ -19,5 +20,23 @@ extension SKProduct {
         formatter.numberStyle = .currency
         formatter.locale = self.priceLocale
         return formatter.string(from: self.price)
+    }
+}
+
+extension UIView {
+    @IBInspectable private var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+        }
+    }
+}
+
+extension UIViewController {
+    func alert(with title: String, message: String) {
+        let alertController = Utility.alert(title, message: message)
+        self.navigationController?.present(alertController, animated: true, completion: nil)
     }
 }

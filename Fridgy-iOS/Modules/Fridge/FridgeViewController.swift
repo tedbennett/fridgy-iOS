@@ -64,7 +64,7 @@ class FridgeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        setupRefreshControl()
         model.refresh()
         tableView.reloadData()
     }
@@ -437,9 +437,12 @@ extension FridgeViewController: UITableViewDropDelegate {
 
 extension FridgeViewController {
     func setupRefreshControl() {
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to sync")
-        refreshControl.addTarget(self, action: #selector(onRefreshTriggered), for: .valueChanged)
-        tableView.refreshControl = refreshControl
+        if FridgeManager.shared.inSharedFridge {
+            refreshControl.addTarget(self, action: #selector(onRefreshTriggered), for: .valueChanged)
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.refreshControl = nil
+        }
     }
     
     @objc func onRefreshTriggered() {

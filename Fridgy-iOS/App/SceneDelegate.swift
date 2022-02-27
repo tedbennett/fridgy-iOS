@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import AuthenticationServices
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,43 +21,59 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
         
+        UserManager.shared.presentationDelegate = self
+        
+        checkFridge()
+        
         if let url = connectionOptions.userActivities.first?.webpageURL {
-            guard url.host == "www.fridgy-app.com" || url.host == "fridgy-app.com",
-                  url.pathComponents.count == 3,
-                  url.pathComponents[1] == "groups" else {
-                      return
-                  }
-            if let tabBarController = window?.rootViewController as? UITabBarController {
-                tabBarController.selectedIndex = 2
-            }
+            handleUrl(url)
         }
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         if let url = userActivity.webpageURL {
-            guard url.host == "www.fridgy-app.com" || url.host == "fridgy-app.com",
-                  url.pathComponents.count == 3,
-                  url.pathComponents[1] == "groups" else {
-                      return
-                  }
-            let groupId = url.pathComponents[2]
-            if let tabBarController = self.window?.rootViewController as? UITabBarController {
-                tabBarController.selectedIndex = 2
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-               
-                
-                if let tabBarController = self.window?.rootViewController as? UITabBarController,
-                   let nav = tabBarController.selectedViewController as? UINavigationController {
-                    if let groupVC = nav.visibleViewController as? GroupViewController {
-                        groupVC.handleJoinSession(id: groupId)
-                    } else if let signupVC = nav.visibleViewController as? GroupSignUpViewController {
-                        signupVC.handleJoinSession(id: groupId)
+            handleUrl(url)
+        }
+    }
+    
+    func checkFridge() {
+        if let id = Utility.fridgeId, let user = Auth.auth().currentUser?.uid {
+            Task {
+                let exists = try await NetworkManager.shared.checkFridgeExists(id: id)
+                let inFridge = try await NetworkManager.shared.checkInFridge(userId: user, fridgeId: id)
+                if !exists || !inFridge {
+                    Utility.fridgeId = nil
+                    await MainActor.run {
+                        if let tabBarController = self.window?.rootViewController as? UITabBarController,
+                           let nav = tabBarController.selectedViewController as? UINavigationController {
+                            nav.visibleViewController?.alert(with: "Shared Fridge left", message: "Your fridge will no longer be synced")
+                        }
                     }
                 }
-                
             }
             
+        }
+    }
+    
+    func handleUrl(_ url: URL) {
+        guard url.host == "www.fridgy-app.com" || url.host == "fridgy-app.com",
+              url.pathComponents.count == 3,
+              url.pathComponents[1] == "group" else {
+                  return
+              }
+        let groupId = url.pathComponents[2]
+        if let tabBarController = self.window?.rootViewController as? UITabBarController {
+            tabBarController.selectedIndex = 2
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            if let tabBarController = self.window?.rootViewController as? UITabBarController,
+               let nav = tabBarController.selectedViewController as? UINavigationController {
+                if let groupVC = nav.visibleViewController as? GroupViewController {
+                    groupVC.handleJoinSession(id: groupId)
+                } else if let signupVC = nav.visibleViewController as? GroupSignUpViewController {
+                    signupVC.handleJoinSession(id: groupId)
+                }
+            }
         }
     }
 
@@ -90,3 +108,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+// MARK: ASAuthorizationControllerPresentationContextProviding
+
+extension SceneDelegate: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.window!
+    }
+}

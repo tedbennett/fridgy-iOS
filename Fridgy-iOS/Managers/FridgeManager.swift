@@ -21,7 +21,7 @@ class FridgeManager {
         
     }
     
-    var inSharedFridge: Bool { UserDefaults.standard.string(forKey: "fridgeId") != nil }
+    var inSharedFridge: Bool { Utility.fridgeId != nil }
     
     var pendingRecords: [Record] = []
     
@@ -93,11 +93,8 @@ class FridgeManager {
             }
         }
         
-        UserDefaults.standard.set(fridge.admin, forKey: "admin")
-        
-        if let data = try? JSONEncoder().encode(fridge.users) {
-            UserDefaults.standard.set(data, forKey: "users")
-        }
+        Utility.admin = fridge.admin
+        Utility.users = fridge.users
         
         try context.save()
     }
@@ -193,11 +190,10 @@ class FridgeManager {
     func createFridge(user: String, name: String, categories: [Category]) async throws {
         let id = try await NetworkManager.shared.createFridge(name: name, admin: user)
         try await NetworkManager.shared.joinFridge(userId: user, fridgeId: id)
-        UserDefaults.standard.set(id, forKey: "fridgeId")
-        UserDefaults.standard.set(user, forKey: "admin")
+        Utility.fridgeId = id
+        Utility.admin = user
         let users = try await NetworkManager.shared.getUsers(fridgeId: id)
-        let data = try JSONEncoder().encode(users)
-        UserDefaults.standard.set(data, forKey: "users")
+        Utility.users = users
         
         for category in categories {
             createCategory(category)
@@ -209,43 +205,38 @@ class FridgeManager {
     
     func joinFridge(user: String, fridgeId: String, context: NSManagedObjectContext) async throws {
         try await NetworkManager.shared.joinFridge(userId: user, fridgeId: fridgeId)
-        UserDefaults.standard.set(fridgeId, forKey: "fridgeId")
+        Utility.fridgeId = fridgeId
         try await fetchFridge(context: context)
     }
     
     func deleteFridge() async throws {
-        if let data = UserDefaults.standard.data(forKey: "users") {
-            let users = try JSONDecoder().decode([User].self, from: data)
+        if let users = Utility.users {
             for user in users {
                 try await NetworkManager.shared.leaveFridge(userId: user.id)
             }
         }
         
         try await NetworkManager.shared.deleteFridge()
-        UserDefaults.standard.setValue(nil, forKey: "fridgeId")
-        UserDefaults.standard.setValue(nil, forKey: "admin")
-        UserDefaults.standard.setValue(nil, forKey: "users")
+        Utility.fridgeId = nil
+        Utility.admin = nil
+        Utility.users = nil
     }
     
     func removeUserFromFridge(user: String) async throws {
         try await NetworkManager.shared.leaveFridge(userId: user)
         
-        if let data = UserDefaults.standard.data(forKey: "users") {
-            var users = try JSONDecoder().decode([User].self, from: data)
-            
+        if var users = Utility.users {
             users.removeAll(where: { $0.id == user })
-            
-            let newData = try JSONEncoder().encode(users)
-            UserDefaults.standard.set(newData, forKey: "users")
+            Utility.users = users
         }
     }
     
     func leaveFridge(user: String) async throws {
         
         try await NetworkManager.shared.leaveFridge(userId: user)
-        UserDefaults.standard.setValue(nil, forKey: "fridgeId")
-        UserDefaults.standard.setValue(nil, forKey: "admin")
-        UserDefaults.standard.setValue(nil, forKey: "users")
+        Utility.fridgeId = nil
+        Utility.admin = nil
+        Utility.users = nil
     }
 }
 
