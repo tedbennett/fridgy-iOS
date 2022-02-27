@@ -119,7 +119,7 @@ extension FridgeViewController {
                 style: .default,
                 handler:{ [weak self] (UIAlertAction) in
                     guard let self = self else { return }
-                    self.performSegue(withIdentifier: "presentWelcomeView", sender: self)
+                    self.performSegue(withIdentifier: "presentTutorial", sender: self)
                 }
             )
         )

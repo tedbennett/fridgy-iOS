@@ -239,6 +239,14 @@
             </objects>
             <point key="canvasLocation" x="1520" y="-571"/>
         </scene>
+        <!--Tutorial-->
+        <scene sceneID="kgh-lz-D2h">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Tutorial" id="wiI-za-9Lx" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vOM-jL-hCi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2252" y="-294"/>
+        </scene>
         <!--Your Fridge-->
         <scene sceneID="mkZ-bj-4zT">
             <objects>
@@ -285,7 +293,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o7m-MZ-QK3">
-                                                    <rect key="frame" x="15" y="11.5" width="314" height="22.5"/>
+                                                    <rect key="frame" x="20" y="11.5" width="309" height="22.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                                                 </textField>
@@ -304,7 +312,7 @@
                                                 <constraint firstItem="4Z2-vu-uFq" firstAttribute="top" secondItem="Wy6-H3-23c" secondAttribute="top" constant="10" id="63r-wi-je9"/>
                                                 <constraint firstAttribute="bottom" secondItem="4Z2-vu-uFq" secondAttribute="bottom" constant="10" id="IYw-RW-sHs"/>
                                                 <constraint firstAttribute="trailing" secondItem="4Z2-vu-uFq" secondAttribute="trailing" constant="15" id="ggj-4R-vDn"/>
-                                                <constraint firstItem="o7m-MZ-QK3" firstAttribute="leading" secondItem="Wy6-H3-23c" secondAttribute="leading" constant="15" id="k4x-dO-ZQE"/>
+                                                <constraint firstItem="o7m-MZ-QK3" firstAttribute="leading" secondItem="Wy6-H3-23c" secondAttribute="leading" constant="20" id="k4x-dO-ZQE"/>
                                                 <constraint firstItem="o7m-MZ-QK3" firstAttribute="top" secondItem="Wy6-H3-23c" secondAttribute="top" constant="11.5" id="wha-uW-lIm"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -341,6 +349,7 @@
                         <outlet property="tableView" destination="VAM-TO-IoG" id="IqD-xu-t0W"/>
                         <segue destination="qlB-8P-Xcs" kind="presentation" identifier="presentEditCategories" id="S5Z-bz-W1f"/>
                         <segue destination="XD4-AQ-qOd" kind="presentation" identifier="presentWelcomeView" id="r1y-k1-bc4"/>
+                        <segue destination="wiI-za-9Lx" kind="presentation" identifier="presentTutorial" id="KhM-fY-rGc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVk-mn-v8j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
