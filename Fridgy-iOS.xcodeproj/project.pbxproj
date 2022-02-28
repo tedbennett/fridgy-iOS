@@ -610,7 +610,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Fridgy-iOS/Fridgy-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				INFOPLIST_FILE = "Fridgy-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -618,7 +618,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "TedB.Fridgy-iOs";
 				PRODUCT_NAME = Fridgly;
 				SWIFT_VERSION = 5.0;
@@ -632,7 +632,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Fridgy-iOS/Fridgy-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				INFOPLIST_FILE = "Fridgy-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -640,7 +640,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "TedB.Fridgy-iOs";
 				PRODUCT_NAME = Fridgly;
 				SWIFT_VERSION = 5.0;
