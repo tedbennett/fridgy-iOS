@@ -9,6 +9,7 @@
 import UIKit
 import AuthenticationServices
 import StoreKit
+import SPConfetti
 
 protocol GroupLeaveDelegate: AnyObject {
     func didLeaveGroup()
@@ -67,8 +68,7 @@ class GroupSignUpViewController: UIViewController {
             authorizationButton.topAnchor.constraint(equalTo: authorizationButtonParent.topAnchor, constant: 1),
             authorizationButton.bottomAnchor.constraint(equalTo: authorizationButtonParent.bottomAnchor, constant: -1)
         ])
-        
-        
+        Utility.plusId = nil
         if UserManager.shared.isLoggedIn {
             if let plusId = Utility.plusId,
                plusId == UserManager.shared.userId {
@@ -83,10 +83,11 @@ class GroupSignUpViewController: UIViewController {
         StoreObserver.shared.delegate = self
         StoreObserver.shared.fetchProducts()
         showLoadingView()
-        
         if Utility.fridgeId != nil {
             presentGroupView()
         }
+        
+        SPConfettiConfiguration.particlesConfig.colors = [#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1), #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1), #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)]
     }
     
     func updateView() {
@@ -302,6 +303,7 @@ extension GroupSignUpViewController: StoreObserverDelegate {
         if productId == "fridgy_iap_1" {
             Utility.plusId = UserManager.shared.userId
             state = .plus
+            SPConfetti.startAnimating(.centerWidthToDown, particles: [.arc], duration: 2)
             alert(with: "Restore Succeeded", message: "Fridgy Plus purchase restored")
         } else {
             alert(with: "Something went wrong", message: "Unrecognised restored purchase")
@@ -312,6 +314,7 @@ extension GroupSignUpViewController: StoreObserverDelegate {
         hideLoadingView()
         Utility.plusId = UserManager.shared.userId
         state = .plus
+        SPConfetti.startAnimating(.centerWidthToDown, particles: [.arc], duration: 2)
     }
     
     func purchaseCancelled() {

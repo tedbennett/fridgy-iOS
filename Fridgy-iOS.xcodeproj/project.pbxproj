@@ -44,6 +44,7 @@
 		578B527527CD391E007263CC /* move_items_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B527127CD391E007263CC /* move_items_light.mp4 */; };
 		578B527627CD391E007263CC /* refresh_fridge_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B527227CD391E007263CC /* refresh_fridge_light.mp4 */; };
 		578B527727CD391E007263CC /* shopping_list_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B527327CD391E007263CC /* shopping_list_light.mp4 */; };
+		578B527A27CD5745007263CC /* SPConfetti in Frameworks */ = {isa = PBXBuildFile; productRef = 578B527927CD5745007263CC /* SPConfetti */; };
 		9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213B26ECA82200D74502 /* GlobalSettings.swift */; };
 		9F32213E26ECAE5500D74502 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */; };
 		9F843E8D26E4052C0020BB3A /* FridgeTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */; };
@@ -138,6 +139,7 @@
 				578B523F27CBFCC6007263CC /* FirebaseFunctions in Frameworks */,
 				5750E93727B5B52F0090C048 /* FirebaseFirestoreSwift-Beta in Frameworks */,
 				5750E93B27B6CAE90090C048 /* CloudKit.framework in Frameworks */,
+				578B527A27CD5745007263CC /* SPConfetti in Frameworks */,
 				5750E93327B5B52F0090C048 /* FirebaseAuth in Frameworks */,
 				573AA90C27CAC200009FCE62 /* SwiftKeychainWrapper in Frameworks */,
 				5750E92F27B5B52F0090C048 /* FirebaseAnalytics in Frameworks */,
@@ -361,6 +363,7 @@
 				573AA90B27CAC200009FCE62 /* SwiftKeychainWrapper */,
 				578B523E27CBFCC6007263CC /* FirebaseFunctions */,
 				578B524027CBFCC6007263CC /* FirebaseFunctionsSwift-Beta */,
+				578B527927CD5745007263CC /* SPConfetti */,
 			);
 			productName = "Fridgy-iOS";
 			productReference = 9F9357EA2456DB4E0026B32D /* Fridgly.app */;
@@ -393,6 +396,7 @@
 			packageReferences = (
 				5750E92D27B5B52F0090C048 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				573AA90A27CAC200009FCE62 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				578B527827CD5745007263CC /* XCRemoteSwiftPackageReference "SPConfetti" */,
 			);
 			productRefGroup = 9F9357EB2456DB4E0026B32D /* Products */;
 			projectDirPath = "";
@@ -684,6 +688,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		578B527827CD5745007263CC /* XCRemoteSwiftPackageReference "SPConfetti" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanvorobei/SPConfetti";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -726,6 +738,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5750E92D27B5B52F0090C048 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFunctionsSwift-Beta";
+		};
+		578B527927CD5745007263CC /* SPConfetti */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 578B527827CD5745007263CC /* XCRemoteSwiftPackageReference "SPConfetti" */;
+			productName = SPConfetti;
 		};
 /* End XCSwiftPackageProductDependency section */
 
