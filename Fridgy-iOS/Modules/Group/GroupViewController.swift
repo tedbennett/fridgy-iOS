@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class GroupViewController: UIViewController {
     
@@ -49,15 +48,7 @@ class GroupViewController: UIViewController {
     
     func handleJoinSession(id: String) {
         if id != Utility.fridgeId {
-            let alert = UIAlertController(
-                title: "Already in Group",
-                message: "Leave your current group before joining another",
-                preferredStyle: .alert
-            )
-            alert.addAction(
-                UIAlertAction(title: "OK", style: .default, handler: nil)
-            )
-            present(alert, animated: true, completion: nil)
+            alert(with: "Already in Group", message: "Leave your current group before joining another")
         }
     }
     
@@ -80,11 +71,12 @@ class GroupViewController: UIViewController {
                 }
             })
         )
+        alert.view.tintColor = .systemGreen
         present(alert, animated: true, completion: nil)
     }
     
     func leaveGroup() {
-        guard let user = Auth.auth().currentUser?.uid else {
+        guard let user = UserManager.shared.userId else {
             return
         }
         

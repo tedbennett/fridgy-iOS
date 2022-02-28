@@ -8,8 +8,6 @@
 
 import UIKit
 import AuthenticationServices
-import CryptoKit
-import FirebaseAuth
 import StoreKit
 
 protocol GroupLeaveDelegate: AnyObject {
@@ -73,7 +71,7 @@ class GroupSignUpViewController: UIViewController {
         
         if UserManager.shared.isLoggedIn {
             if let plusId = Utility.plusId,
-               plusId == Auth.auth().currentUser?.uid {
+               plusId == UserManager.shared.userId {
                 state = .plus
             } else {
                 state = .loggedInNoProduct
@@ -122,7 +120,7 @@ class GroupSignUpViewController: UIViewController {
                 notLoggedInView.isHidden = true
         }
         
-        if Auth.auth().currentUser != nil {
+        if UserManager.shared.isLoggedIn {
             let optionsButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(onOptionsPressed))
             optionsButton.tintColor = .systemGreen
             navigationItem.rightBarButtonItem = optionsButton
@@ -163,7 +161,7 @@ class GroupSignUpViewController: UIViewController {
     
     func logout() {
         do {
-            try Auth.auth().signOut()
+            try UserManager.shared.logout()
         } catch {
             print("Failed to sign out")
         }
@@ -171,7 +169,7 @@ class GroupSignUpViewController: UIViewController {
     }
     
     func handleJoinSession(id: String) {
-        if let user = Auth.auth().currentUser  {
+        if let user = UserManager.shared.user  {
             let context = AppDelegate.persistentContainer.newBackgroundContext()
             // User signed in and not in session, join session
             showLoadingView()
@@ -217,7 +215,7 @@ class GroupSignUpViewController: UIViewController {
            let users = Utility.users {
             vc.groupMembers = users.filter { $0.id != admin }.sorted(by: { $0.name > $1.name })
             vc.groupHost = users.first(where: { $0.id == admin })
-            vc.isAdmin = Auth.auth().currentUser?.uid == Utility.admin
+            vc.isAdmin = UserManager.shared.userId == Utility.admin
             vc.leaveDelegate = self
         }
     }
@@ -232,7 +230,7 @@ extension GroupSignUpViewController {
         UserManager.shared.handleLogInWithAppleID { [weak self] success in
             if success {
                 if let plusId = Utility.plusId,
-                   plusId == Auth.auth().currentUser?.uid {
+                   plusId == UserManager.shared.userId {
                     self?.state = .plus
                 } else if let product = self?.product {
                     self?.state = .loggedIn(product: product)
@@ -259,7 +257,7 @@ extension GroupSignUpViewController {
     }
     
     @IBAction func onCreateFridgePressed(_ sender: UIButton) {
-        guard let user = Auth.auth().currentUser?.uid else {
+        guard let user = UserManager.shared.userId else {
             return
         }
         showLoadingView()
@@ -302,7 +300,7 @@ extension GroupSignUpViewController: StoreObserverDelegate {
     func restoreDidSucceed(_ productId: String) {
         hideLoadingView()
         if productId == "fridgy_iap_1" {
-            Utility.plusId = Auth.auth().currentUser?.uid
+            Utility.plusId = UserManager.shared.userId
             state = .plus
             alert(with: "Restore Succeeded", message: "Fridgy Plus purchase restored")
         } else {
@@ -312,7 +310,7 @@ extension GroupSignUpViewController: StoreObserverDelegate {
     
     func purchaseDidSucceed() {
         hideLoadingView()
-        Utility.plusId = Auth.auth().currentUser?.uid
+        Utility.plusId = UserManager.shared.userId
         state = .plus
     }
     

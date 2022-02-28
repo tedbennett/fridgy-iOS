@@ -7,52 +7,92 @@
 //
 
 import UIKit
-import AVFoundation
 
-class TutorialViewController: UIViewController {
-
+class TutorialViewController: UIPageViewController {
+    
+    var pageItems: [UIViewController] = []
+    var pageIndex = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        playerView.translatesAutoresizingMaskIntoConstraints = false
+        pageItems = [
+            TutorialPageViewController(type: .addItems),
+            TutorialPageViewController(type: .moveItems),
+            TutorialPageViewController(type: .slideActions),
+            TutorialPageViewController(type: .shoppingList),
+            TutorialPageViewController(type: .refreshFridge)
+        ]
+        view.backgroundColor = .systemBackground
         
-        view.addSubview(playerView)
+        UIPageControl.appearance().currentPageIndicatorTintColor = .systemGreen
+        UIPageControl.appearance().pageIndicatorTintColor = .systemGray5
+        
+        delegate = self
+        dataSource = self
+        
+        setViewControllers([pageItems[0]], direction: .forward, animated: false)
+        
+        navigationItem.hidesBackButton = true
+        let doneButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(onDoneButtonPressed))
+        doneButton.tintColor = .systemGreen
+        navigationItem.rightBarButtonItem = doneButton
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .secondaryLabel
+        view.addSubview(label)
+        label.text = "Swipe to continue"
+        
+        
+        
         NSLayoutConstraint.activate([
-            playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            playerView.heightAnchor.constraint(equalToConstant: 200),
-            playerView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            label.bottomAnchor.constraint(equalTo: scrollView!.bottomAnchor)
         ])
-        
-        
-        
-        playerView.setup(filename: "add_items")
-        // Do any additional setup after loading the view.
     }
     
-    var playerView = PlayerView()
-
+    @objc func onDoneButtonPressed() {
+        dismiss(animated: true)
+    }
 }
 
-class PlayerView: UIView {
-    private var playerLayer = AVPlayerLayer()
-    private var playerLooper: AVPlayerLooper?
+extension TutorialViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
-    func setup(filename: String) {
-        let url = Bundle.main.url(forResource: filename, withExtension: ".mov")!
-        let playerItem = AVPlayerItem(url: url)
-        
-        let player = AVQueuePlayer(playerItem: playerItem)
-        playerLayer.player = player
-        playerLayer.videoGravity = .resizeAspect
-        layer.addSublayer(playerLayer)
-        
-        playerLooper = AVPlayerLooper(player: player, templateItem: playerItem)
-        
-        player.play()
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
+        pageItems.count
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        playerLayer.frame = bounds
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+        pageIndex
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let index = pageItems.firstIndex(of: viewController),
+              index > 0 else {
+            return nil
+        }
+        return pageItems[index - 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let index = pageItems.firstIndex(of: viewController),
+              index < pageItems.count - 1 else {
+                  return nil
+              }
+        return pageItems[index + 1]
+    }
+}
+
+extension UIPageViewController {
+    var scrollView: UIScrollView? {
+        for view in view.subviews {
+            if view is UIScrollView {
+                return view as? UIScrollView
+            }
+        }
+        return nil
     }
 }

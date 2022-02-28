@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import Firebase
-import FirebaseAuth
 import StoreKit
 import AuthenticationServices
 
@@ -18,15 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        
-//        if Auth.auth().currentUser == nil {
-//            Auth.auth().signIn(withEmail: "test@test.com", password: "test123", completion: {
-//                authResult, error in
-//                Task {
-//                    try await NetworkManager.shared.createUser(name: "James", email: "test@test.com", id: authResult!.user.uid)
-//                }
-//            })
-//        }
         
         var titleFont = UIFont.preferredFont(forTextStyle: .largeTitle)
         titleFont = UIFont(
@@ -50,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        
         SKPaymentQueue.default().remove(StoreObserver.shared)
     }
     
@@ -66,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     break // The Apple ID credential is valid.
                 case .revoked, .notFound:
                     if UserManager.shared.isLoggedIn,
-                       let id = Auth.auth().currentUser?.uid {
+                       let id = UserManager.shared.userId {
                         try? UserManager.shared.logout()
                         Task {
                             try await UserManager.shared.deleteAccount(id: id)
@@ -146,5 +135,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    
+    func testAccount() {
+        if Auth.auth().currentUser == nil {
+            Auth.auth().signIn(withEmail: "test@test.com", password: "test123", completion: {
+                authResult, error in
+                Task {
+                    try await NetworkManager.shared.createUser(name: "James", email: "test@test.com", id: authResult!.user.uid)
+                }
+            })
+        }
+    }
 }
 

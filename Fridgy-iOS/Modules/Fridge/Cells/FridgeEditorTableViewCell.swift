@@ -42,11 +42,15 @@ class FridgeEditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         shoppingListImageView.isHidden = !isShoppingList
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let text = textField.text else { return true  }
+    func finishEditing() {
+        guard let text = textField.text else { return }
         textField.resignFirstResponder()
         delegate?.didEndEditing(text: text)
         textField.text = ""
-        return false
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        finishEditing()
+        return true
     }
 }

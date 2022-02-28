@@ -12,6 +12,7 @@ import CoreData
 class ShoppingListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyLabel: UILabel!
     let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
@@ -36,6 +37,11 @@ class ShoppingListViewController: UIViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
     }
     
     var isAddingItem = false
@@ -53,20 +59,39 @@ class ShoppingListViewController: UIViewController {
         }
     }
     
+    func refreshUI() {
+        emptyLabel.isHidden = !items.isEmpty
+        tableView.reloadData()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         populateItems()
-        tableView.reloadData()
+        refreshUI()
+    }
+    
+    
+    @objc func dismissKeyboard() {
+        // Try and find cell being edited to get it's text
+        if isAddingItem {
+            let indexPath = IndexPath(row: items.count, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? ShoppingListAddItemTableViewCell {
+                cell.finishEditing()
+                view.endEditing(false)
+            }
+        }
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
+        emptyLabel.isHidden = true
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
         }
     }
     
     @objc func keyboardWillHide(_ notification:Notification) {
+        emptyLabel.isHidden = !items.isEmpty
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
@@ -80,7 +105,8 @@ class ShoppingListViewController: UIViewController {
         AppDelegate.saveContext()
         
         let indexPath = IndexPath(row: index, section: 0)
-        self.tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        emptyLabel.isHidden = !items.isEmpty
     }
 }
 
@@ -92,7 +118,7 @@ extension ShoppingListViewController {
         isAddingItem = true
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
-        tableView.reloadData()
+        refreshUI()
     }
 }
 
@@ -170,13 +196,6 @@ extension ShoppingListViewController: ShoppingListSelectDelegate {
             idsToRemove.remove(at: index)
         }
     }
-    
-    func showInShoppingListAlert() {
-        let alert = UIAlertController(title: "Item Not In Fridge", message: "This will be automatically added to the 'Other' category of your fridge when you check it.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-    }
 }
 
 // MARK: AddItemToShoppingListDelegate
@@ -184,12 +203,14 @@ extension ShoppingListViewController: ShoppingListSelectDelegate {
 extension ShoppingListViewController: AddItemToShoppingListDelegate {
     func didFinishEditing(text: String) {
         isAddingItem = false
-        let item = Item(name: text, index: nil, inShoppingList: true, context: AppDelegate.viewContext)
-        AppDelegate.saveContext()
-        FridgeManager.shared.addItem(item)
-        
-        items.append(item)
-        tableView.reloadData()
+        if !text.isEmpty {
+            let item = Item(name: text, index: nil, inShoppingList: true, context: AppDelegate.viewContext)
+            AppDelegate.saveContext()
+            FridgeManager.shared.addItem(item)
+            
+            items.append(item)
+        }
+        refreshUI()
     }
 }
 
@@ -212,12 +233,8 @@ extension ShoppingListViewController {
                 try await FridgeManager.shared.fetchFridge(context: context)
                 await MainActor.run {
                     populateItems()
-                    CATransaction.begin()
-                    CATransaction.setCompletionBlock { () -> Void in
-                        self.tableView.reloadData()
-                    }
                     refreshControl.endRefreshing()
-                    CATransaction.commit()
+                    refreshUI()
                 }
             } catch {
                 // Show alert

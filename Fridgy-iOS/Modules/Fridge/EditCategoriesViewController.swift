@@ -28,11 +28,27 @@ class EditCategoriesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isEditing = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         delegate?.didFinishEditingCategories()
+    }
+    
+    @objc func dismissKeyboard() {
+        // Try and find cell being edited to get it's text
+        if isAddingCategory {
+            let indexPath = IndexPath(row: model.categories.count, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) as? AddCategoryTableViewCell {
+                cell.finishEditing()
+                view.endEditing(false)
+            }
+        }
     }
 }
 
@@ -46,6 +62,11 @@ extension EditCategoriesViewController {
             generator.impactOccurred()
         }
         tableView.reloadData()
+    }
+    
+    @IBAction func onDoneButtonPressed(_ sender: UIBarButtonItem) {
+        dismissKeyboard()
+        dismiss(animated: true)
     }
 }
 
@@ -100,6 +121,7 @@ extension EditCategoriesViewController: UITableViewDelegate {
                     self.model.removeCategory(at: indexPath.row)
                     self.tableView.deleteRows(at: [indexPath], with: .fade)
                 }))
+                alert.view.tintColor = .systemGreen
                 self.present(alert, animated: true, completion: nil)
             } else {
                 model.removeCategory(at: indexPath.row)

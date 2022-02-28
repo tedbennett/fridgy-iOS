@@ -15,6 +15,7 @@ class FridgeModel {
     init() {
         if !Utility.launchedBefore {
             let _ = Category(name: "Other", index: 0, context: AppDelegate.viewContext)
+            let _ = Category(name: "Expires Soon", index: 1, context: AppDelegate.viewContext)
             try? AppDelegate.viewContext.save()
             Utility.launchedBefore = true
         } else {
@@ -155,6 +156,10 @@ class FridgeModel {
     }
     
     // MARK: Helpers
+    
+    func isEmpty() -> Bool {
+        categories.allSatisfy { $0.items.isEmpty }
+    }
     
     func isInBounds(_ indexPath: IndexPath) -> Bool {
         guard indexPath.section < categories.count else { return false}

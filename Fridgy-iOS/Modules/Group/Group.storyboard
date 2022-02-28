@@ -40,6 +40,7 @@
                                                 <constraint firstItem="sXv-5Z-FCl" firstAttribute="centerY" secondItem="Txv-42-H6j" secondAttribute="centerY" id="fcH-JW-lJG"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                         <connections>
                                             <outlet property="nameLabel" destination="sXv-5Z-FCl" id="lXw-N4-MSE"/>
                                         </connections>
@@ -165,7 +166,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To join another shared fridge, have the admin share an invite link" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1K-nQ-5UK">
-                                        <rect key="frame" x="0.0" y="70" width="374" height="41"/>
+                                        <rect key="frame" x="0.0" y="90" width="374" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
@@ -173,7 +174,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="b1K-nQ-5UK" firstAttribute="top" secondItem="W0c-rG-e5Y" secondAttribute="bottom" constant="10" id="9Yk-eM-DfE"/>
+                                    <constraint firstItem="b1K-nQ-5UK" firstAttribute="top" secondItem="W0c-rG-e5Y" secondAttribute="bottom" constant="30" id="9Yk-eM-DfE"/>
                                     <constraint firstItem="W0c-rG-e5Y" firstAttribute="top" secondItem="dbT-qn-hNS" secondAttribute="top" id="Vql-vr-AJ5"/>
                                     <constraint firstItem="W0c-rG-e5Y" firstAttribute="centerX" secondItem="dbT-qn-hNS" secondAttribute="centerX" id="flH-De-ZX1"/>
                                     <constraint firstAttribute="trailing" secondItem="b1K-nQ-5UK" secondAttribute="trailing" id="tCs-Ap-ny5"/>
@@ -197,7 +198,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up to join a shared fridge, or to create your own!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ZB-tD-z6c">
-                                        <rect key="frame" x="0.0" y="90" width="374" height="41"/>
+                                        <rect key="frame" x="0.0" y="110" width="374" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                         <nil key="highlightedColor"/>
@@ -205,7 +206,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="9ZB-tD-z6c" firstAttribute="top" secondItem="iJs-P3-3jt" secondAttribute="bottom" constant="10" id="9aT-Yk-d22"/>
+                                    <constraint firstItem="9ZB-tD-z6c" firstAttribute="top" secondItem="iJs-P3-3jt" secondAttribute="bottom" constant="30" id="9aT-Yk-d22"/>
                                     <constraint firstAttribute="trailing" secondItem="9ZB-tD-z6c" secondAttribute="trailing" id="DdB-Oo-8CJ"/>
                                     <constraint firstItem="iJs-P3-3jt" firstAttribute="centerX" secondItem="SUL-kd-Tqp" secondAttribute="centerX" id="Ixk-NF-Bsq"/>
                                     <constraint firstItem="iJs-P3-3jt" firstAttribute="top" secondItem="SUL-kd-Tqp" secondAttribute="top" id="bzq-5X-dGY"/>
@@ -289,11 +290,11 @@
             </objects>
             <point key="canvasLocation" x="1908.6956521739132" y="81.696428571428569"/>
         </scene>
-        <!--Group-->
+        <!--Shared Fridge-->
         <scene sceneID="UZi-PJ-qp7">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yvq-8K-mb0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Group" image="person.2" catalog="system" selectedImage="person.2.fill" id="jFW-Dl-TCD">
+                    <tabBarItem key="tabBarItem" title="Shared Fridge" image="person.2" catalog="system" selectedImage="person.2.fill" id="jFW-Dl-TCD">
                         <color key="badgeColor" systemColor="systemGreenColor"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -316,6 +317,9 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

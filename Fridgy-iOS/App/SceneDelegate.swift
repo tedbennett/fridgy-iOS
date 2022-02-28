@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 import AuthenticationServices
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -37,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func checkFridge() {
-        if let id = Utility.fridgeId, let user = Auth.auth().currentUser?.uid {
+        if let id = Utility.fridgeId, let user = UserManager.shared.userId {
             Task {
                 let exists = try await NetworkManager.shared.checkFridgeExists(id: id)
                 let inFridge = try await NetworkManager.shared.checkInFridge(userId: user, fridgeId: id)

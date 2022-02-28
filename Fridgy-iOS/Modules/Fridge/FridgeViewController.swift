@@ -13,6 +13,7 @@ import MobileCoreServices
 class FridgeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyLabel: UILabel!
     let refreshControl = UIRefreshControl()
     
     var model = FridgeModel()
@@ -39,6 +40,11 @@ class FridgeViewController: UIViewController {
            forHeaderFooterViewReuseIdentifier: FridgeTableHeaderView.identifier
         )
         
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
         setupRefreshControl()
         
         NotificationCenter.default.addObserver(
@@ -56,7 +62,7 @@ class FridgeViewController: UIViewController {
         )
         
         if GlobalSettings.updateAppVersion() != GlobalSettings.appVersion {
-            if GlobalSettings.appVersion == "2.0.0" {
+            if GlobalSettings.appVersion == "3.0.0" {
                 performSegue(withIdentifier: "presentWelcomeView", sender: self)
             }
         }
@@ -66,16 +72,39 @@ class FridgeViewController: UIViewController {
         super.viewWillAppear(animated)
         setupRefreshControl()
         model.refresh()
+        emptyLabel.isHidden = !model.isEmpty()
         tableView.reloadData()
     }
     
+
+    @objc func dismissKeyboard() {
+        // Try and find cell being edited to get it's text
+        if let index = categoryBeingEdited {
+            let indexPath = IndexPath(row: model.categories[index].items.count, section: index)
+            if let cell = tableView.cellForRow(at: indexPath) as? FridgeEditorTableViewCell {
+                cell.finishEditing()
+                view.endEditing(false)
+            }
+        } else if let indexPath = cellBeingEdited,
+              let cell = tableView.cellForRow(at: indexPath) as? FridgeEditorTableViewCell {
+            cell.finishEditing()
+            view.endEditing(false)
+        }
+    }
+    
     @objc func keyboardWillShow(_ notification:Notification) {
+        emptyLabel.isHidden = true
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationItem.leftBarButtonItem?.isEnabled = false
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
         }
     }
     
     @objc func keyboardWillHide(_ notification:Notification) {
+        emptyLabel.isHidden = !model.isEmpty()
+        navigationItem.rightBarButtonItem?.isEnabled = true
+        navigationItem.leftBarButtonItem?.isEnabled = true
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     
@@ -86,56 +115,6 @@ class FridgeViewController: UIViewController {
             vc.model = model
             vc.delegate = self
         }
-    }
-}
-
-
-// MARK: IBActions
-
-extension FridgeViewController {
-    @IBAction func onMenuButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = UIAlertController(
-            title: "Options",
-            message: nil,
-            preferredStyle: .actionSheet
-        )
-        
-        alert.view.tintColor = .systemGreen
-        
-        alert.addAction(
-            UIAlertAction(
-                title: "Edit Categories",
-                style: .default,
-                handler:{ [weak self] (UIAlertAction) in
-                    guard let self = self else { return }
-                    self.performSegue(withIdentifier: "presentEditCategories", sender: self)
-                }
-            )
-        )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: "Show Info",
-                style: .default,
-                handler:{ [weak self] (UIAlertAction) in
-                    guard let self = self else { return }
-                    self.performSegue(withIdentifier: "presentTutorial", sender: self)
-                }
-            )
-        )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: "Cancel",
-                style: .cancel,
-                handler: nil
-            )
-        )
-        
-        
-        self.present(alert, animated: true, completion: {
-            print("completion block")
-        })
     }
 }
 
@@ -179,6 +158,10 @@ extension FridgeViewController: UITableViewDelegate {
         ) { [weak self] (action, view, completionHandler) in
             self?.model.removeItem(at: indexPath)
             self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            if let empty = self?.model.isEmpty() {
+                self?.emptyLabel.isHidden = !empty
+            }
             completionHandler(true)
         }
         
@@ -312,6 +295,7 @@ extension FridgeViewController: EditorTableViewCellDelegate {
         
         categoryBeingEdited = nil
         cellBeingEdited = nil
+        emptyLabel.isHidden = !model.isEmpty()
         tableView.reloadData()
     }
 }
@@ -453,6 +437,7 @@ extension FridgeViewController {
                 await MainActor.run {
                     refreshControl.endRefreshing()
                     model.refresh()
+                    emptyLabel.isHidden = !model.isEmpty()
                     tableView.reloadData()
                 }
             } catch {

@@ -32,11 +32,18 @@
 		578B524127CBFCC6007263CC /* FirebaseFunctionsSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 578B524027CBFCC6007263CC /* FirebaseFunctionsSwift-Beta */; };
 		578B524427CC343E007263CC /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B524327CC343E007263CC /* TutorialViewController.swift */; };
 		578B524827CC35AD007263CC /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 578B524727CC35AD007263CC /* Tutorial.storyboard */; };
-		578B524A27CC371D007263CC /* add_items.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B524927CC371D007263CC /* add_items.mov */; };
-		578B525027CC3898007263CC /* refresh_fridge.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B524C27CC3897007263CC /* refresh_fridge.mov */; };
-		578B525127CC3898007263CC /* move_items.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B524D27CC3898007263CC /* move_items.mov */; };
-		578B525227CC3898007263CC /* slide_actions.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B524E27CC3898007263CC /* slide_actions.mov */; };
-		578B525327CC3898007263CC /* shopping_list.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B524F27CC3898007263CC /* shopping_list.mov */; };
+		578B525627CCC7D7007263CC /* TutorialPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B525427CCC7D7007263CC /* TutorialPageViewController.swift */; };
+		578B525727CCC7D7007263CC /* TutorialPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 578B525527CCC7D7007263CC /* TutorialPageViewController.xib */; };
+		578B526727CD1813007263CC /* move_items_dark.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B525D27CD1813007263CC /* move_items_dark.mov */; };
+		578B526827CD1813007263CC /* refresh_fridge_dark.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B525E27CD1813007263CC /* refresh_fridge_dark.mov */; };
+		578B526927CD1813007263CC /* swipe_actions_dark.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B525F27CD1813007263CC /* swipe_actions_dark.mov */; };
+		578B526A27CD1813007263CC /* shopping_list_dark.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B526027CD1813007263CC /* shopping_list_dark.mov */; };
+		578B526B27CD1813007263CC /* add_items_dark.mov in Resources */ = {isa = PBXBuildFile; fileRef = 578B526127CD1813007263CC /* add_items_dark.mov */; };
+		578B526F27CD37C0007263CC /* swipe_actions_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B526E27CD37C0007263CC /* swipe_actions_light.mp4 */; };
+		578B527427CD391E007263CC /* add_items_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B527027CD391E007263CC /* add_items_light.mp4 */; };
+		578B527527CD391E007263CC /* move_items_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B527127CD391E007263CC /* move_items_light.mp4 */; };
+		578B527627CD391E007263CC /* refresh_fridge_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B527227CD391E007263CC /* refresh_fridge_light.mp4 */; };
+		578B527727CD391E007263CC /* shopping_list_light.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 578B527327CD391E007263CC /* shopping_list_light.mp4 */; };
 		9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213B26ECA82200D74502 /* GlobalSettings.swift */; };
 		9F32213E26ECAE5500D74502 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */; };
 		9F843E8D26E4052C0020BB3A /* FridgeTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */; };
@@ -81,11 +88,18 @@
 		5788A07E27C6B584006F6A81 /* GroupSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSignUpViewController.swift; sourceTree = "<group>"; };
 		578B524327CC343E007263CC /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		578B524727CC35AD007263CC /* Tutorial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tutorial.storyboard; sourceTree = "<group>"; };
-		578B524927CC371D007263CC /* add_items.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = add_items.mov; sourceTree = "<group>"; };
-		578B524C27CC3897007263CC /* refresh_fridge.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = refresh_fridge.mov; sourceTree = "<group>"; };
-		578B524D27CC3898007263CC /* move_items.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = move_items.mov; sourceTree = "<group>"; };
-		578B524E27CC3898007263CC /* slide_actions.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = slide_actions.mov; sourceTree = "<group>"; };
-		578B524F27CC3898007263CC /* shopping_list.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = shopping_list.mov; sourceTree = "<group>"; };
+		578B525427CCC7D7007263CC /* TutorialPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialPageViewController.swift; sourceTree = "<group>"; };
+		578B525527CCC7D7007263CC /* TutorialPageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialPageViewController.xib; sourceTree = "<group>"; };
+		578B525D27CD1813007263CC /* move_items_dark.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = move_items_dark.mov; sourceTree = "<group>"; };
+		578B525E27CD1813007263CC /* refresh_fridge_dark.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = refresh_fridge_dark.mov; sourceTree = "<group>"; };
+		578B525F27CD1813007263CC /* swipe_actions_dark.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = swipe_actions_dark.mov; sourceTree = "<group>"; };
+		578B526027CD1813007263CC /* shopping_list_dark.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = shopping_list_dark.mov; sourceTree = "<group>"; };
+		578B526127CD1813007263CC /* add_items_dark.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = add_items_dark.mov; sourceTree = "<group>"; };
+		578B526E27CD37C0007263CC /* swipe_actions_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = swipe_actions_light.mp4; sourceTree = "<group>"; };
+		578B527027CD391E007263CC /* add_items_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = add_items_light.mp4; sourceTree = "<group>"; };
+		578B527127CD391E007263CC /* move_items_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = move_items_light.mp4; sourceTree = "<group>"; };
+		578B527227CD391E007263CC /* refresh_fridge_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = refresh_fridge_light.mp4; sourceTree = "<group>"; };
+		578B527327CD391E007263CC /* shopping_list_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = shopping_list_light.mp4; sourceTree = "<group>"; };
 		9F32213B26ECA82200D74502 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
 		9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		9F843E8C26E4052C0020BB3A /* FridgeTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FridgeTableHeaderView.swift; sourceTree = "<group>"; };
@@ -179,8 +193,10 @@
 		578B524227CC3429007263CC /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				578B524327CC343E007263CC /* TutorialViewController.swift */,
 				578B524727CC35AD007263CC /* Tutorial.storyboard */,
+				578B524327CC343E007263CC /* TutorialViewController.swift */,
+				578B525427CCC7D7007263CC /* TutorialPageViewController.swift */,
+				578B525527CCC7D7007263CC /* TutorialPageViewController.xib */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -188,12 +204,17 @@
 		578B524B27CC3724007263CC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				578B524D27CC3898007263CC /* move_items.mov */,
-				578B524C27CC3897007263CC /* refresh_fridge.mov */,
-				578B524F27CC3898007263CC /* shopping_list.mov */,
-				578B524E27CC3898007263CC /* slide_actions.mov */,
+				578B526127CD1813007263CC /* add_items_dark.mov */,
+				578B525D27CD1813007263CC /* move_items_dark.mov */,
+				578B526E27CD37C0007263CC /* swipe_actions_light.mp4 */,
+				578B527027CD391E007263CC /* add_items_light.mp4 */,
+				578B527127CD391E007263CC /* move_items_light.mp4 */,
+				578B527227CD391E007263CC /* refresh_fridge_light.mp4 */,
+				578B527327CD391E007263CC /* shopping_list_light.mp4 */,
+				578B525E27CD1813007263CC /* refresh_fridge_dark.mov */,
+				578B526027CD1813007263CC /* shopping_list_dark.mov */,
+				578B525F27CD1813007263CC /* swipe_actions_dark.mov */,
 				9F9357F62456DB530026B32D /* Assets.xcassets */,
-				578B524927CC371D007263CC /* add_items.mov */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -387,20 +408,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				578B527727CD391E007263CC /* shopping_list_light.mp4 in Resources */,
+				578B526B27CD1813007263CC /* add_items_dark.mov in Resources */,
+				578B525727CCC7D7007263CC /* TutorialPageViewController.xib in Resources */,
+				578B526A27CD1813007263CC /* shopping_list_dark.mov in Resources */,
 				5750E93F27B7B4E00090C048 /* .gitignore in Resources */,
 				578B524827CC35AD007263CC /* Tutorial.storyboard in Resources */,
 				9F89B31F26E387BA002B91C7 /* ShoppingList.storyboard in Resources */,
-				578B525227CC3898007263CC /* slide_actions.mov in Resources */,
+				578B526927CD1813007263CC /* swipe_actions_dark.mov in Resources */,
+				578B526827CD1813007263CC /* refresh_fridge_dark.mov in Resources */,
+				578B527527CD391E007263CC /* move_items_light.mp4 in Resources */,
 				9F9357FA2456DB530026B32D /* LaunchScreen.storyboard in Resources */,
+				578B527427CD391E007263CC /* add_items_light.mp4 in Resources */,
 				5750E92C27B5B4A40090C048 /* GoogleService-Info.plist in Resources */,
-				578B524A27CC371D007263CC /* add_items.mov in Resources */,
-				578B525127CC3898007263CC /* move_items.mov in Resources */,
-				578B525027CC3898007263CC /* refresh_fridge.mov in Resources */,
 				5724133F27B7DA60009FA2D2 /* Group.storyboard in Resources */,
-				578B525327CC3898007263CC /* shopping_list.mov in Resources */,
 				9F89B32326E387CE002B91C7 /* Fridge.storyboard in Resources */,
+				578B526727CD1813007263CC /* move_items_dark.mov in Resources */,
 				9F9357F72456DB530026B32D /* Assets.xcassets in Resources */,
 				9F89B31426E379F6002B91C7 /* Main.storyboard in Resources */,
+				578B527627CD391E007263CC /* refresh_fridge_light.mp4 in Resources */,
+				578B526F27CD37C0007263CC /* swipe_actions_light.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +462,7 @@
 				9F9357EE2456DB4E0026B32D /* AppDelegate.swift in Sources */,
 				578B524427CC343E007263CC /* TutorialViewController.swift in Sources */,
 				9F843E9626E427AD0020BB3A /* Item+CoreDataClass.swift in Sources */,
+				578B525627CCC7D7007263CC /* TutorialPageViewController.swift in Sources */,
 				9F32213C26ECA82200D74502 /* GlobalSettings.swift in Sources */,
 				573AA90E27CAC23B009FCE62 /* AppExtensions.swift in Sources */,
 				5788A07F27C6B584006F6A81 /* GroupSignUpViewController.swift in Sources */,

@@ -17,11 +17,22 @@ class UserManager: NSObject {
     
     private override init() { }
     
+    // Sign in with Apple
+    weak var presentationDelegate: ASAuthorizationControllerPresentationContextProviding?
+    var currentNonce: String?
+    var signInCompletion: ((Bool) -> Void)?
+    
     var isLoggedIn: Bool {
         Auth.auth().currentUser != nil
     }
     
+    var userId: String? {
+        Auth.auth().currentUser?.uid
+    }
     
+    var user: FirebaseAuth.User? {
+        Auth.auth().currentUser
+    }
     
     func signInWith(appleIDCredential: ASAuthorizationAppleIDCredential) async throws -> AuthDataResult {
         guard let nonce = currentNonce,
@@ -36,9 +47,7 @@ class UserManager: NSObject {
             rawNonce: nonce
         )
         
-        
         return try await Auth.auth().signIn(with: credential)
-        
     }
     
     func logout() throws {
@@ -48,10 +57,6 @@ class UserManager: NSObject {
     func deleteAccount(id: String) async throws {
         try await NetworkManager.shared.deleteUser(id: id)
     }
-    
-    var currentNonce: String?
-    weak var presentationDelegate: ASAuthorizationControllerPresentationContextProviding?
-    var signInCompletion: ((Bool) -> Void)?
 }
 
 // MARK: Sign In With Apple

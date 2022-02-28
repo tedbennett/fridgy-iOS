@@ -39,11 +39,15 @@ class ShoppingListAddItemTableViewCell: UITableViewCell, UITextFieldDelegate {
         ), for: .normal)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let text = textField.text else { return true }
+    func finishEditing() {
+        guard let text = textField.text else { return }
         delegate?.didFinishEditing(text: text)
         textField.resignFirstResponder()
         textField.text = ""
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        finishEditing()
         return true
     }
 }

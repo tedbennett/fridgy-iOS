@@ -37,6 +37,7 @@ extension UIView {
 extension UIViewController {
     func alert(with title: String, message: String) {
         let alertController = Utility.alert(title, message: message)
+        alertController.view.tintColor = .systemGreen
         self.navigationController?.present(alertController, animated: true, completion: nil)
     }
 }

@@ -12,7 +12,6 @@ class WelcomeViewController: UIViewController {
 
     @IBOutlet weak var fridgyLabel: UILabel!
     @IBOutlet weak var welcomeToLabel: UILabel!
-    @IBOutlet weak var dismissButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +26,9 @@ class WelcomeViewController: UIViewController {
         )
         welcomeToLabel.font = titleFont
         fridgyLabel.font = titleFont
-        dismissButton.layer.cornerRadius = 10
     }
     
-    @IBAction func onDismissButtonPressed(_ sender: UIButton) {
+    @IBAction func onSkipButtonPressed(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
 }

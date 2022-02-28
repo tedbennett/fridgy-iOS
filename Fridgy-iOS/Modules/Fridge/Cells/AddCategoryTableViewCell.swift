@@ -33,11 +33,15 @@ class AddCategoryTableViewCell: UITableViewCell, UITextFieldDelegate {
         textField.text = text
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let text = textField.text else { return true  }
+    func finishEditing() {
+        guard let text = textField.text else { return  }
         textField.resignFirstResponder()
         delegate?.didEndEditing(text: text)
         textField.text = ""
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        finishEditing()
         return true
     }
 }
