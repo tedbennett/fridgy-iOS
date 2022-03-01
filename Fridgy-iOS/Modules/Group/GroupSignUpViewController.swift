@@ -278,9 +278,8 @@ extension GroupSignUpViewController: StoreObserverDelegate {
     
     func didReceiveProducts(_ products: [SKProduct]) {
         hideLoadingView()
-        if products.first?.productIdentifier == "fridgy_iap_1" {
+        if let product = products.first(where: { $0.productIdentifier == "fridgy_iap_1"}) {
             // Show button
-            let product = products.first!
             self.product = product
             switch state {
                 case .loggedInNoProduct:
@@ -295,6 +294,7 @@ extension GroupSignUpViewController: StoreObserverDelegate {
     
     func failedToReceiveProducts() {
         // Show error
+        hideLoadingView()
         alert(with: "Something went wrong", message: "Oops, it seems that Fridgy Plus is unavailable")
     }
     
