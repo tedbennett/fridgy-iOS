@@ -71,13 +71,22 @@ class ShoppingListViewController: UIViewController {
         refreshUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        idsToRemove.forEach { id in
+            guard let index = self.items.firstIndex(where: { $0.uniqueId == id }) else { return }
+            deleteItem(at: index)
+        }
+    }
+    
     
     @objc func dismissKeyboard() {
         // Try and find cell being edited to get it's text
         if isAddingItem {
             let indexPath = IndexPath(row: items.count, section: 0)
             if let cell = tableView.cellForRow(at: indexPath) as? ShoppingListAddItemTableViewCell {
-                cell.finishEditing()
+                cell.finishEditing(spawnNewItem: false)
                 view.endEditing(false)
             }
         }
@@ -102,6 +111,19 @@ class ShoppingListViewController: UIViewController {
         item.inFridge = true
         FridgeManager.shared.updateItem(item)
         
+        AppDelegate.saveContext()
+        
+        let indexPath = IndexPath(row: index, section: 0)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        emptyLabel.isHidden = !items.isEmpty
+    }
+    
+    func permanentlyDeleteItem(at index: Int) {
+        let item = items.remove(at: index)
+        guard let category = item.category?.uniqueId else { return }
+        
+        FridgeManager.shared.deleteItem(id: item.uniqueId, category: category)
+        AppDelegate.viewContext.delete(item)
         AppDelegate.saveContext()
         
         let indexPath = IndexPath(row: index, section: 0)
@@ -175,6 +197,39 @@ extension ShoppingListViewController: UITableViewDataSource {
         guard let cell = cell as? ShoppingListAddItemTableViewCell else { return }
         cell.textField.becomeFirstResponder()
     }
+    
+    
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        guard indexPath.row < items.count else { return nil }
+        
+        let removeItem = UIContextualAction(
+            style: .destructive,
+            title: "Delete"
+        ) { [weak self] (action, view, completionHandler) in
+            if self?.items[indexPath.row].inFridge == true {
+                let alert = UIAlertController(title: "Item in Fridge", message: "Deleting this item will also delete it from the fridge.\nTap the circle on the left to remove from shopping list without deleting permanently.", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+                
+                let delete = UIAlertAction(title: "Delete", style: .destructive) { _ in
+                    self?.permanentlyDeleteItem(at: indexPath.row)
+                }
+                
+                alert.addAction(delete)
+                
+                self?.present(alert, animated: true)
+                completionHandler(true)
+            } else {
+                self?.deleteItem(at: indexPath.row)
+                completionHandler(true)
+            }
+        }
+        
+        return UISwipeActionsConfiguration(actions: [removeItem])
+    }
 }
 
 
@@ -201,8 +256,8 @@ extension ShoppingListViewController: ShoppingListSelectDelegate {
 // MARK: AddItemToShoppingListDelegate
 
 extension ShoppingListViewController: AddItemToShoppingListDelegate {
-    func didFinishEditing(text: String) {
-        isAddingItem = false
+    func didFinishEditing(text: String, spawnNewItem: Bool) {
+        isAddingItem = spawnNewItem
         if !text.isEmpty {
             let item = Item(name: text, index: nil, inShoppingList: true, context: AppDelegate.viewContext)
             AppDelegate.saveContext()

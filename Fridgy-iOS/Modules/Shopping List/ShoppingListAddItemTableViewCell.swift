@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddItemToShoppingListDelegate: AnyObject {
-    func didFinishEditing(text: String)
+    func didFinishEditing(text: String, spawnNewItem: Bool)
 }
 
 class ShoppingListAddItemTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -39,15 +39,17 @@ class ShoppingListAddItemTableViewCell: UITableViewCell, UITextFieldDelegate {
         ), for: .normal)
     }
     
-    func finishEditing() {
+    func finishEditing(spawnNewItem: Bool) {
         guard let text = textField.text else { return }
-        delegate?.didFinishEditing(text: text)
-        textField.resignFirstResponder()
+        delegate?.didFinishEditing(text: text, spawnNewItem: spawnNewItem && !text.isEmpty)
+        if !(spawnNewItem && !text.isEmpty) {
+            textField.resignFirstResponder()
+        }
         textField.text = ""
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        finishEditing()
+        finishEditing(spawnNewItem: true)
         return true
     }
 }

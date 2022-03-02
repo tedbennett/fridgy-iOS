@@ -283,7 +283,7 @@
                         <outlet property="notLoggedInView" destination="SUL-kd-Tqp" id="kFi-Um-VdV"/>
                         <outlet property="plusView" destination="dbT-qn-hNS" id="EHt-0O-1tK"/>
                         <outlet property="upgradeButton" destination="eZf-60-qIV" id="m8g-C7-vVr"/>
-                        <segue destination="Y6W-OH-hqX" kind="show" identifier="presentGroupSegue" id="9eX-82-ifv"/>
+                        <segue destination="Y6W-OH-hqX" kind="show" identifier="presentGroupSegue" animates="NO" id="9eX-82-ifv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vGO-yp-2dB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

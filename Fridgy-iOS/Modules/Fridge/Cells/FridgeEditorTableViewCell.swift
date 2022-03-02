@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EditorTableViewCellDelegate: AnyObject {
-    func didEndEditing(text: String)
+    func didEndEditing(text: String, spawnNewItem: Bool)
 }
 
 class FridgeEditorTableViewCell: UITableViewCell, UITextFieldDelegate {
@@ -42,15 +42,17 @@ class FridgeEditorTableViewCell: UITableViewCell, UITextFieldDelegate {
         shoppingListImageView.isHidden = !isShoppingList
     }
     
-    func finishEditing() {
+    func finishEditing(spawnNewItem: Bool) {
         guard let text = textField.text else { return }
-        textField.resignFirstResponder()
-        delegate?.didEndEditing(text: text)
+        if !(spawnNewItem && !text.isEmpty) {
+            textField.resignFirstResponder()
+        }
+        delegate?.didEndEditing(text: text, spawnNewItem: spawnNewItem && !text.isEmpty)
         textField.text = ""
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        finishEditing()
+        finishEditing(spawnNewItem: true)
         return true
     }
 }

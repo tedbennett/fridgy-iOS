@@ -68,8 +68,8 @@ class FridgeViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         setupRefreshControl()
         model.refresh()
         emptyLabel.isHidden = !model.isEmpty()
@@ -82,12 +82,12 @@ class FridgeViewController: UIViewController {
         if let index = categoryBeingEdited {
             let indexPath = IndexPath(row: model.categories[index].items.count, section: index)
             if let cell = tableView.cellForRow(at: indexPath) as? FridgeEditorTableViewCell {
-                cell.finishEditing()
+                cell.finishEditing(spawnNewItem: false)
                 view.endEditing(false)
             }
         } else if let indexPath = cellBeingEdited,
               let cell = tableView.cellForRow(at: indexPath) as? FridgeEditorTableViewCell {
-            cell.finishEditing()
+            cell.finishEditing(spawnNewItem: false)
             view.endEditing(false)
         }
     }
@@ -284,7 +284,7 @@ extension FridgeViewController: UITableViewDataSource {
 
 extension FridgeViewController: EditorTableViewCellDelegate {
     
-    func didEndEditing(text: String) {
+    func didEndEditing(text: String, spawnNewItem: Bool) {
         if text != "" {
             if let categoryBeingEdited = categoryBeingEdited {
                 model.addItem(text: text, section: categoryBeingEdited)
@@ -292,8 +292,9 @@ extension FridgeViewController: EditorTableViewCellDelegate {
                 model.updateItem(at: cellBeingEdited, text: text)
             }
         }
-        
-        categoryBeingEdited = nil
+        if !spawnNewItem {
+            categoryBeingEdited = nil
+        }
         cellBeingEdited = nil
         emptyLabel.isHidden = !model.isEmpty()
         tableView.reloadData()
