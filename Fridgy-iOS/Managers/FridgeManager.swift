@@ -64,7 +64,7 @@ class FridgeManager {
             if let localCategory = categories.first(where: {$0.uniqueId == category.id}) {
                 // Now sync fridge items
                 for item in category.items {
-                    if let localItem = localCategory.items.first(where: { $0.uniqueId == item.id }) {
+                    if let localItem = localCategory.allItems.first(where: { $0.uniqueId == item.id }) {
                         // Check all of the details are correct
                         localItem.name = item.name
                         localItem.inFridge = item.inFridge
@@ -76,7 +76,7 @@ class FridgeManager {
                 }
                 
                 // Now check that all local items were in the remote and haven't been deleted
-                for localItem in localCategory.items {
+                for localItem in localCategory.allItems {
                     if !category.items.contains(where: { $0.id == localItem.uniqueId }) {
                         context.delete(localItem)
                     }
@@ -197,7 +197,7 @@ class FridgeManager {
         
         for category in categories {
             createCategory(category)
-            for item in category.items {
+            for item in category.allItems {
                 addItem(item)
             }
         }

@@ -43,6 +43,10 @@ extension Category {
     var items: [Item] {
         (children?.allObjects as? [Item])?.filter { $0.inFridge }.sorted { $0.index < $1.index } ?? []
     }
+    
+    var allItems: [Item] {
+        (children?.allObjects as? [Item])?.sorted { $0.index < $1.index } ?? []
+    }
 
 }
 

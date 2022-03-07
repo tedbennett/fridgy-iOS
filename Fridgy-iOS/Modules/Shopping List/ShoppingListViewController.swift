@@ -20,7 +20,6 @@ class ShoppingListViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        setupRefreshControl()
         
         populateItems()
         
@@ -69,6 +68,7 @@ class ShoppingListViewController: UIViewController {
         
         populateItems()
         refreshUI()
+        setupRefreshControl()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

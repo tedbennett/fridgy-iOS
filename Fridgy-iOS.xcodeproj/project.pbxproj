@@ -102,7 +102,6 @@
 		578B527127CD391E007263CC /* move_items_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = move_items_light.mp4; sourceTree = "<group>"; };
 		578B527227CD391E007263CC /* refresh_fridge_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = refresh_fridge_light.mp4; sourceTree = "<group>"; };
 		578B527327CD391E007263CC /* shopping_list_light.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = shopping_list_light.mp4; sourceTree = "<group>"; };
-		578B528127CE9A46007263CC /* ContentInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ContentInfo.plist; sourceTree = "<group>"; };
 		578B528827CF70D7007263CC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		9F32213B26ECA82200D74502 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
 		9F32213D26ECAE5500D74502 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
@@ -224,14 +223,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		578B528027CE9A46007263CC /* FridgyI */ = {
-			isa = PBXGroup;
-			children = (
-				578B528127CE9A46007263CC /* ContentInfo.plist */,
-			);
-			path = FridgyI;
-			sourceTree = "<group>";
-		};
 		9F32213A26ECA81800D74502 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				9F9357EC2456DB4E0026B32D /* Fridgy-iOS */,
-				578B528027CE9A46007263CC /* FridgyI */,
 				9F9357EB2456DB4E0026B32D /* Products */,
 				5750E93927B6CAE90090C048 /* Frameworks */,
 			);
@@ -624,7 +614,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Fridgy-iOS/Fridgy-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				INFOPLIST_FILE = "Fridgy-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -632,7 +622,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "TedB.Fridgy-iOs";
 				PRODUCT_NAME = Fridgly;
 				SWIFT_VERSION = 5.0;
@@ -646,7 +636,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Fridgy-iOS/Fridgy-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 9Y2AMH5S23;
 				INFOPLIST_FILE = "Fridgy-iOS/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -654,7 +644,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.1;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "TedB.Fridgy-iOs";
 				PRODUCT_NAME = Fridgly;
 				SWIFT_VERSION = 5.0;
