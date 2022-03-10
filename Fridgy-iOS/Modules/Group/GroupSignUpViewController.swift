@@ -134,7 +134,7 @@ class GroupSignUpViewController: UIViewController {
         }
     }
     
-    @objc func onOptionsPressed() {
+    @objc func onOptionsPressed(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(
             title: "Options",
             message: nil,
@@ -160,7 +160,7 @@ class GroupSignUpViewController: UIViewController {
                 handler: nil
             )
         )
-        
+        alert.popoverPresentationController?.barButtonItem = sender
         present(alert, animated: true)
     }
     

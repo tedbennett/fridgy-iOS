@@ -60,7 +60,6 @@
                     <navigationItem key="navigationItem" title="Group" id="nha-bK-HZx"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="authorizationButtonParent" destination="iJs-P3-3jt" id="zAr-O3-tdE"/>
                         <outlet property="userTableView" destination="vvh-tv-oIM" id="W3F-jf-NdX"/>
                     </connections>
                 </viewController>

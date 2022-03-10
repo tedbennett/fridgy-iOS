@@ -109,7 +109,7 @@ class GroupViewController: UIViewController {
         present(ac, animated: true)
     }
     
-    @objc func onOptionsPressed() {
+    @objc func onOptionsPressed(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(
             title: "Admin Actions",
             message: nil,
@@ -137,7 +137,8 @@ class GroupViewController: UIViewController {
             )
         )
         
-        self.present(alert, animated: true, completion: {
+        alert.popoverPresentationController?.barButtonItem = sender
+        present(alert, animated: true, completion: {
         })
     }
 }
